@@ -1,0 +1,849 @@
+<meta charset="UTF-8">
+<title>Cuaderno de Inglés — Albert</title>
+<style>
+  :root {
+    --ink: #12192B;
+    --ink-soft: #2A3654;
+    --ink-faint: #55638A;
+    --paper: #EDEEEA;
+    --paper-soft: #E2E1DA;
+    --paper-card: #F7F7F4;
+    --gold: #B87F2E;
+    --gold-soft: #E8D3AC;
+    --teal: #3E7C74;
+    --teal-soft: #CFE3DF;
+    --line: #D8D7CE;
+    --text: #1B2333;
+    --text-dim: #565F78;
+    --shadow: 0 1px 2px rgba(18,25,43,0.06), 0 8px 24px rgba(18,25,43,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0F1420;
+      --paper-soft: #17203368;
+      --paper-card: #171F32;
+      --line: #2B3550;
+      --text: #E7E9F2;
+      --text-dim: #9AA3C2;
+      --gold: #D9A75A;
+      --gold-soft: #3A2E18;
+      --teal: #6FBAB0;
+      --teal-soft: #16302C;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1420;
+    --paper-soft: #17203368;
+    --paper-card: #171F32;
+    --line: #2B3550;
+    --text: #E7E9F2;
+    --text-dim: #9AA3C2;
+    --gold: #D9A75A;
+    --gold-soft: #3A2E18;
+    --teal: #6FBAB0;
+    --teal-soft: #16302C;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --paper: #EDEEEA;
+    --paper-soft: #E2E1DA;
+    --paper-card: #F7F7F4;
+    --line: #D8D7CE;
+    --text: #1B2333;
+    --text-dim: #565F78;
+    --gold: #B87F2E;
+    --gold-soft: #E8D3AC;
+    --teal: #3E7C74;
+    --teal-soft: #CFE3DF;
+    --shadow: 0 1px 2px rgba(18,25,43,0.06), 0 8px 24px rgba(18,25,43,0.05);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding-bottom: 4rem; }
+
+  .display { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; }
+  .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, Menlo, monospace; }
+
+  a { color: inherit; }
+
+  /* ── TOP BAR ── */
+  #topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 1rem;
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    align-items: center; justify-content: space-between;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    font-family: Georgia, serif; font-style: italic;
+    font-size: 1.05rem; color: var(--gold); white-space: nowrap;
+  }
+  .brand .mk { font-style: normal; font-family: ui-monospace, monospace; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; }
+
+  .controls { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+  .tabs {
+    display: inline-flex; background: var(--paper-soft);
+    border-radius: 999px; padding: 3px; border: 1px solid var(--line);
+  }
+  .tab-btn {
+    font-family: ui-monospace, monospace; font-size: 0.68rem; letter-spacing: 0.04em;
+    padding: 0.45rem 0.85rem; border-radius: 999px; border: none;
+    background: transparent; color: var(--text-dim); cursor: pointer;
+    transition: all .18s;
+  }
+  .tab-btn.active { background: var(--ink); color: var(--paper); }
+  :root[data-theme="dark"] .tab-btn.active,
+  @media (prefers-color-scheme: dark) { }
+  .tab-btn.active { background: var(--gold); color: #1B1204; }
+
+  #lang-btn {
+    font-family: ui-monospace, monospace; font-size: 0.68rem;
+    letter-spacing: 0.06em; padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper-card); color: var(--teal);
+    cursor: pointer; transition: all .18s;
+  }
+  #lang-btn:hover { border-color: var(--teal); }
+  #lang-btn:focus-visible, .tab-btn:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--teal); outline-offset: 2px;
+  }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: 640px; margin: 0 auto; padding: 1.75rem 1.1rem 0; }
+  .panel { display: none; }
+  .panel.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .panel.active { animation: none; } }
+
+  header.hero { margin-bottom: 1.75rem; }
+  .eyebrow {
+    font-family: ui-monospace, monospace; font-size: 0.66rem;
+    color: var(--teal); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  h1 {
+    font-family: Georgia, serif; font-style: italic; font-weight: 400;
+    font-size: clamp(1.7rem, 6vw, 2.3rem); line-height: 1.15;
+    text-wrap: balance; color: var(--text); margin: 0 0 0.5rem;
+  }
+  .lede { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+  section { margin-bottom: 2.25rem; }
+  h2 {
+    font-family: Georgia, serif; font-style: italic; font-weight: 400;
+    font-size: 1.3rem; color: var(--text); margin: 0 0 0.9rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--line);
+  }
+  h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.4rem; }
+  p { line-height: 1.65; margin: 0 0 0.6rem; color: var(--text); }
+
+  .card {
+    background: var(--paper-card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem;
+    box-shadow: var(--shadow);
+  }
+  .card.accent-gold { border-left: 3px solid var(--gold); }
+  .card.accent-teal { border-left: 3px solid var(--teal); }
+
+  .goal-card { background: var(--ink); color: var(--paper); border: none; }
+  .goal-card .eyebrow { color: var(--gold-soft); }
+  .goal-card h3 { color: #fff; }
+  .goal-card p { color: color-mix(in srgb, var(--paper) 85%, transparent); }
+  .goal-card .lv { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--gold-soft); letter-spacing: 0.04em; }
+
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; border: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.86rem; background: var(--paper-card); }
+  th, td { text-align: left; padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    font-family: ui-monospace, monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-dim); background: var(--paper-soft);
+    white-space: nowrap;
+  }
+  td.stage { font-weight: 700; color: var(--gold); white-space: nowrap; }
+  td.day { font-weight: 700; white-space: nowrap; }
+  td.pending { color: var(--text-dim); font-style: italic; }
+
+  ul.strategy { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+  ul.strategy li {
+    padding-left: 1.1rem; position: relative; line-height: 1.6; font-size: 0.92rem;
+  }
+  ul.strategy li::before {
+    content: ""; position: absolute; left: 0; top: 0.55em;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--teal);
+  }
+  ul.strategy b { color: var(--text); }
+
+  .res-group { margin-bottom: 1rem; }
+  .res-group h3 { color: var(--teal); font-family: ui-monospace, monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .res-item { display: flex; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px dashed var(--line); align-items: baseline; }
+  .res-item:last-child { border-bottom: none; }
+  .res-item .star { color: var(--gold); flex-shrink: 0; font-size: 0.85rem; width: 1rem; }
+  .res-item .name { font-weight: 700; font-size: 0.9rem; }
+  .res-item .desc { color: var(--text-dim); font-size: 0.85rem; }
+
+  /* ── LESSON PANEL ── */
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
+  @media (min-width: 560px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .tense-name { font-family: Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--gold); margin-bottom: 0.4rem; }
+  .tense-card.continuous .tense-name { color: var(--teal); }
+  .formula {
+    font-family: ui-monospace, monospace; font-size: 0.74rem;
+    background: var(--paper-soft); color: var(--text-dim);
+    padding: 0.4rem 0.6rem; border-radius: 7px; display: inline-block; margin-bottom: 0.75rem;
+  }
+  td.ex { font-family: ui-monospace, monospace; color: var(--teal); font-size: 0.82rem; }
+
+  .rule-row { padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .rule-row:last-child { border-bottom: none; }
+  .rule-tag {
+    font-family: ui-monospace, monospace; font-size: 0.62rem;
+    background: var(--ink); color: var(--gold-soft);
+    padding: 0.25rem 0.55rem; border-radius: 6px; white-space: nowrap; display: inline-block; margin-bottom: 0.35rem;
+  }
+  .rule-examples { font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--teal); display: block; }
+
+  details {
+    background: var(--paper-card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.55rem;
+  }
+  summary { cursor: pointer; font-weight: 700; font-size: 0.9rem; }
+  details[open] summary { margin-bottom: 0.4rem; }
+  .answer { font-family: ui-monospace, monospace; color: var(--teal); font-size: 0.85rem; }
+
+  .tarea-banner {
+    background: var(--gold); color: #241703;
+    border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1.1rem;
+  }
+  .tarea-banner h2 { color: #241703; border-bottom-color: rgba(36,23,3,0.25); }
+  .tarea-banner p { color: rgba(36,23,3,0.85); margin: 0; }
+
+  .pitch-line {
+    background: var(--paper-card); border-radius: 10px;
+    padding: 0.85rem 1rem; margin-bottom: 0.55rem;
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    border-left: 3px solid var(--gold); border: 1px solid var(--line); border-left-width: 3px; border-left-color: var(--gold);
+  }
+  .pitch-line.continuous { border-left-color: var(--teal); }
+  .tag-pill {
+    flex-shrink: 0; font-family: ui-monospace, monospace; font-size: 0.6rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 0.28rem 0.55rem; border-radius: 999px;
+    background: var(--gold-soft); color: var(--gold); margin-top: 0.1rem;
+  }
+  .pitch-line.continuous .tag-pill { background: var(--teal-soft); color: var(--teal); }
+  .pitch-text { font-size: 0.95rem; line-height: 1.5; }
+
+  .tip {
+    font-family: ui-monospace, monospace; font-size: 0.78rem;
+    color: var(--text-dim); background: var(--paper-soft);
+    padding: 0.9rem 1.1rem; border-radius: 10px; line-height: 1.6;
+  }
+
+  /* ── VERBS PANEL ── */
+  .search-bar {
+    position: sticky; top: 3.6rem; z-index: 10;
+    background: var(--paper); padding: 0.15rem 0 0.85rem;
+  }
+  #verb-search {
+    width: 100%; font-family: ui-monospace, monospace; font-size: 0.9rem;
+    padding: 0.7rem 0.9rem; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--paper-card); color: var(--text);
+  }
+  #verb-search:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+  #verb-count { font-family: ui-monospace, monospace; font-size: 0.68rem; color: var(--text-dim); margin-top: 0.4rem; }
+
+  .sound-badge {
+    display: inline-block; font-family: ui-monospace, monospace; font-size: 0.68rem;
+    background: var(--teal-soft); color: var(--teal); padding: 0.25rem 0.6rem;
+    border-radius: 6px; margin: 1rem 0 0.5rem;
+  }
+  table.verb-table td.vbase { font-weight: 700; }
+  table.verb-table td.vsp { font-family: ui-monospace, monospace; color: var(--teal); font-size: 0.82rem; }
+  table.verb-table tr.hidden-row { display: none; }
+
+  footer.note {
+    max-width: 640px; margin: 2rem auto 0; padding: 0 1.1rem;
+    font-family: ui-monospace, monospace; font-size: 0.7rem;
+    color: var(--text-dim); line-height: 1.6;
+  }
+</style>
+
+<div id="topbar">
+  <div class="brand">Cuaderno de Inglés <span class="mk">· ALBERT</span></div>
+  <div class="controls">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="manual" data-en="Manual">Manual</button>
+      <button class="tab-btn" data-tab="lesson" data-en="Today's homework">Tarea de hoy</button>
+      <button class="tab-btn" data-tab="verbs" data-en="Verbs">Verbos</button>
+    </div>
+    <button id="lang-btn">ES → EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ══════════════ PANEL: MANUAL ══════════════ -->
+  <div class="panel active" id="panel-manual">
+
+    <header class="hero">
+      <div class="eyebrow" data-en="Living study manual">Manual de estudio vivo</div>
+      <h1 data-en="Learning English to negotiate">Aprender inglés para negociar</h1>
+      <p class="lede" data-en="Classes Monday and Tuesday. Updated after every class, with a daily practice routine and a running log.">Clases los lunes y martes. Se actualiza después de cada clase, con rutina diaria de práctica y un registro histórico.</p>
+    </header>
+
+    <section>
+      <div class="card goal-card">
+        <div class="eyebrow" data-en="Current level">Nivel actual</div>
+        <div class="lv" data-en="Elementary, a bit ahead (~A2)">Básico, un poco adelantado (~A2)</div>
+        <h3 data-en="Goal: negotiate abroad, by the end of 2027" style="margin-top:0.9rem;">Meta: negociar en el extranjero, para finales de 2027</h3>
+        <p data-en="Everything below scales in difficulty as this goal gets closer.">Todo lo de abajo va subiendo de dificultad a medida que se acerca esta meta.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <tr><th data-en="Stage">Etapa</th><th data-en="When">Cuándo</th><th data-en="Focus">Foco</th></tr>
+          <tr><td class="stage">1</td><td data-en="Now">Ahora</td><td data-en="Basic grammar, everyday vocabulary, pronunciation">Gramática básica, vocabulario cotidiano, pronunciación</td></tr>
+          <tr><td class="stage">2</td><td data-en="Next 3-4 months">Próximos 3-4 meses</td><td data-en="Fluid conversation, natural listening">Conversación fluida, escucha natural</td></tr>
+          <tr><td class="stage">3</td><td data-en="Mid-2027">Mitad de 2027</td><td data-en="Work vocabulary, opinions, simple meetings">Vocabulario de trabajo, opiniones, reuniones simples</td></tr>
+          <tr><td class="stage">4</td><td data-en="Late 2027">Finales de 2027</td><td data-en="Persuading, negotiating, handling objections">Persuadir, negociar, manejar objeciones</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Weekly routine">Rutina semanal</h2>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th data-en="Day">Día</th><th data-en="Activity">Actividad</th></tr>
+          <tr><td class="day">Lun</td><td data-en="Class → review and log notes">Clase → repasar y pasar apuntes al registro</td></tr>
+          <tr><td class="day">Mar</td><td data-en="Class → review and log notes">Clase → repasar y pasar apuntes al registro</td></tr>
+          <tr><td class="day">Mié</td><td data-en="Active recall: this week's vocab/grammar, no notes">Recall activo: vocabulario/gramática de la semana sin apuntes</td></tr>
+          <tr><td class="day">Jue</td><td data-en="Listening: one short video + 5 new words">Listening: un video corto + 5 palabras nuevas</td></tr>
+          <tr><td class="day">Vie</td><td data-en="Shadowing: repeat a short video out loud">Shadowing: repetir un video corto en voz alta</td></tr>
+          <tr><td class="day">Sáb</td><td data-en="News + review accumulated vocabulary">Noticias + repaso de vocabulario acumulado</td></tr>
+          <tr><td class="day">Dom</td><td data-en="Weekly review + check pending homework">Repaso general + revisar tareas pendientes</td></tr>
+        </table>
+      </div>
+      <p class="tip" style="margin-top:0.75rem;" data-en="7 recurring reminders are already set in your calendar, matched to this routine.">Ya hay 7 recordatorios recurrentes puestos en tu calendario, calzados con esta rutina.</p>
+    </section>
+
+    <section>
+      <h2 data-en="Learning strategies">Estrategias de aprendizaje</h2>
+      <div class="card">
+        <ul class="strategy">
+          <li data-en="<b>Active recall</b>: try to remember a word or rule before checking your notes. Failing and retrying beats re-reading."><b>Active recall</b>: intenta recordar la palabra o regla antes de mirar tus apuntes. Fallar e intentar de nuevo enseña más que releer.</li>
+          <li data-en="<b>Spaced repetition</b>: reviewing something the same day, then after 3 days, then after 7, is what moves it into long-term memory."><b>Repetición espaciada</b>: repasar algo el mismo día, luego a los 3 días y luego a los 7, es lo que lo fija en la memoria a largo plazo.</li>
+          <li data-en="<b>Shadowing</b>: repeat a phrase out loud copying rhythm and intonation, not just the words."><b>Shadowing</b>: repite una frase en voz alta imitando ritmo y entonación, no solo las palabras.</li>
+          <li data-en="<b>Short daily immersion</b>: 15-20 minutes every day beats two hours once a week."><b>Inmersión diaria corta</b>: 15-20 min todos los días vale más que 2 horas un solo día.</li>
+          <li data-en="<b>Daily output</b>: write or say something in English every day, even one sentence."><b>Output diario</b>: escribe o di algo en inglés cada día, aunque sea una frase.</li>
+          <li data-en="<b>Vocabulary in context</b>: learn words inside real sentences from class, not loose lists."><b>Vocabulario en contexto</b>: aprende palabras dentro de frases reales de clase, no listas sueltas.</li>
+          <li data-en="<b>Error log</b>: when the teacher corrects you, write it in the log below. Repeated mistakes are the clearest signal of what to review."><b>Bitácora de errores</b>: cuando el profesor te corrija, anótalo en el registro de abajo. Los errores repetidos son la señal más clara de qué repasar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Recommended resources">Recursos recomendados</h2>
+      <p class="lede" style="margin-bottom:1rem;" data-en="⭐ marks what fits your level right now.">⭐ marca lo que te sirve ahora mismo, según tu nivel.</p>
+
+      <div class="card">
+        <div class="res-group">
+          <h3>YOUTUBE</h3>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">English with Lucy</span> — <span class="desc" data-en="grammar explained slowly and clearly, with subtitles">gramática explicada clara y despacio, con subtítulos</span></div></div>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">BBC Learning English</span> — <span class="desc" data-en="short 3-5 min everyday-vocabulary pieces">piezas cortas de 3-5 min de vocabulario cotidiano</span></div></div>
+          <div class="res-item"><span class="star"></span><div><span class="name">Speak English with Vanessa</span> — <span class="desc" data-en="for when you want slightly faster conversation practice">para cuando quieras conversación un poco más rápida</span></div></div>
+          <div class="res-item"><span class="star"></span><div><span class="name">Easy English / TED-Ed</span> — <span class="desc" data-en="later on">más adelante</span></div></div>
+        </div>
+        <div class="res-group">
+          <h3 data-en="SERIES (English subtitles, not Spanish)">SERIES (subtítulos en inglés, no en español)</h3>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">Extra English</span> — <span class="desc" data-en="made specifically for students at your level">hecha específicamente para estudiantes de tu nivel</span></div></div>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">Modern Family</span> — <span class="desc" data-en="everyday English, manageable pace">inglés cotidiano, ritmo manejable</span></div></div>
+          <div class="res-item"><span class="star"></span><div><span class="name">Friends / Brooklyn Nine-Nine</span> — <span class="desc" data-en="once you can follow dialogue without pausing">cuando ya sigas diálogo sin pausar</span></div></div>
+        </div>
+        <div class="res-group">
+          <h3 data-en="NEWS / PODCASTS">NOTICIEROS / PODCASTS</h3>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">VOA Learning English</span> — <span class="desc" data-en="slow pace, clear vocabulary — ideal right now">ritmo lento, vocabulario claro — ideal ahora mismo</span></div></div>
+          <div class="res-item"><span class="star">⭐</span><div><span class="name">CNN 10</span> — <span class="desc" data-en="~10 min of daily news made for students">~10 min de noticias diarias pensadas para estudiantes</span></div></div>
+          <div class="res-item"><span class="star"></span><div><span class="name">BBC 6 Minute English</span> — <span class="desc" data-en="later on">más adelante</span></div></div>
+        </div>
+        <div class="res-group">
+          <h3 data-en="FOR YOUR NEGOTIATION GOAL (later, not now)">PARA TU META DE NEGOCIACIÓN (más adelante, no ahora)</h3>
+          <div class="res-item"><span class="star"></span><div><span class="name">Business English Pod / BBC Business English</span> — <span class="desc" data-en="once you're comfortable with basic conversation, meeting and negotiation vocabulary lives here">cuando domines conversación básica, aquí hay vocabulario de reuniones y negociación</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Class log">Registro de clases</h2>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th data-en="Date">Fecha</th><th data-en="Topic">Tema</th><th data-en="Key notes">Apuntes clave</th><th data-en="Homework">Tareas</th></tr>
+          <tr>
+            <td class="day">10-08 <span class="mono" style="font-size:0.7rem;color:var(--text-dim)" data-en="(Mon)">(lun)</span></td>
+            <td data-en="Simple Present vs. Present Continuous (1st, 2nd, 3rd person)">Presente simple vs. presente continuo (1ª, 2ª, 3ª persona)</td>
+            <td data-en="3rd-person spelling: ch/sh/s/x/z/o → -es · consonant+y → -ies · vowel+y → -s">Ortografía 3ª persona: ch/sh/s/x/z/o → -es · consonante+y → -ies · vocal+y → -s</td>
+            <td data-en="Sell the fabric (Musafil) pitch — see Today's homework tab">Vender la tela (Musafil) — ver pestaña Tarea de hoy</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Review log">Registro de repasos</h2>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th data-en="Date">Fecha</th><th data-en="What I reviewed">Qué repasé</th><th data-en="Notes">Notas</th></tr>
+          <tr><td class="pending" data-en="(pending)">(pendiente)</td><td class="pending">—</td><td class="pending">—</td></tr>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ══════════════ PANEL: LESSON / HOMEWORK ══════════════ -->
+  <div class="panel" id="panel-lesson">
+
+    <header class="hero">
+      <div class="eyebrow" data-en="Class of Monday, August 10, 2026">Clase del lunes 10 de agosto, 2026</div>
+      <h1 data-en="Simple Present vs. Present Continuous">Presente Simple vs. Presente Continuo</h1>
+      <p class="lede" data-en="Deep dive into today's class, plus your homework for tomorrow (Tuesday).">Profundización de la clase de hoy, más tu tarea para mañana (martes).</p>
+    </header>
+
+    <section>
+      <div class="card accent-teal">
+        <h3 data-en="What we saw in class today">Qué vimos hoy en clase</h3>
+        <p data-en="Simple Present and Present Continuous in first, second and third person, plus the spelling rules for adding -s/-es to verbs in third person singular.">Presente simple y presente continuo en primera, segunda y tercera persona, más las reglas de ortografía para agregar -s/-es a los verbos en tercera persona singular.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="The two tenses, side by side">Los dos tiempos, uno junto al otro</h2>
+      <div class="grid2">
+        <div class="card tense-card">
+          <div class="tense-name" data-en="Simple Present">Presente Simple</div>
+          <p data-en="Facts, routines, general truths, schedules.">Hechos, rutinas, verdades generales, horarios.</p>
+          <div class="formula" data-en="Subject + verb (+s/es for he/she/it)">Sujeto + verbo (+s/es para he/she/it)</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th data-en="Person">Persona</th><th data-en="Example">Ejemplo</th></tr>
+              <tr><td>I / You</td><td class="ex">I work. You work.</td></tr>
+              <tr><td>He / She / It</td><td class="ex">He works. She watches.</td></tr>
+              <tr><td>We / They</td><td class="ex">We work. They work.</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="card tense-card continuous">
+          <div class="tense-name" data-en="Present Continuous">Presente Continuo</div>
+          <p data-en="Actions happening right now, or temporary things these days.">Acciones que pasan ahora mismo, o cosas temporales estos días.</p>
+          <div class="formula" data-en="Subject + am/is/are + verb-ing">Sujeto + am/is/are + verbo-ing</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th data-en="Person">Persona</th><th data-en="Example">Ejemplo</th></tr>
+              <tr><td>I</td><td class="ex">I am working.</td></tr>
+              <tr><td>You / We / They</td><td class="ex">You/We/They are working.</td></tr>
+              <tr><td>He / She / It</td><td class="ex">He/She/It is working.</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Third-person spelling rules">Reglas de ortografía en tercera persona</h2>
+      <div class="card">
+        <div class="rule-row">
+          <span class="rule-tag">ch · sh · s · x · z · o</span>
+          <span class="rule-examples" data-en="add -es → watch → watches · wash → washes · go → goes">se agrega -es → watch → watches · wash → washes · go → goes</span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag" data-en="consonant + y">consonante + y</span>
+          <span class="rule-examples" data-en="y becomes -ies → study → studies · try → tries">la y cambia a -ies → study → studies · try → tries</span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag" data-en="vowel + y">vocal + y</span>
+          <span class="rule-examples" data-en="just add -s → play → plays · buy → buys">solo se agrega -s → play → plays · buy → buys</span>
+        </div>
+      </div>
+      <p class="tip" data-en="Bonus, for later: -ing spelling also has rules — a short verb (vowel+consonant) doubles the last letter (run → running); a verb ending in silent -e drops it (make → making).">Bonus, para más adelante: la forma -ing también tiene reglas — un verbo corto (vocal+consonante) duplica la última letra (run → running); un verbo que termina en -e muda la elimina (make → making).</p>
+    </section>
+
+    <section>
+      <h2 data-en="Quick check — tap to reveal the answer">Repaso rápido — toca para ver la respuesta</h2>
+      <details><summary data-en="1. She ___ (watch) TV every night.">1. She ___ (watch) TV every night.</summary><div class="answer">watches</div></details>
+      <details><summary data-en="2. Right now, I ___ (write) an email.">2. Right now, I ___ (write) an email.</summary><div class="answer">am writing</div></details>
+      <details><summary data-en="3. My brother ___ (study) English on Mondays.">3. My brother ___ (study) English on Mondays.</summary><div class="answer">studies</div></details>
+      <details><summary data-en="4. They ___ (play) soccer this afternoon.">4. They ___ (play) soccer this afternoon.</summary><div class="answer">are playing</div></details>
+      <details><summary data-en="5. He ___ (go) to the gym three times a week.">5. He ___ (go) to the gym three times a week.</summary><div class="answer">goes</div></details>
+    </section>
+
+    <section>
+      <div class="tarea-banner">
+        <h2 data-en="Homework for tomorrow (Tuesday): sell your fabric">Tarea para mañana (martes): vender tu tela</h2>
+        <p data-en="Reused the real story from your Musafil (Inmotex) pitch deck, shortened for class, built with exactly today's grammar. Each line is tagged Simple or Continuous so you can point it out to your teacher.">Reutilicé la historia real de tu pitch de Musafil (Inmotex), resumida para clase, armada con justo la gramática de hoy. Cada línea está marcada Simple o Continuo para que se la señales al profesor.</p>
+      </div>
+
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="Hi, my name is Albert. I work for Inmotex, a company in Venezuela.">Hola, me llamo Albert. Trabajo para Inmotex, una empresa en Venezuela.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="We make a fabric called Musafil. It mixes banana fiber and cotton.">Hacemos una tela llamada Musafil. Mezcla fibra de plátano y algodón.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="Right now, we are looking for stores that want to sell something different.">Ahora mismo, estamos buscando tiendas que quieran vender algo diferente.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="The fabric comes from the banana stem. Farmers usually throw it away.">La tela viene del tallo de plátano. Los agricultores normalmente lo botan.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="Musafil feels soft, like linen, and it works with your current machines.">Musafil se siente suave, como el lino, y funciona con tus máquinas actuales.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="I am offering you a free sample this week.">Te estoy ofreciendo una muestra gratis esta semana.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="Are you selling anything sustainable right now?">¿Estás vendiendo algo sostenible en este momento?</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="When do you receive new fabric samples?">¿Cuándo recibes muestras de tela nuevas?</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="I believe Musafil tells a story your customers want to hear.">Creo que Musafil cuenta una historia que tus clientes quieren escuchar.</span></div>
+
+      <p class="tip" style="margin-top:0.85rem;" data-en="How to practice: read it out loud 2-3 times switching to English up top, then try saying it from memory. Same shadowing technique from the routine — Friday's practice, early.">Cómo practicarlo: léelo en voz alta 2-3 veces cambiando a inglés arriba, y luego intenta decirlo de memoria. Es la misma técnica de shadowing de la rutina — adelantas la práctica del viernes.</p>
+    </section>
+
+  </div>
+
+  <!-- ══════════════ PANEL: VERBS ══════════════ -->
+  <div class="panel" id="panel-verbs">
+
+    <header class="hero">
+      <div class="eyebrow" data-en="From Professor Richard's list">De la lista del profesor Richard</div>
+      <h1 data-en="Verb reference: base, past, participle">Verbos: base, pasado y participio</h1>
+      <p class="lede" data-en="These 3 forms build every tense: base for present, past for simple past, participle for perfect tenses (have/has + participle) and passive voice.">Estas 3 formas arman todos los tiempos: la base para presente, el pasado para pasado simple, y el participio para los tiempos perfectos (have/has + participio) y la voz pasiva.</p>
+    </header>
+
+    <div class="search-bar">
+      <input id="verb-search" type="text" placeholder="Buscar verbo, en inglés o español..." data-en-placeholder="Search a verb, in English or Spanish...">
+      <div id="verb-count"></div>
+    </div>
+
+    <section>
+      <h2 data-en="Irregular verbs (128)">Verbos irregulares (128)</h2>
+      <div class="tbl-wrap">
+        <table class="verb-table">
+          <tr><th data-en="Base">Infinitivo</th><th data-en="Simple past">Pasado simple</th><th data-en="Past participle">Participio</th><th data-en="Spanish">Español</th></tr>
+          <tr><td class="vbase">arise</td><td class="vsp">arose</td><td class="vsp">arisen</td><td>surgir, levantarse</td></tr>
+          <tr><td class="vbase">awake</td><td class="vsp">awoke</td><td class="vsp">awoken</td><td>despertarse</td></tr>
+          <tr><td class="vbase">be (am/is/are)</td><td class="vsp">was/were</td><td class="vsp">been</td><td>ser, estar</td></tr>
+          <tr><td class="vbase">bear</td><td class="vsp">bore</td><td class="vsp">borne/born</td><td>soportar, dar a luz</td></tr>
+          <tr><td class="vbase">beat</td><td class="vsp">beat</td><td class="vsp">beaten</td><td>golpear</td></tr>
+          <tr><td class="vbase">become</td><td class="vsp">became</td><td class="vsp">become</td><td>llegar a ser</td></tr>
+          <tr><td class="vbase">begin</td><td class="vsp">began</td><td class="vsp">begun</td><td>empezar</td></tr>
+          <tr><td class="vbase">bend</td><td class="vsp">bent</td><td class="vsp">bent</td><td>doblar</td></tr>
+          <tr><td class="vbase">bet</td><td class="vsp">bet</td><td class="vsp">bet</td><td>apostar</td></tr>
+          <tr><td class="vbase">bind</td><td class="vsp">bound</td><td class="vsp">bound</td><td>atar, encuadernar</td></tr>
+          <tr><td class="vbase">bid</td><td class="vsp">bid</td><td class="vsp">bid</td><td>pujar</td></tr>
+          <tr><td class="vbase">bite</td><td class="vsp">bit</td><td class="vsp">bitten</td><td>morder</td></tr>
+          <tr><td class="vbase">bleed</td><td class="vsp">bled</td><td class="vsp">bled</td><td>sangrar</td></tr>
+          <tr><td class="vbase">blow</td><td class="vsp">blew</td><td class="vsp">blown</td><td>soplar</td></tr>
+          <tr><td class="vbase">break</td><td class="vsp">broke</td><td class="vsp">broken</td><td>romper</td></tr>
+          <tr><td class="vbase">breed</td><td class="vsp">bred</td><td class="vsp">bred</td><td>criar</td></tr>
+          <tr><td class="vbase">bring</td><td class="vsp">brought</td><td class="vsp">brought</td><td>traer, llevar</td></tr>
+          <tr><td class="vbase">broadcast</td><td class="vsp">broadcast</td><td class="vsp">broadcast</td><td>radiar</td></tr>
+          <tr><td class="vbase">build</td><td class="vsp">built</td><td class="vsp">built</td><td>edificar</td></tr>
+          <tr><td class="vbase">burn</td><td class="vsp">burnt/burned</td><td class="vsp">burnt/burned</td><td>quemar</td></tr>
+          <tr><td class="vbase">burst</td><td class="vsp">burst</td><td class="vsp">burst</td><td>reventar</td></tr>
+          <tr><td class="vbase">buy</td><td class="vsp">bought</td><td class="vsp">bought</td><td>comprar</td></tr>
+          <tr><td class="vbase">cast</td><td class="vsp">cast</td><td class="vsp">cast</td><td>arrojar</td></tr>
+          <tr><td class="vbase">catch</td><td class="vsp">caught</td><td class="vsp">caught</td><td>coger</td></tr>
+          <tr><td class="vbase">come</td><td class="vsp">came</td><td class="vsp">come</td><td>venir</td></tr>
+          <tr><td class="vbase">cost</td><td class="vsp">cost</td><td class="vsp">cost</td><td>costar</td></tr>
+          <tr><td class="vbase">cut</td><td class="vsp">cut</td><td class="vsp">cut</td><td>cortar</td></tr>
+          <tr><td class="vbase">choose</td><td class="vsp">chose</td><td class="vsp">chosen</td><td>elegir</td></tr>
+          <tr><td class="vbase">cling</td><td class="vsp">clung</td><td class="vsp">clung</td><td>agarrarse</td></tr>
+          <tr><td class="vbase">creep</td><td class="vsp">crept</td><td class="vsp">crept</td><td>arrastrarse</td></tr>
+          <tr><td class="vbase">deal</td><td class="vsp">dealt</td><td class="vsp">dealt</td><td>tratar</td></tr>
+          <tr><td class="vbase">dig</td><td class="vsp">dug</td><td class="vsp">dug</td><td>cavar</td></tr>
+          <tr><td class="vbase">do (does)</td><td class="vsp">did</td><td class="vsp">done</td><td>hacer</td></tr>
+          <tr><td class="vbase">draw</td><td class="vsp">drew</td><td class="vsp">drawn</td><td>dibujar</td></tr>
+          <tr><td class="vbase">dream</td><td class="vsp">dreamt/dreamed</td><td class="vsp">dreamt/dreamed</td><td>soñar</td></tr>
+          <tr><td class="vbase">drink</td><td class="vsp">drank</td><td class="vsp">drunk</td><td>beber</td></tr>
+          <tr><td class="vbase">drive</td><td class="vsp">drove</td><td class="vsp">driven</td><td>conducir</td></tr>
+          <tr><td class="vbase">eat</td><td class="vsp">ate</td><td class="vsp">eaten</td><td>comer</td></tr>
+          <tr><td class="vbase">fall</td><td class="vsp">fell</td><td class="vsp">fallen</td><td>caer</td></tr>
+          <tr><td class="vbase">feed</td><td class="vsp">fed</td><td class="vsp">fed</td><td>alimentar</td></tr>
+          <tr><td class="vbase">feel</td><td class="vsp">felt</td><td class="vsp">felt</td><td>sentir</td></tr>
+          <tr><td class="vbase">fight</td><td class="vsp">fought</td><td class="vsp">fought</td><td>luchar</td></tr>
+          <tr><td class="vbase">find</td><td class="vsp">found</td><td class="vsp">found</td><td>encontrar</td></tr>
+          <tr><td class="vbase">flee</td><td class="vsp">fled</td><td class="vsp">fled</td><td>huir</td></tr>
+          <tr><td class="vbase">fly</td><td class="vsp">flew</td><td class="vsp">flown</td><td>volar</td></tr>
+          <tr><td class="vbase">forbid</td><td class="vsp">forbade</td><td class="vsp">forbidden</td><td>prohibir</td></tr>
+          <tr><td class="vbase">forget</td><td class="vsp">forgot</td><td class="vsp">forgotten</td><td>olvidar</td></tr>
+          <tr><td class="vbase">forgive</td><td class="vsp">forgave</td><td class="vsp">forgiven</td><td>perdonar</td></tr>
+          <tr><td class="vbase">freeze</td><td class="vsp">froze</td><td class="vsp">frozen</td><td>helar</td></tr>
+          <tr><td class="vbase">get</td><td class="vsp">got</td><td class="vsp">got/gotten</td><td>obtener</td></tr>
+          <tr><td class="vbase">give</td><td class="vsp">gave</td><td class="vsp">given</td><td>dar</td></tr>
+          <tr><td class="vbase">go (goes)</td><td class="vsp">went</td><td class="vsp">gone</td><td>ir</td></tr>
+          <tr><td class="vbase">grow</td><td class="vsp">grew</td><td class="vsp">grown</td><td>crecer</td></tr>
+          <tr><td class="vbase">grind</td><td class="vsp">ground</td><td class="vsp">ground</td><td>moler</td></tr>
+          <tr><td class="vbase">hang</td><td class="vsp">hung</td><td class="vsp">hung</td><td>colgar</td></tr>
+          <tr><td class="vbase">have</td><td class="vsp">had</td><td class="vsp">had</td><td>haber, tener</td></tr>
+          <tr><td class="vbase">hear</td><td class="vsp">heard</td><td class="vsp">heard</td><td>oír</td></tr>
+          <tr><td class="vbase">hide</td><td class="vsp">hid</td><td class="vsp">hidden</td><td>ocultar</td></tr>
+          <tr><td class="vbase">hit</td><td class="vsp">hit</td><td class="vsp">hit</td><td>golpear</td></tr>
+          <tr><td class="vbase">hold</td><td class="vsp">held</td><td class="vsp">held</td><td>agarrar, celebrar</td></tr>
+          <tr><td class="vbase">hurt</td><td class="vsp">hurt</td><td class="vsp">hurt</td><td>herir</td></tr>
+          <tr><td class="vbase">keep</td><td class="vsp">kept</td><td class="vsp">kept</td><td>conservar</td></tr>
+          <tr><td class="vbase">know</td><td class="vsp">knew</td><td class="vsp">known</td><td>saber, conocer</td></tr>
+          <tr><td class="vbase">kneel</td><td class="vsp">knelt</td><td class="vsp">knelt</td><td>arrodillarse</td></tr>
+          <tr><td class="vbase">knit</td><td class="vsp">knit</td><td class="vsp">knit</td><td>hacer punto</td></tr>
+          <tr><td class="vbase">lay</td><td class="vsp">laid</td><td class="vsp">laid</td><td>poner</td></tr>
+          <tr><td class="vbase">lead</td><td class="vsp">led</td><td class="vsp">led</td><td>conducir</td></tr>
+          <tr><td class="vbase">lean</td><td class="vsp">leant</td><td class="vsp">leant</td><td>apoyarse</td></tr>
+          <tr><td class="vbase">leap</td><td class="vsp">leapt</td><td class="vsp">leapt</td><td>brincar</td></tr>
+          <tr><td class="vbase">learn</td><td class="vsp">learnt/learned</td><td class="vsp">learnt/learned</td><td>aprender</td></tr>
+          <tr><td class="vbase">leave</td><td class="vsp">left</td><td class="vsp">left</td><td>dejar</td></tr>
+          <tr><td class="vbase">lend</td><td class="vsp">lent</td><td class="vsp">lent</td><td>prestar</td></tr>
+          <tr><td class="vbase">let</td><td class="vsp">let</td><td class="vsp">let</td><td>permitir</td></tr>
+          <tr><td class="vbase">lie</td><td class="vsp">lay</td><td class="vsp">lain</td><td>echarse</td></tr>
+          <tr><td class="vbase">light</td><td class="vsp">lit</td><td class="vsp">lit</td><td>encender</td></tr>
+          <tr><td class="vbase">lose</td><td class="vsp">lost</td><td class="vsp">lost</td><td>perder</td></tr>
+          <tr><td class="vbase">make</td><td class="vsp">made</td><td class="vsp">made</td><td>hacer</td></tr>
+          <tr><td class="vbase">mean</td><td class="vsp">meant</td><td class="vsp">meant</td><td>significar</td></tr>
+          <tr><td class="vbase">meet</td><td class="vsp">met</td><td class="vsp">met</td><td>encontrar</td></tr>
+          <tr><td class="vbase">mistake</td><td class="vsp">mistook</td><td class="vsp">mistaken</td><td>equivocar</td></tr>
+          <tr><td class="vbase">overcome</td><td class="vsp">overcame</td><td class="vsp">overcome</td><td>vencer</td></tr>
+          <tr><td class="vbase">pay</td><td class="vsp">paid</td><td class="vsp">paid</td><td>pagar</td></tr>
+          <tr><td class="vbase">put</td><td class="vsp">put</td><td class="vsp">put</td><td>poner</td></tr>
+          <tr><td class="vbase">read</td><td class="vsp">read</td><td class="vsp">read</td><td>leer</td></tr>
+          <tr><td class="vbase">ride</td><td class="vsp">rode</td><td class="vsp">ridden</td><td>montar</td></tr>
+          <tr><td class="vbase">ring</td><td class="vsp">rang</td><td class="vsp">rung</td><td>llamar</td></tr>
+          <tr><td class="vbase">rise</td><td class="vsp">rose</td><td class="vsp">risen</td><td>levantarse</td></tr>
+          <tr><td class="vbase">run</td><td class="vsp">ran</td><td class="vsp">run</td><td>correr</td></tr>
+          <tr><td class="vbase">say</td><td class="vsp">said</td><td class="vsp">said</td><td>decir</td></tr>
+          <tr><td class="vbase">see</td><td class="vsp">saw</td><td class="vsp">seen</td><td>ver</td></tr>
+          <tr><td class="vbase">seek</td><td class="vsp">sought</td><td class="vsp">sought</td><td>buscar</td></tr>
+          <tr><td class="vbase">sell</td><td class="vsp">sold</td><td class="vsp">sold</td><td>vender</td></tr>
+          <tr><td class="vbase">send</td><td class="vsp">sent</td><td class="vsp">sent</td><td>enviar</td></tr>
+          <tr><td class="vbase">set</td><td class="vsp">set</td><td class="vsp">set</td><td>poner(se)</td></tr>
+          <tr><td class="vbase">sew</td><td class="vsp">sewed</td><td class="vsp">sewed/sewn</td><td>coser</td></tr>
+          <tr><td class="vbase">shake</td><td class="vsp">shook</td><td class="vsp">shaken</td><td>sacudir</td></tr>
+          <tr><td class="vbase">shear</td><td class="vsp">shore</td><td class="vsp">shorn</td><td>esquilar</td></tr>
+          <tr><td class="vbase">shine</td><td class="vsp">shone</td><td class="vsp">shone</td><td>brillar</td></tr>
+          <tr><td class="vbase">shoot</td><td class="vsp">shot</td><td class="vsp">shot</td><td>disparar</td></tr>
+          <tr><td class="vbase">show</td><td class="vsp">showed</td><td class="vsp">shown</td><td>mostrar</td></tr>
+          <tr><td class="vbase">shrink</td><td class="vsp">shrank</td><td class="vsp">shrunk</td><td>encogerse</td></tr>
+          <tr><td class="vbase">shut</td><td class="vsp">shut</td><td class="vsp">shut</td><td>cerrar</td></tr>
+          <tr><td class="vbase">sing</td><td class="vsp">sang</td><td class="vsp">sung</td><td>cantar</td></tr>
+          <tr><td class="vbase">sink</td><td class="vsp">sank</td><td class="vsp">sunk</td><td>hundir</td></tr>
+          <tr><td class="vbase">sit</td><td class="vsp">sat</td><td class="vsp">sat</td><td>sentarse</td></tr>
+          <tr><td class="vbase">sleep</td><td class="vsp">slept</td><td class="vsp">slept</td><td>dormir</td></tr>
+          <tr><td class="vbase">slide</td><td class="vsp">slid</td><td class="vsp">slid</td><td>resbalar</td></tr>
+          <tr><td class="vbase">smell</td><td class="vsp">smelt</td><td class="vsp">smelt</td><td>oler</td></tr>
+          <tr><td class="vbase">sow</td><td class="vsp">sowed</td><td class="vsp">sowed/sown</td><td>sembrar</td></tr>
+          <tr><td class="vbase">speak</td><td class="vsp">spoke</td><td class="vsp">spoken</td><td>hablar</td></tr>
+          <tr><td class="vbase">speed</td><td class="vsp">sped</td><td class="vsp">sped</td><td>acelerar</td></tr>
+          <tr><td class="vbase">spell</td><td class="vsp">spelt</td><td class="vsp">spelt</td><td>deletrear</td></tr>
+          <tr><td class="vbase">spend</td><td class="vsp">spent</td><td class="vsp">spent</td><td>gastar</td></tr>
+          <tr><td class="vbase">spill</td><td class="vsp">spilt/spilled</td><td class="vsp">spilt/spilled</td><td>derramar</td></tr>
+          <tr><td class="vbase">spin</td><td class="vsp">spun</td><td class="vsp">spun</td><td>hilar</td></tr>
+          <tr><td class="vbase">spit</td><td class="vsp">spat</td><td class="vsp">spat</td><td>escupir</td></tr>
+          <tr><td class="vbase">split</td><td class="vsp">split</td><td class="vsp">split</td><td>partir, rajar</td></tr>
+          <tr><td class="vbase">spoil</td><td class="vsp">spoilt/spoiled</td><td class="vsp">spoilt/spoiled</td><td>estropear</td></tr>
+          <tr><td class="vbase">spread</td><td class="vsp">spread</td><td class="vsp">spread</td><td>extender</td></tr>
+          <tr><td class="vbase">spring</td><td class="vsp">sprang</td><td class="vsp">sprung</td><td>saltar</td></tr>
+          <tr><td class="vbase">stand</td><td class="vsp">stood</td><td class="vsp">stood</td><td>estar de pie</td></tr>
+          <tr><td class="vbase">steal</td><td class="vsp">stole</td><td class="vsp">stolen</td><td>robar</td></tr>
+          <tr><td class="vbase">stick</td><td class="vsp">stuck</td><td class="vsp">stuck</td><td>pegar, engomar</td></tr>
+          <tr><td class="vbase">sting</td><td class="vsp">stung</td><td class="vsp">stung</td><td>picar</td></tr>
+          <tr><td class="vbase">stink</td><td class="vsp">stank/stunk</td><td class="vsp">stunk</td><td>apestar</td></tr>
+          <tr><td class="vbase">stride</td><td class="vsp">strode</td><td class="vsp">stridden</td><td>dar zancadas</td></tr>
+          <tr><td class="vbase">strike</td><td class="vsp">struck</td><td class="vsp">struck</td><td>golpear</td></tr>
+          <tr><td class="vbase">swear</td><td class="vsp">swore</td><td class="vsp">sworn</td><td>jurar</td></tr>
+          <tr><td class="vbase">sweat</td><td class="vsp">sweat</td><td class="vsp">sweat</td><td>sudar</td></tr>
+          <tr><td class="vbase">sweep</td><td class="vsp">swept</td><td class="vsp">swept</td><td>barrer</td></tr>
+          <tr><td class="vbase">swell</td><td class="vsp">swelled</td><td class="vsp">swollen</td><td>hinchar</td></tr>
+          <tr><td class="vbase">swim</td><td class="vsp">swam</td><td class="vsp">swum</td><td>nadar</td></tr>
+          <tr><td class="vbase">swing</td><td class="vsp">swung</td><td class="vsp">swung</td><td>columpiarse</td></tr>
+          <tr><td class="vbase">take</td><td class="vsp">took</td><td class="vsp">taken</td><td>coger</td></tr>
+          <tr><td class="vbase">teach</td><td class="vsp">taught</td><td class="vsp">taught</td><td>enseñar</td></tr>
+          <tr><td class="vbase">tear</td><td class="vsp">tore</td><td class="vsp">torn</td><td>rasgar</td></tr>
+          <tr><td class="vbase">tell</td><td class="vsp">told</td><td class="vsp">told</td><td>decir</td></tr>
+          <tr><td class="vbase">think</td><td class="vsp">thought</td><td class="vsp">thought</td><td>pensar</td></tr>
+          <tr><td class="vbase">throw</td><td class="vsp">threw</td><td class="vsp">thrown</td><td>arrojar, tirar</td></tr>
+          <tr><td class="vbase">thrust</td><td class="vsp">thrust</td><td class="vsp">thrust</td><td>introducir</td></tr>
+          <tr><td class="vbase">tread</td><td class="vsp">trod</td><td class="vsp">trodden</td><td>pisar, hollar</td></tr>
+          <tr><td class="vbase">understand</td><td class="vsp">understood</td><td class="vsp">understood</td><td>entender</td></tr>
+          <tr><td class="vbase">undergo</td><td class="vsp">underwent</td><td class="vsp">undergone</td><td>sufrir</td></tr>
+          <tr><td class="vbase">undertake</td><td class="vsp">undertook</td><td class="vsp">undertaken</td><td>emprender</td></tr>
+          <tr><td class="vbase">wake</td><td class="vsp">woke</td><td class="vsp">woken</td><td>despertarse</td></tr>
+          <tr><td class="vbase">wear</td><td class="vsp">wore</td><td class="vsp">worn</td><td>llevar puesto</td></tr>
+          <tr><td class="vbase">weave</td><td class="vsp">wove</td><td class="vsp">woven</td><td>tejer</td></tr>
+          <tr><td class="vbase">weep</td><td class="vsp">wept</td><td class="vsp">wept</td><td>llorar</td></tr>
+          <tr><td class="vbase">wet</td><td class="vsp">wet</td><td class="vsp">wet</td><td>mojar</td></tr>
+          <tr><td class="vbase">win</td><td class="vsp">won</td><td class="vsp">won</td><td>ganar</td></tr>
+          <tr><td class="vbase">wind</td><td class="vsp">wound</td><td class="vsp">wound</td><td>enrollar</td></tr>
+          <tr><td class="vbase">withdraw</td><td class="vsp">withdrew</td><td class="vsp">withdrawn</td><td>retirarse</td></tr>
+          <tr><td class="vbase">wring</td><td class="vsp">wrung</td><td class="vsp">wrung</td><td>torcer</td></tr>
+          <tr><td class="vbase">write</td><td class="vsp">wrote</td><td class="vsp">written</td><td>escribir</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Regular verbs (69) — by -ed sound">Verbos regulares (69) — por sonido de -ed</h2>
+      <p class="lede" data-en="The -ed ending doesn't always sound the same. Professor Richard grouped these by pronunciation — useful for speaking, not just writing.">La terminación -ed no siempre suena igual. El profesor Richard los agrupó por pronunciación — útil para hablar, no solo para escribir.</p>
+
+      <div class="sound-badge">/ɪd/ <span data-en="— after t or d sounds (accepted, needed)">— después de sonido t o d (accepted, needed)</span></div>
+      <div class="tbl-wrap">
+        <table class="verb-table">
+          <tr><th data-en="Base">Base</th><th data-en="Past / participle">Pasado / participio</th><th data-en="Spanish">Español</th></tr>
+          <tr><td class="vbase">accept</td><td class="vsp">accepted</td><td>aceptar</td></tr>
+          <tr><td class="vbase">count</td><td class="vsp">counted</td><td>contar</td></tr>
+          <tr><td class="vbase">date</td><td class="vsp">dated</td><td>citar</td></tr>
+          <tr><td class="vbase">end</td><td class="vsp">ended</td><td>terminar</td></tr>
+          <tr><td class="vbase">expect</td><td class="vsp">expected</td><td>esperar</td></tr>
+          <tr><td class="vbase">intend</td><td class="vsp">intended</td><td>intentar</td></tr>
+          <tr><td class="vbase">need</td><td class="vsp">needed</td><td>necesitar</td></tr>
+          <tr><td class="vbase">plant</td><td class="vsp">planted</td><td>plantar</td></tr>
+          <tr><td class="vbase">point</td><td class="vsp">pointed</td><td>señalar</td></tr>
+          <tr><td class="vbase">rent</td><td class="vsp">rented</td><td>rentar</td></tr>
+          <tr><td class="vbase">repeat</td><td class="vsp">repeated</td><td>repetir</td></tr>
+          <tr><td class="vbase">resist</td><td class="vsp">resisted</td><td>resistir</td></tr>
+          <tr><td class="vbase">start</td><td class="vsp">started</td><td>empezar</td></tr>
+          <tr><td class="vbase">visit</td><td class="vsp">visited</td><td>visitar</td></tr>
+          <tr><td class="vbase">wait</td><td class="vsp">waited</td><td>esperar</td></tr>
+          <tr><td class="vbase">want</td><td class="vsp">wanted</td><td>querer</td></tr>
+        </table>
+      </div>
+
+      <div class="sound-badge">/t/ <span data-en="— after unvoiced sounds (asked, walked)">— después de sonido sordo (asked, walked)</span></div>
+      <div class="tbl-wrap">
+        <table class="verb-table">
+          <tr><th data-en="Base">Base</th><th data-en="Past / participle">Pasado / participio</th><th data-en="Spanish">Español</th></tr>
+          <tr><td class="vbase">ask</td><td class="vsp">asked</td><td>preguntar</td></tr>
+          <tr><td class="vbase">cook</td><td class="vsp">cooked</td><td>cocinar</td></tr>
+          <tr><td class="vbase">dance</td><td class="vsp">danced</td><td>bailar</td></tr>
+          <tr><td class="vbase">dress</td><td class="vsp">dressed</td><td>vestir</td></tr>
+          <tr><td class="vbase">erase</td><td class="vsp">erased</td><td>borrar</td></tr>
+          <tr><td class="vbase">finish</td><td class="vsp">finished</td><td>terminar</td></tr>
+          <tr><td class="vbase">help</td><td class="vsp">helped</td><td>ayudar</td></tr>
+          <tr><td class="vbase">jump</td><td class="vsp">jumped</td><td>brincar, saltar</td></tr>
+          <tr><td class="vbase">like</td><td class="vsp">liked</td><td>gustar</td></tr>
+          <tr><td class="vbase">look</td><td class="vsp">looked</td><td>mirar</td></tr>
+          <tr><td class="vbase">miss</td><td class="vsp">missed</td><td>extrañar</td></tr>
+          <tr><td class="vbase">practice</td><td class="vsp">practiced</td><td>practicar</td></tr>
+          <tr><td class="vbase">push</td><td class="vsp">pushed</td><td>empujar</td></tr>
+          <tr><td class="vbase">shop</td><td class="vsp">shopped</td><td>comprar</td></tr>
+          <tr><td class="vbase">smoke</td><td class="vsp">smoked</td><td>fumar</td></tr>
+          <tr><td class="vbase">stop</td><td class="vsp">stopped</td><td>detener</td></tr>
+          <tr><td class="vbase">talk</td><td class="vsp">talked</td><td>hablar</td></tr>
+          <tr><td class="vbase">use</td><td class="vsp">used</td><td>usar</td></tr>
+          <tr><td class="vbase">walk</td><td class="vsp">walked</td><td>caminar</td></tr>
+          <tr><td class="vbase">wash</td><td class="vsp">washed</td><td>lavar</td></tr>
+          <tr><td class="vbase">wish</td><td class="vsp">wished</td><td>desear</td></tr>
+          <tr><td class="vbase">work</td><td class="vsp">worked</td><td>trabajar</td></tr>
+        </table>
+      </div>
+
+      <div class="sound-badge">/d/ <span data-en="— after voiced sounds (played, cleaned)">— después de sonido sonoro (played, cleaned)</span></div>
+      <div class="tbl-wrap">
+        <table class="verb-table">
+          <tr><th data-en="Base">Base</th><th data-en="Past / participle">Pasado / participio</th><th data-en="Spanish">Español</th></tr>
+          <tr><td class="vbase">answer</td><td class="vsp">answered</td><td>responder</td></tr>
+          <tr><td class="vbase">arrive</td><td class="vsp">arrived</td><td>llegar</td></tr>
+          <tr><td class="vbase">belong</td><td class="vsp">belonged</td><td>pertenecer</td></tr>
+          <tr><td class="vbase">change</td><td class="vsp">changed</td><td>cambiar</td></tr>
+          <tr><td class="vbase">clean</td><td class="vsp">cleaned</td><td>limpiar</td></tr>
+          <tr><td class="vbase">climb</td><td class="vsp">climbed</td><td>escalar</td></tr>
+          <tr><td class="vbase">close</td><td class="vsp">closed</td><td>cerrar</td></tr>
+          <tr><td class="vbase">consider</td><td class="vsp">considered</td><td>considerar</td></tr>
+          <tr><td class="vbase">dare</td><td class="vsp">dared</td><td>retar</td></tr>
+          <tr><td class="vbase">deliver</td><td class="vsp">delivered</td><td>entregar</td></tr>
+          <tr><td class="vbase">enjoy</td><td class="vsp">enjoyed</td><td>disfrutar</td></tr>
+          <tr><td class="vbase">fill</td><td class="vsp">filled</td><td>llenar</td></tr>
+          <tr><td class="vbase">follow</td><td class="vsp">followed</td><td>seguir</td></tr>
+          <tr><td class="vbase">hurry</td><td class="vsp">hurried</td><td>apurarse</td></tr>
+          <tr><td class="vbase">learn</td><td class="vsp">learned</td><td>aprender</td></tr>
+          <tr><td class="vbase">listen</td><td class="vsp">listened</td><td>escuchar</td></tr>
+          <tr><td class="vbase">live</td><td class="vsp">lived</td><td>vivir</td></tr>
+          <tr><td class="vbase">love</td><td class="vsp">loved</td><td>amar</td></tr>
+          <tr><td class="vbase">name</td><td class="vsp">named</td><td>nombrar</td></tr>
+          <tr><td class="vbase">open</td><td class="vsp">opened</td><td>abrir</td></tr>
+          <tr><td class="vbase">order</td><td class="vsp">ordered</td><td>ordenar</td></tr>
+          <tr><td class="vbase">plan</td><td class="vsp">planned</td><td>planear</td></tr>
+          <tr><td class="vbase">play</td><td class="vsp">played</td><td>jugar</td></tr>
+          <tr><td class="vbase">rain</td><td class="vsp">rained</td><td>llover</td></tr>
+          <tr><td class="vbase">remember</td><td class="vsp">remembered</td><td>recordar</td></tr>
+          <tr><td class="vbase">show</td><td class="vsp">showed</td><td>mostrar</td></tr>
+          <tr><td class="vbase">stay</td><td class="vsp">stayed</td><td>permanecer</td></tr>
+          <tr><td class="vbase">study</td><td class="vsp">studied</td><td>estudiar</td></tr>
+          <tr><td class="vbase">travel</td><td class="vsp">traveled</td><td>viajar</td></tr>
+          <tr><td class="vbase">try</td><td class="vsp">tried</td><td>intentar, tratar</td></tr>
+          <tr><td class="vbase">turn</td><td class="vsp">turned</td><td>voltear, dar vuelta</td></tr>
+        </table>
+      </div>
+      <p class="tip" style="margin-top:0.85rem;" data-en="List from Professor Richard (Learning with Richard). Use the search bar above to find any verb fast on your phone.">Lista del profesor Richard (Learning with Richard). Usa la barra de búsqueda de arriba para encontrar cualquier verbo rápido desde tu teléfono.</p>
+    </section>
+
+  </div>
+
+</div>
+
+<footer class="note">
+  <span data-en="Snapshot of Manual_Ingles.md — ask Albert's assistant to update and republish after each class.">Snapshot de Manual_Ingles.md — pide que se actualice y se vuelva a publicar después de cada clase.</span>
+</footer>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Language toggle
+  let lang = 'es';
+  document.getElementById('lang-btn').addEventListener('click', () => {
+    lang = lang === 'es' ? 'en' : 'es';
+    document.getElementById('lang-btn').textContent = lang === 'es' ? 'ES → EN' : 'EN → ES';
+    updateLang();
+  });
+  function updateLang() {
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (lang === 'en') {
+        if (!el.dataset.es) el.dataset.es = el.innerHTML;
+        el.innerHTML = el.dataset.en;
+      } else {
+        if (el.dataset.es) el.innerHTML = el.dataset.es;
+      }
+    });
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+      if (lang === 'en') {
+        if (!el.dataset.esPlaceholder) el.dataset.esPlaceholder = el.placeholder;
+        el.placeholder = el.dataset.enPlaceholder;
+      } else {
+        if (el.dataset.esPlaceholder) el.placeholder = el.dataset.esPlaceholder;
+      }
+    });
+  }
+
+  // Verb search filter
+  const verbSearch = document.getElementById('verb-search');
+  if (verbSearch) {
+    verbSearch.addEventListener('input', () => {
+      const q = verbSearch.value.trim().toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('#panel-verbs table.verb-table').forEach(tbl => {
+        tbl.querySelectorAll('tr').forEach(row => {
+          if (row.querySelector('th')) return; // header row always stays
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.classList.toggle('hidden-row', !match);
+          if (match) visible++;
+        });
+      });
+      document.getElementById('verb-count').textContent = q ? (visible + ' resultado(s)') : '';
+    });
+  }
+</script>
