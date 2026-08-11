@@ -118,9 +118,54 @@
     cursor: pointer; transition: all .18s;
   }
   #lang-btn:hover { border-color: var(--teal); }
-  #lang-btn:focus-visible, .tab-btn:focus-visible, button:focus-visible, summary:focus-visible {
+
+  #interlinear-btn {
+    font-family: ui-monospace, monospace; font-size: 0.7rem;
+    letter-spacing: 0.03em; padding: 0.7rem 1rem; min-height: 44px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper-card); color: var(--text-dim);
+    cursor: pointer; transition: all .18s;
+  }
+  #interlinear-btn:hover { border-color: var(--gold); }
+  #interlinear-btn.active { background: var(--teal); color: #06211D; border-color: var(--teal); }
+
+  #pronunciation-btn {
+    font-family: ui-monospace, monospace; font-size: 0.7rem;
+    letter-spacing: 0.03em; padding: 0.7rem 1rem; min-height: 44px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper-card); color: var(--text-dim);
+    cursor: pointer; transition: all .18s;
+  }
+  #pronunciation-btn:hover { border-color: var(--gold); }
+  #pronunciation-btn.active { background: var(--gold); color: #241703; border-color: var(--gold); }
+
+  #lang-btn:focus-visible, .tab-btn:focus-visible, #interlinear-btn:focus-visible, #pronunciation-btn:focus-visible, button:focus-visible, summary:focus-visible {
     outline: 2px solid var(--teal); outline-offset: 2px;
   }
+
+  /* Word-by-word gloss + pronunciation (used in the pitch-line sentences) */
+  .word-wrap {
+    display: inline-flex; flex-direction: column; align-items: center;
+    margin: 0 0.18em 0.3em 0; vertical-align: top; text-align: center;
+  }
+  .w-gloss {
+    display: none; font-family: ui-monospace, monospace; font-size: 0.62em;
+    color: var(--teal); line-height: 1.3; margin-top: 0.15em; white-space: nowrap;
+  }
+  .w-ipa {
+    display: none; font-family: ui-monospace, monospace; font-size: 0.62em;
+    color: var(--gold); line-height: 1.3; margin-top: 0.15em; white-space: nowrap;
+  }
+  body.interlinear-on .w-gloss { display: block; }
+  body.pronunciation-on .w-ipa { display: block; }
+  body.interlinear-on .pitch-text, body.pronunciation-on .pitch-text { line-height: 1.3; }
+
+  /* Verb-table pronunciation (irregular verbs, base form) */
+  .vpron {
+    display: none; font-family: ui-monospace, monospace; font-size: 0.78em;
+    color: var(--gold); margin-left: 0.4em;
+  }
+  body.pronunciation-on .vpron { display: inline; }
 
   /* ── LAYOUT ── */
   .wrap { max-width: 640px; margin: 0 auto; padding: 1.75rem 1.1rem 0; }
@@ -248,6 +293,17 @@
   .pitch-line.continuous .tag-pill { background: var(--teal-soft); color: var(--teal); }
   .pitch-text { font-size: 0.95rem; line-height: 1.5; }
 
+  .deck-link {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background: var(--paper-card); border: 1px dashed var(--gold);
+    border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.1rem;
+    text-decoration: none; color: var(--text);
+  }
+  .deck-link:hover { border-style: solid; }
+  .deck-link .dl-title { font-weight: 700; font-size: 0.95rem; }
+  .deck-link .dl-sub { color: var(--text-dim); font-size: 0.8rem; margin-top: 0.15rem; }
+  .deck-link .dl-arrow { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; }
+
   .tip {
     font-family: ui-monospace, monospace; font-size: 0.78rem;
     color: var(--text-dim); background: var(--paper-soft);
@@ -292,6 +348,8 @@
       <button class="tab-btn" data-tab="verbs" data-en="Verbs">Verbos</button>
     </div>
     <button id="lang-btn">ES → EN</button>
+    <button id="interlinear-btn" title="Muestra la traducción debajo de cada palabra, en las frases de la tarea">Traducción x palabra: OFF</button>
+    <button id="pronunciation-btn" title="Muestra la pronunciación (IPA) de cada palabra, en las frases y en la lista de verbos">Pronunciación: OFF</button>
   </div>
 </div>
 
@@ -497,15 +555,25 @@
         <p data-en="Reused the real story from your Musafil (Inmotex) pitch deck, shortened for class, built with exactly today's grammar. Each line is tagged Simple or Continuous so you can point it out to your teacher.">Reutilicé la historia real de tu pitch de Musafil (Inmotex), resumida para clase, armada con justo la gramática de hoy. Cada línea está marcada Simple o Continuo para que se la señales al profesor.</p>
       </div>
 
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="Hi, my name is Albert. I work for Inmotex, a company in Venezuela.">Hola, me llamo Albert. Trabajo para Inmotex, una empresa en Venezuela.</span></div>
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="We make a fabric called Musafil. It mixes banana fiber and cotton.">Hacemos una tela llamada Musafil. Mezcla fibra de plátano y algodón.</span></div>
-      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="Right now, we are looking for stores that want to sell something different.">Ahora mismo, estamos buscando tiendas que quieran vender algo diferente.</span></div>
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="The fabric comes from the banana stem. Farmers usually throw it away.">La tela viene del tallo de plátano. Los agricultores normalmente lo botan.</span></div>
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="Musafil feels soft, like linen, and it works with your current machines.">Musafil se siente suave, como el lino, y funciona con tus máquinas actuales.</span></div>
-      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="I am offering you a free sample this week.">Te estoy ofreciendo una muestra gratis esta semana.</span></div>
-      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="Are you selling anything sustainable right now?">¿Estás vendiendo algo sostenible en este momento?</span></div>
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="When do you receive new fabric samples?">¿Cuándo recibes muestras de tela nuevas?</span></div>
-      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="I believe Musafil tells a story your customers want to hear.">Creo que Musafil cuenta una historia que tus clientes quieren escuchar.</span></div>
+      <a class="deck-link" href="https://albertumcat-boop.github.io/cuaderno-ingles-albert/musafil-pitch.html" target="_blank" rel="noopener">
+        <div>
+          <div class="dl-title" data-en="Watch the full Musafil pitch deck (the real one)">Ver el pitch completo de Musafil (el real)</div>
+          <div class="dl-sub" data-en="The original interactive deck this homework was adapted from — opens in a new tab.">El deck interactivo original del que se adaptó esta tarea — se abre en pestaña nueva.</div>
+        </div>
+        <div class="dl-arrow">↗</div>
+      </a>
+
+      <p class="tip" style="margin-bottom:1rem;" data-en="Tap “Word gloss” up top to see the Spanish translation under each English word in the lines below.">Toca “Traducción por palabra” arriba para ver la traducción en español debajo de cada palabra en inglés de las líneas de abajo.</p>
+
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Hi,</span><span class='w-ipa'>/haɪ/</span><span class='w-gloss'>Hola,</span></span> <span class='word-wrap'><span class='w-en'>my</span><span class='w-ipa'>/maɪ/</span><span class='w-gloss'>mi</span></span> <span class='word-wrap'><span class='w-en'>name</span><span class='w-ipa'>/neɪm/</span><span class='w-gloss'>nombre</span></span> <span class='word-wrap'><span class='w-en'>is</span><span class='w-ipa'>/ɪz/</span><span class='w-gloss'>es</span></span> <span class='word-wrap'><span class='w-en'>Albert.</span><span class='w-ipa'>/ˈælbərt/</span><span class='w-gloss'>Albert.</span></span> <span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>work</span><span class='w-ipa'>/wɜːrk/</span><span class='w-gloss'>trabajo</span></span> <span class='word-wrap'><span class='w-en'>for</span><span class='w-ipa'>/fɔːr/</span><span class='w-gloss'>para</span></span> <span class='word-wrap'><span class='w-en'>Inmotex,</span><span class='w-ipa'>/ˈɪnmoʊtɛks/</span><span class='w-gloss'>Inmotex,</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>company</span><span class='w-ipa'>/ˈkʌmpəni/</span><span class='w-gloss'>empresa</span></span> <span class='word-wrap'><span class='w-en'>in</span><span class='w-ipa'>/ɪn/</span><span class='w-gloss'>en</span></span> <span class='word-wrap'><span class='w-en'>Venezuela.</span><span class='w-ipa'>/ˌvɛnəˈzweɪlə/</span><span class='w-gloss'>Venezuela.</span></span>">Hola, me llamo Albert. Trabajo para Inmotex, una empresa en Venezuela.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>We</span><span class='w-ipa'>/wiː/</span><span class='w-gloss'>nosotros</span></span> <span class='word-wrap'><span class='w-en'>make</span><span class='w-ipa'>/meɪk/</span><span class='w-gloss'>hacemos</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>tela</span></span> <span class='word-wrap'><span class='w-en'>called</span><span class='w-ipa'>/kɔːld/</span><span class='w-gloss'>llamada</span></span> <span class='word-wrap'><span class='w-en'>Musafil.</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil.</span></span> <span class='word-wrap'><span class='w-en'>It</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>ella</span></span> <span class='word-wrap'><span class='w-en'>mixes</span><span class='w-ipa'>/ˈmɪksɪz/</span><span class='w-gloss'>mezcla</span></span> <span class='word-wrap'><span class='w-en'>banana</span><span class='w-ipa'>/bəˈnænə/</span><span class='w-gloss'>de plátano</span></span> <span class='word-wrap'><span class='w-en'>fiber</span><span class='w-ipa'>/ˈfaɪbər/</span><span class='w-gloss'>fibra</span></span> <span class='word-wrap'><span class='w-en'>and</span><span class='w-ipa'>/ænd/</span><span class='w-gloss'>y</span></span> <span class='word-wrap'><span class='w-en'>cotton.</span><span class='w-ipa'>/ˈkɒtn/</span><span class='w-gloss'>algodón.</span></span>">Hacemos una tela llamada Musafil. Mezcla fibra de plátano y algodón.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Right</span><span class='w-ipa'>/raɪt/</span><span class='w-gloss'>ahora</span></span> <span class='word-wrap'><span class='w-en'>now,</span><span class='w-ipa'>/naʊ/</span><span class='w-gloss'>mismo,</span></span> <span class='word-wrap'><span class='w-en'>we</span><span class='w-ipa'>/wiː/</span><span class='w-gloss'>nosotros</span></span> <span class='word-wrap'><span class='w-en'>are</span><span class='w-ipa'>/ɑːr/</span><span class='w-gloss'>estamos</span></span> <span class='word-wrap'><span class='w-en'>looking</span><span class='w-ipa'>/ˈlʊkɪŋ/</span><span class='w-gloss'>buscando</span></span> <span class='word-wrap'><span class='w-en'>for</span><span class='w-ipa'>/fɔːr/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>stores</span><span class='w-ipa'>/stɔːrz/</span><span class='w-gloss'>tiendas</span></span> <span class='word-wrap'><span class='w-en'>that</span><span class='w-ipa'>/ðæt/</span><span class='w-gloss'>que</span></span> <span class='word-wrap'><span class='w-en'>want</span><span class='w-ipa'>/wɒnt/</span><span class='w-gloss'>quieren</span></span> <span class='word-wrap'><span class='w-en'>to</span><span class='w-ipa'>/tuː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>sell</span><span class='w-ipa'>/sɛl/</span><span class='w-gloss'>vender</span></span> <span class='word-wrap'><span class='w-en'>something</span><span class='w-ipa'>/ˈsʌmθɪŋ/</span><span class='w-gloss'>algo</span></span> <span class='word-wrap'><span class='w-en'>different.</span><span class='w-ipa'>/ˈdɪfrənt/</span><span class='w-gloss'>diferente.</span></span>">Ahora mismo, estamos buscando tiendas que quieran vender algo diferente.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>The</span><span class='w-ipa'>/ðə/</span><span class='w-gloss'>la</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>tela</span></span> <span class='word-wrap'><span class='w-en'>comes</span><span class='w-ipa'>/kʌmz/</span><span class='w-gloss'>viene</span></span> <span class='word-wrap'><span class='w-en'>from</span><span class='w-ipa'>/frʌm/</span><span class='w-gloss'>de</span></span> <span class='word-wrap'><span class='w-en'>the</span><span class='w-ipa'>/ðə/</span><span class='w-gloss'>el</span></span> <span class='word-wrap'><span class='w-en'>banana</span><span class='w-ipa'>/bəˈnænə/</span><span class='w-gloss'>de plátano</span></span> <span class='word-wrap'><span class='w-en'>stem.</span><span class='w-ipa'>/stɛm/</span><span class='w-gloss'>tallo.</span></span> <span class='word-wrap'><span class='w-en'>Farmers</span><span class='w-ipa'>/ˈfɑːrmərz/</span><span class='w-gloss'>los agricultores</span></span> <span class='word-wrap'><span class='w-en'>usually</span><span class='w-ipa'>/ˈjuːʒuəli/</span><span class='w-gloss'>normalmente</span></span> <span class='word-wrap'><span class='w-en'>throw</span><span class='w-ipa'>/θroʊ/</span><span class='w-gloss'>botan</span></span> <span class='word-wrap'><span class='w-en'>it</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>lo</span></span> <span class='word-wrap'><span class='w-en'>away.</span><span class='w-ipa'>/əˈweɪ/</span><span class='w-gloss'>–</span></span>">La tela viene del tallo de plátano. Los agricultores normalmente lo botan.</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Musafil</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil</span></span> <span class='word-wrap'><span class='w-en'>feels</span><span class='w-ipa'>/fiːlz/</span><span class='w-gloss'>se siente</span></span> <span class='word-wrap'><span class='w-en'>soft,</span><span class='w-ipa'>/sɒft/</span><span class='w-gloss'>suave,</span></span> <span class='word-wrap'><span class='w-en'>like</span><span class='w-ipa'>/laɪk/</span><span class='w-gloss'>como</span></span> <span class='word-wrap'><span class='w-en'>linen,</span><span class='w-ipa'>/ˈlɪnɪn/</span><span class='w-gloss'>el lino,</span></span> <span class='word-wrap'><span class='w-en'>and</span><span class='w-ipa'>/ænd/</span><span class='w-gloss'>y</span></span> <span class='word-wrap'><span class='w-en'>it</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>ella</span></span> <span class='word-wrap'><span class='w-en'>works</span><span class='w-ipa'>/wɜːrks/</span><span class='w-gloss'>funciona</span></span> <span class='word-wrap'><span class='w-en'>with</span><span class='w-ipa'>/wɪð/</span><span class='w-gloss'>con</span></span> <span class='word-wrap'><span class='w-en'>your</span><span class='w-ipa'>/jɔːr/</span><span class='w-gloss'>tus</span></span> <span class='word-wrap'><span class='w-en'>current</span><span class='w-ipa'>/ˈkʌrənt/</span><span class='w-gloss'>actuales</span></span> <span class='word-wrap'><span class='w-en'>machines.</span><span class='w-ipa'>/məˈʃiːnz/</span><span class='w-gloss'>máquinas.</span></span>">Musafil se siente suave, como el lino, y funciona con tus máquinas actuales.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>am</span><span class='w-ipa'>/æm/</span><span class='w-gloss'>estoy</span></span> <span class='word-wrap'><span class='w-en'>offering</span><span class='w-ipa'>/ˈɒfərɪŋ/</span><span class='w-gloss'>ofreciendo</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>te</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>free</span><span class='w-ipa'>/friː/</span><span class='w-gloss'>gratis</span></span> <span class='word-wrap'><span class='w-en'>sample</span><span class='w-ipa'>/ˈsæmpəl/</span><span class='w-gloss'>muestra</span></span> <span class='word-wrap'><span class='w-en'>this</span><span class='w-ipa'>/ðɪs/</span><span class='w-gloss'>esta</span></span> <span class='word-wrap'><span class='w-en'>week.</span><span class='w-ipa'>/wiːk/</span><span class='w-gloss'>semana.</span></span>">Te estoy ofreciendo una muestra gratis esta semana.</span></div>
+      <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Are</span><span class='w-ipa'>/ɑːr/</span><span class='w-gloss'>¿estás</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>selling</span><span class='w-ipa'>/ˈsɛlɪŋ/</span><span class='w-gloss'>vendiendo</span></span> <span class='word-wrap'><span class='w-en'>anything</span><span class='w-ipa'>/ˈɛniθɪŋ/</span><span class='w-gloss'>algo</span></span> <span class='word-wrap'><span class='w-en'>sustainable</span><span class='w-ipa'>/səˈsteɪnəbəl/</span><span class='w-gloss'>sostenible</span></span> <span class='word-wrap'><span class='w-en'>right</span><span class='w-ipa'>/raɪt/</span><span class='w-gloss'>ahora</span></span> <span class='word-wrap'><span class='w-en'>now?</span><span class='w-ipa'>/naʊ/</span><span class='w-gloss'>mismo?</span></span>">¿Estás vendiendo algo sostenible en este momento?</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>When</span><span class='w-ipa'>/wɛn/</span><span class='w-gloss'>¿cuándo</span></span> <span class='word-wrap'><span class='w-en'>do</span><span class='w-ipa'>/duː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>tú</span></span> <span class='word-wrap'><span class='w-en'>receive</span><span class='w-ipa'>/rɪˈsiːv/</span><span class='w-gloss'>recibes</span></span> <span class='word-wrap'><span class='w-en'>new</span><span class='w-ipa'>/njuː/</span><span class='w-gloss'>nuevas</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>de tela</span></span> <span class='word-wrap'><span class='w-en'>samples?</span><span class='w-ipa'>/ˈsæmpəlz/</span><span class='w-gloss'>muestras?</span></span>">¿Cuándo recibes muestras de tela nuevas?</span></div>
+      <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>believe</span><span class='w-ipa'>/bɪˈliːv/</span><span class='w-gloss'>creo</span></span> <span class='word-wrap'><span class='w-en'>Musafil</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil</span></span> <span class='word-wrap'><span class='w-en'>tells</span><span class='w-ipa'>/tɛlz/</span><span class='w-gloss'>cuenta</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>story</span><span class='w-ipa'>/ˈstɔːri/</span><span class='w-gloss'>historia</span></span> <span class='word-wrap'><span class='w-en'>your</span><span class='w-ipa'>/jɔːr/</span><span class='w-gloss'>que tus</span></span> <span class='word-wrap'><span class='w-en'>customers</span><span class='w-ipa'>/ˈkʌstəmərz/</span><span class='w-gloss'>clientes</span></span> <span class='word-wrap'><span class='w-en'>want</span><span class='w-ipa'>/wɒnt/</span><span class='w-gloss'>quieren</span></span> <span class='word-wrap'><span class='w-en'>to</span><span class='w-ipa'>/tuː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>hear.</span><span class='w-ipa'>/hɪr/</span><span class='w-gloss'>escuchar.</span></span>">Creo que Musafil cuenta una historia que tus clientes quieren escuchar.</span></div>
 
       <p class="tip" style="margin-top:0.85rem;" data-en="How to practice: read it out loud 2-3 times switching to English up top, then try saying it from memory. Same shadowing technique from the routine — Friday's practice, early.">Cómo practicarlo: léelo en voz alta 2-3 veces cambiando a inglés arriba, y luego intenta decirlo de memoria. Es la misma técnica de shadowing de la rutina — adelantas la práctica del viernes.</p>
     </section>
@@ -527,164 +595,164 @@
     </div>
 
     <section>
-      <h2 data-en="Irregular verbs (128)">Verbos irregulares (128)</h2>
+      <h2 data-en="Irregular verbs (154)">Verbos irregulares (154)</h2>
       <div class="tbl-wrap">
         <table class="verb-table">
           <tr><th data-en="Base">Infinitivo</th><th data-en="Simple past">Pasado simple</th><th data-en="Past participle">Participio</th><th data-en="Spanish">Español</th></tr>
-          <tr><td class="vbase">arise</td><td class="vsp">arose</td><td class="vsp">arisen</td><td>surgir, levantarse</td></tr>
-          <tr><td class="vbase">awake</td><td class="vsp">awoke</td><td class="vsp">awoken</td><td>despertarse</td></tr>
-          <tr><td class="vbase">be (am/is/are)</td><td class="vsp">was/were</td><td class="vsp">been</td><td>ser, estar</td></tr>
-          <tr><td class="vbase">bear</td><td class="vsp">bore</td><td class="vsp">borne/born</td><td>soportar, dar a luz</td></tr>
-          <tr><td class="vbase">beat</td><td class="vsp">beat</td><td class="vsp">beaten</td><td>golpear</td></tr>
-          <tr><td class="vbase">become</td><td class="vsp">became</td><td class="vsp">become</td><td>llegar a ser</td></tr>
-          <tr><td class="vbase">begin</td><td class="vsp">began</td><td class="vsp">begun</td><td>empezar</td></tr>
-          <tr><td class="vbase">bend</td><td class="vsp">bent</td><td class="vsp">bent</td><td>doblar</td></tr>
-          <tr><td class="vbase">bet</td><td class="vsp">bet</td><td class="vsp">bet</td><td>apostar</td></tr>
-          <tr><td class="vbase">bind</td><td class="vsp">bound</td><td class="vsp">bound</td><td>atar, encuadernar</td></tr>
-          <tr><td class="vbase">bid</td><td class="vsp">bid</td><td class="vsp">bid</td><td>pujar</td></tr>
-          <tr><td class="vbase">bite</td><td class="vsp">bit</td><td class="vsp">bitten</td><td>morder</td></tr>
-          <tr><td class="vbase">bleed</td><td class="vsp">bled</td><td class="vsp">bled</td><td>sangrar</td></tr>
-          <tr><td class="vbase">blow</td><td class="vsp">blew</td><td class="vsp">blown</td><td>soplar</td></tr>
-          <tr><td class="vbase">break</td><td class="vsp">broke</td><td class="vsp">broken</td><td>romper</td></tr>
-          <tr><td class="vbase">breed</td><td class="vsp">bred</td><td class="vsp">bred</td><td>criar</td></tr>
-          <tr><td class="vbase">bring</td><td class="vsp">brought</td><td class="vsp">brought</td><td>traer, llevar</td></tr>
-          <tr><td class="vbase">broadcast</td><td class="vsp">broadcast</td><td class="vsp">broadcast</td><td>radiar</td></tr>
-          <tr><td class="vbase">build</td><td class="vsp">built</td><td class="vsp">built</td><td>edificar</td></tr>
-          <tr><td class="vbase">burn</td><td class="vsp">burnt/burned</td><td class="vsp">burnt/burned</td><td>quemar</td></tr>
-          <tr><td class="vbase">burst</td><td class="vsp">burst</td><td class="vsp">burst</td><td>reventar</td></tr>
-          <tr><td class="vbase">buy</td><td class="vsp">bought</td><td class="vsp">bought</td><td>comprar</td></tr>
-          <tr><td class="vbase">cast</td><td class="vsp">cast</td><td class="vsp">cast</td><td>arrojar</td></tr>
-          <tr><td class="vbase">catch</td><td class="vsp">caught</td><td class="vsp">caught</td><td>coger</td></tr>
-          <tr><td class="vbase">come</td><td class="vsp">came</td><td class="vsp">come</td><td>venir</td></tr>
-          <tr><td class="vbase">cost</td><td class="vsp">cost</td><td class="vsp">cost</td><td>costar</td></tr>
-          <tr><td class="vbase">cut</td><td class="vsp">cut</td><td class="vsp">cut</td><td>cortar</td></tr>
-          <tr><td class="vbase">choose</td><td class="vsp">chose</td><td class="vsp">chosen</td><td>elegir</td></tr>
-          <tr><td class="vbase">cling</td><td class="vsp">clung</td><td class="vsp">clung</td><td>agarrarse</td></tr>
-          <tr><td class="vbase">creep</td><td class="vsp">crept</td><td class="vsp">crept</td><td>arrastrarse</td></tr>
-          <tr><td class="vbase">deal</td><td class="vsp">dealt</td><td class="vsp">dealt</td><td>tratar</td></tr>
-          <tr><td class="vbase">dig</td><td class="vsp">dug</td><td class="vsp">dug</td><td>cavar</td></tr>
-          <tr><td class="vbase">do (does)</td><td class="vsp">did</td><td class="vsp">done</td><td>hacer</td></tr>
-          <tr><td class="vbase">draw</td><td class="vsp">drew</td><td class="vsp">drawn</td><td>dibujar</td></tr>
-          <tr><td class="vbase">dream</td><td class="vsp">dreamt/dreamed</td><td class="vsp">dreamt/dreamed</td><td>soñar</td></tr>
-          <tr><td class="vbase">drink</td><td class="vsp">drank</td><td class="vsp">drunk</td><td>beber</td></tr>
-          <tr><td class="vbase">drive</td><td class="vsp">drove</td><td class="vsp">driven</td><td>conducir</td></tr>
-          <tr><td class="vbase">eat</td><td class="vsp">ate</td><td class="vsp">eaten</td><td>comer</td></tr>
-          <tr><td class="vbase">fall</td><td class="vsp">fell</td><td class="vsp">fallen</td><td>caer</td></tr>
-          <tr><td class="vbase">feed</td><td class="vsp">fed</td><td class="vsp">fed</td><td>alimentar</td></tr>
-          <tr><td class="vbase">feel</td><td class="vsp">felt</td><td class="vsp">felt</td><td>sentir</td></tr>
-          <tr><td class="vbase">fight</td><td class="vsp">fought</td><td class="vsp">fought</td><td>luchar</td></tr>
-          <tr><td class="vbase">find</td><td class="vsp">found</td><td class="vsp">found</td><td>encontrar</td></tr>
-          <tr><td class="vbase">flee</td><td class="vsp">fled</td><td class="vsp">fled</td><td>huir</td></tr>
-          <tr><td class="vbase">fly</td><td class="vsp">flew</td><td class="vsp">flown</td><td>volar</td></tr>
-          <tr><td class="vbase">forbid</td><td class="vsp">forbade</td><td class="vsp">forbidden</td><td>prohibir</td></tr>
-          <tr><td class="vbase">forget</td><td class="vsp">forgot</td><td class="vsp">forgotten</td><td>olvidar</td></tr>
-          <tr><td class="vbase">forgive</td><td class="vsp">forgave</td><td class="vsp">forgiven</td><td>perdonar</td></tr>
-          <tr><td class="vbase">freeze</td><td class="vsp">froze</td><td class="vsp">frozen</td><td>helar</td></tr>
-          <tr><td class="vbase">get</td><td class="vsp">got</td><td class="vsp">got/gotten</td><td>obtener</td></tr>
-          <tr><td class="vbase">give</td><td class="vsp">gave</td><td class="vsp">given</td><td>dar</td></tr>
-          <tr><td class="vbase">go (goes)</td><td class="vsp">went</td><td class="vsp">gone</td><td>ir</td></tr>
-          <tr><td class="vbase">grow</td><td class="vsp">grew</td><td class="vsp">grown</td><td>crecer</td></tr>
-          <tr><td class="vbase">grind</td><td class="vsp">ground</td><td class="vsp">ground</td><td>moler</td></tr>
-          <tr><td class="vbase">hang</td><td class="vsp">hung</td><td class="vsp">hung</td><td>colgar</td></tr>
-          <tr><td class="vbase">have</td><td class="vsp">had</td><td class="vsp">had</td><td>haber, tener</td></tr>
-          <tr><td class="vbase">hear</td><td class="vsp">heard</td><td class="vsp">heard</td><td>oír</td></tr>
-          <tr><td class="vbase">hide</td><td class="vsp">hid</td><td class="vsp">hidden</td><td>ocultar</td></tr>
-          <tr><td class="vbase">hit</td><td class="vsp">hit</td><td class="vsp">hit</td><td>golpear</td></tr>
-          <tr><td class="vbase">hold</td><td class="vsp">held</td><td class="vsp">held</td><td>agarrar, celebrar</td></tr>
-          <tr><td class="vbase">hurt</td><td class="vsp">hurt</td><td class="vsp">hurt</td><td>herir</td></tr>
-          <tr><td class="vbase">keep</td><td class="vsp">kept</td><td class="vsp">kept</td><td>conservar</td></tr>
-          <tr><td class="vbase">know</td><td class="vsp">knew</td><td class="vsp">known</td><td>saber, conocer</td></tr>
-          <tr><td class="vbase">kneel</td><td class="vsp">knelt</td><td class="vsp">knelt</td><td>arrodillarse</td></tr>
-          <tr><td class="vbase">knit</td><td class="vsp">knit</td><td class="vsp">knit</td><td>hacer punto</td></tr>
-          <tr><td class="vbase">lay</td><td class="vsp">laid</td><td class="vsp">laid</td><td>poner</td></tr>
-          <tr><td class="vbase">lead</td><td class="vsp">led</td><td class="vsp">led</td><td>conducir</td></tr>
-          <tr><td class="vbase">lean</td><td class="vsp">leant</td><td class="vsp">leant</td><td>apoyarse</td></tr>
-          <tr><td class="vbase">leap</td><td class="vsp">leapt</td><td class="vsp">leapt</td><td>brincar</td></tr>
-          <tr><td class="vbase">learn</td><td class="vsp">learnt/learned</td><td class="vsp">learnt/learned</td><td>aprender</td></tr>
-          <tr><td class="vbase">leave</td><td class="vsp">left</td><td class="vsp">left</td><td>dejar</td></tr>
-          <tr><td class="vbase">lend</td><td class="vsp">lent</td><td class="vsp">lent</td><td>prestar</td></tr>
-          <tr><td class="vbase">let</td><td class="vsp">let</td><td class="vsp">let</td><td>permitir</td></tr>
-          <tr><td class="vbase">lie</td><td class="vsp">lay</td><td class="vsp">lain</td><td>echarse</td></tr>
-          <tr><td class="vbase">light</td><td class="vsp">lit</td><td class="vsp">lit</td><td>encender</td></tr>
-          <tr><td class="vbase">lose</td><td class="vsp">lost</td><td class="vsp">lost</td><td>perder</td></tr>
-          <tr><td class="vbase">make</td><td class="vsp">made</td><td class="vsp">made</td><td>hacer</td></tr>
-          <tr><td class="vbase">mean</td><td class="vsp">meant</td><td class="vsp">meant</td><td>significar</td></tr>
-          <tr><td class="vbase">meet</td><td class="vsp">met</td><td class="vsp">met</td><td>encontrar</td></tr>
-          <tr><td class="vbase">mistake</td><td class="vsp">mistook</td><td class="vsp">mistaken</td><td>equivocar</td></tr>
-          <tr><td class="vbase">overcome</td><td class="vsp">overcame</td><td class="vsp">overcome</td><td>vencer</td></tr>
-          <tr><td class="vbase">pay</td><td class="vsp">paid</td><td class="vsp">paid</td><td>pagar</td></tr>
-          <tr><td class="vbase">put</td><td class="vsp">put</td><td class="vsp">put</td><td>poner</td></tr>
-          <tr><td class="vbase">read</td><td class="vsp">read</td><td class="vsp">read</td><td>leer</td></tr>
-          <tr><td class="vbase">ride</td><td class="vsp">rode</td><td class="vsp">ridden</td><td>montar</td></tr>
-          <tr><td class="vbase">ring</td><td class="vsp">rang</td><td class="vsp">rung</td><td>llamar</td></tr>
-          <tr><td class="vbase">rise</td><td class="vsp">rose</td><td class="vsp">risen</td><td>levantarse</td></tr>
-          <tr><td class="vbase">run</td><td class="vsp">ran</td><td class="vsp">run</td><td>correr</td></tr>
-          <tr><td class="vbase">say</td><td class="vsp">said</td><td class="vsp">said</td><td>decir</td></tr>
-          <tr><td class="vbase">see</td><td class="vsp">saw</td><td class="vsp">seen</td><td>ver</td></tr>
-          <tr><td class="vbase">seek</td><td class="vsp">sought</td><td class="vsp">sought</td><td>buscar</td></tr>
-          <tr><td class="vbase">sell</td><td class="vsp">sold</td><td class="vsp">sold</td><td>vender</td></tr>
-          <tr><td class="vbase">send</td><td class="vsp">sent</td><td class="vsp">sent</td><td>enviar</td></tr>
-          <tr><td class="vbase">set</td><td class="vsp">set</td><td class="vsp">set</td><td>poner(se)</td></tr>
-          <tr><td class="vbase">sew</td><td class="vsp">sewed</td><td class="vsp">sewed/sewn</td><td>coser</td></tr>
-          <tr><td class="vbase">shake</td><td class="vsp">shook</td><td class="vsp">shaken</td><td>sacudir</td></tr>
-          <tr><td class="vbase">shear</td><td class="vsp">shore</td><td class="vsp">shorn</td><td>esquilar</td></tr>
-          <tr><td class="vbase">shine</td><td class="vsp">shone</td><td class="vsp">shone</td><td>brillar</td></tr>
-          <tr><td class="vbase">shoot</td><td class="vsp">shot</td><td class="vsp">shot</td><td>disparar</td></tr>
-          <tr><td class="vbase">show</td><td class="vsp">showed</td><td class="vsp">shown</td><td>mostrar</td></tr>
-          <tr><td class="vbase">shrink</td><td class="vsp">shrank</td><td class="vsp">shrunk</td><td>encogerse</td></tr>
-          <tr><td class="vbase">shut</td><td class="vsp">shut</td><td class="vsp">shut</td><td>cerrar</td></tr>
-          <tr><td class="vbase">sing</td><td class="vsp">sang</td><td class="vsp">sung</td><td>cantar</td></tr>
-          <tr><td class="vbase">sink</td><td class="vsp">sank</td><td class="vsp">sunk</td><td>hundir</td></tr>
-          <tr><td class="vbase">sit</td><td class="vsp">sat</td><td class="vsp">sat</td><td>sentarse</td></tr>
-          <tr><td class="vbase">sleep</td><td class="vsp">slept</td><td class="vsp">slept</td><td>dormir</td></tr>
-          <tr><td class="vbase">slide</td><td class="vsp">slid</td><td class="vsp">slid</td><td>resbalar</td></tr>
-          <tr><td class="vbase">smell</td><td class="vsp">smelt</td><td class="vsp">smelt</td><td>oler</td></tr>
-          <tr><td class="vbase">sow</td><td class="vsp">sowed</td><td class="vsp">sowed/sown</td><td>sembrar</td></tr>
-          <tr><td class="vbase">speak</td><td class="vsp">spoke</td><td class="vsp">spoken</td><td>hablar</td></tr>
-          <tr><td class="vbase">speed</td><td class="vsp">sped</td><td class="vsp">sped</td><td>acelerar</td></tr>
-          <tr><td class="vbase">spell</td><td class="vsp">spelt</td><td class="vsp">spelt</td><td>deletrear</td></tr>
-          <tr><td class="vbase">spend</td><td class="vsp">spent</td><td class="vsp">spent</td><td>gastar</td></tr>
-          <tr><td class="vbase">spill</td><td class="vsp">spilt/spilled</td><td class="vsp">spilt/spilled</td><td>derramar</td></tr>
-          <tr><td class="vbase">spin</td><td class="vsp">spun</td><td class="vsp">spun</td><td>hilar</td></tr>
-          <tr><td class="vbase">spit</td><td class="vsp">spat</td><td class="vsp">spat</td><td>escupir</td></tr>
-          <tr><td class="vbase">split</td><td class="vsp">split</td><td class="vsp">split</td><td>partir, rajar</td></tr>
-          <tr><td class="vbase">spoil</td><td class="vsp">spoilt/spoiled</td><td class="vsp">spoilt/spoiled</td><td>estropear</td></tr>
-          <tr><td class="vbase">spread</td><td class="vsp">spread</td><td class="vsp">spread</td><td>extender</td></tr>
-          <tr><td class="vbase">spring</td><td class="vsp">sprang</td><td class="vsp">sprung</td><td>saltar</td></tr>
-          <tr><td class="vbase">stand</td><td class="vsp">stood</td><td class="vsp">stood</td><td>estar de pie</td></tr>
-          <tr><td class="vbase">steal</td><td class="vsp">stole</td><td class="vsp">stolen</td><td>robar</td></tr>
-          <tr><td class="vbase">stick</td><td class="vsp">stuck</td><td class="vsp">stuck</td><td>pegar, engomar</td></tr>
-          <tr><td class="vbase">sting</td><td class="vsp">stung</td><td class="vsp">stung</td><td>picar</td></tr>
-          <tr><td class="vbase">stink</td><td class="vsp">stank/stunk</td><td class="vsp">stunk</td><td>apestar</td></tr>
-          <tr><td class="vbase">stride</td><td class="vsp">strode</td><td class="vsp">stridden</td><td>dar zancadas</td></tr>
-          <tr><td class="vbase">strike</td><td class="vsp">struck</td><td class="vsp">struck</td><td>golpear</td></tr>
-          <tr><td class="vbase">swear</td><td class="vsp">swore</td><td class="vsp">sworn</td><td>jurar</td></tr>
-          <tr><td class="vbase">sweat</td><td class="vsp">sweat</td><td class="vsp">sweat</td><td>sudar</td></tr>
-          <tr><td class="vbase">sweep</td><td class="vsp">swept</td><td class="vsp">swept</td><td>barrer</td></tr>
-          <tr><td class="vbase">swell</td><td class="vsp">swelled</td><td class="vsp">swollen</td><td>hinchar</td></tr>
-          <tr><td class="vbase">swim</td><td class="vsp">swam</td><td class="vsp">swum</td><td>nadar</td></tr>
-          <tr><td class="vbase">swing</td><td class="vsp">swung</td><td class="vsp">swung</td><td>columpiarse</td></tr>
-          <tr><td class="vbase">take</td><td class="vsp">took</td><td class="vsp">taken</td><td>coger</td></tr>
-          <tr><td class="vbase">teach</td><td class="vsp">taught</td><td class="vsp">taught</td><td>enseñar</td></tr>
-          <tr><td class="vbase">tear</td><td class="vsp">tore</td><td class="vsp">torn</td><td>rasgar</td></tr>
-          <tr><td class="vbase">tell</td><td class="vsp">told</td><td class="vsp">told</td><td>decir</td></tr>
-          <tr><td class="vbase">think</td><td class="vsp">thought</td><td class="vsp">thought</td><td>pensar</td></tr>
-          <tr><td class="vbase">throw</td><td class="vsp">threw</td><td class="vsp">thrown</td><td>arrojar, tirar</td></tr>
-          <tr><td class="vbase">thrust</td><td class="vsp">thrust</td><td class="vsp">thrust</td><td>introducir</td></tr>
-          <tr><td class="vbase">tread</td><td class="vsp">trod</td><td class="vsp">trodden</td><td>pisar, hollar</td></tr>
-          <tr><td class="vbase">understand</td><td class="vsp">understood</td><td class="vsp">understood</td><td>entender</td></tr>
-          <tr><td class="vbase">undergo</td><td class="vsp">underwent</td><td class="vsp">undergone</td><td>sufrir</td></tr>
-          <tr><td class="vbase">undertake</td><td class="vsp">undertook</td><td class="vsp">undertaken</td><td>emprender</td></tr>
-          <tr><td class="vbase">wake</td><td class="vsp">woke</td><td class="vsp">woken</td><td>despertarse</td></tr>
-          <tr><td class="vbase">wear</td><td class="vsp">wore</td><td class="vsp">worn</td><td>llevar puesto</td></tr>
-          <tr><td class="vbase">weave</td><td class="vsp">wove</td><td class="vsp">woven</td><td>tejer</td></tr>
-          <tr><td class="vbase">weep</td><td class="vsp">wept</td><td class="vsp">wept</td><td>llorar</td></tr>
-          <tr><td class="vbase">wet</td><td class="vsp">wet</td><td class="vsp">wet</td><td>mojar</td></tr>
-          <tr><td class="vbase">win</td><td class="vsp">won</td><td class="vsp">won</td><td>ganar</td></tr>
-          <tr><td class="vbase">wind</td><td class="vsp">wound</td><td class="vsp">wound</td><td>enrollar</td></tr>
-          <tr><td class="vbase">withdraw</td><td class="vsp">withdrew</td><td class="vsp">withdrawn</td><td>retirarse</td></tr>
-          <tr><td class="vbase">wring</td><td class="vsp">wrung</td><td class="vsp">wrung</td><td>torcer</td></tr>
-          <tr><td class="vbase">write</td><td class="vsp">wrote</td><td class="vsp">written</td><td>escribir</td></tr>
+          <tr><td class="vbase">arise<span class='vpron'>/əˈraɪz/</span></td><td class="vsp">arose</td><td class="vsp">arisen</td><td>surgir, levantarse</td></tr>
+          <tr><td class="vbase">awake<span class='vpron'>/əˈweɪk/</span></td><td class="vsp">awoke</td><td class="vsp">awoken</td><td>despertarse</td></tr>
+          <tr><td class="vbase">be (am/is/are)<span class='vpron'>/biː/</span></td><td class="vsp">was/were</td><td class="vsp">been</td><td>ser, estar</td></tr>
+          <tr><td class="vbase">bear<span class='vpron'>/bɛr/</span></td><td class="vsp">bore</td><td class="vsp">borne/born</td><td>soportar, dar a luz</td></tr>
+          <tr><td class="vbase">beat<span class='vpron'>/biːt/</span></td><td class="vsp">beat</td><td class="vsp">beaten</td><td>golpear</td></tr>
+          <tr><td class="vbase">become<span class='vpron'>/bɪˈkʌm/</span></td><td class="vsp">became</td><td class="vsp">become</td><td>llegar a ser</td></tr>
+          <tr><td class="vbase">begin<span class='vpron'>/bɪˈɡɪn/</span></td><td class="vsp">began</td><td class="vsp">begun</td><td>empezar</td></tr>
+          <tr><td class="vbase">bend<span class='vpron'>/bɛnd/</span></td><td class="vsp">bent</td><td class="vsp">bent</td><td>doblar</td></tr>
+          <tr><td class="vbase">bet<span class='vpron'>/bɛt/</span></td><td class="vsp">bet</td><td class="vsp">bet</td><td>apostar</td></tr>
+          <tr><td class="vbase">bind<span class='vpron'>/baɪnd/</span></td><td class="vsp">bound</td><td class="vsp">bound</td><td>atar, encuadernar</td></tr>
+          <tr><td class="vbase">bid<span class='vpron'>/bɪd/</span></td><td class="vsp">bid</td><td class="vsp">bid</td><td>pujar</td></tr>
+          <tr><td class="vbase">bite<span class='vpron'>/baɪt/</span></td><td class="vsp">bit</td><td class="vsp">bitten</td><td>morder</td></tr>
+          <tr><td class="vbase">bleed<span class='vpron'>/bliːd/</span></td><td class="vsp">bled</td><td class="vsp">bled</td><td>sangrar</td></tr>
+          <tr><td class="vbase">blow<span class='vpron'>/bloʊ/</span></td><td class="vsp">blew</td><td class="vsp">blown</td><td>soplar</td></tr>
+          <tr><td class="vbase">break<span class='vpron'>/breɪk/</span></td><td class="vsp">broke</td><td class="vsp">broken</td><td>romper</td></tr>
+          <tr><td class="vbase">breed<span class='vpron'>/briːd/</span></td><td class="vsp">bred</td><td class="vsp">bred</td><td>criar</td></tr>
+          <tr><td class="vbase">bring<span class='vpron'>/brɪŋ/</span></td><td class="vsp">brought</td><td class="vsp">brought</td><td>traer, llevar</td></tr>
+          <tr><td class="vbase">broadcast<span class='vpron'>/ˈbrɔːdkæst/</span></td><td class="vsp">broadcast</td><td class="vsp">broadcast</td><td>radiar</td></tr>
+          <tr><td class="vbase">build<span class='vpron'>/bɪld/</span></td><td class="vsp">built</td><td class="vsp">built</td><td>edificar</td></tr>
+          <tr><td class="vbase">burn<span class='vpron'>/bɜːrn/</span></td><td class="vsp">burnt/burned</td><td class="vsp">burnt/burned</td><td>quemar</td></tr>
+          <tr><td class="vbase">burst<span class='vpron'>/bɜːrst/</span></td><td class="vsp">burst</td><td class="vsp">burst</td><td>reventar</td></tr>
+          <tr><td class="vbase">buy<span class='vpron'>/baɪ/</span></td><td class="vsp">bought</td><td class="vsp">bought</td><td>comprar</td></tr>
+          <tr><td class="vbase">cast<span class='vpron'>/kæst/</span></td><td class="vsp">cast</td><td class="vsp">cast</td><td>arrojar</td></tr>
+          <tr><td class="vbase">catch<span class='vpron'>/kætʃ/</span></td><td class="vsp">caught</td><td class="vsp">caught</td><td>coger</td></tr>
+          <tr><td class="vbase">come<span class='vpron'>/kʌm/</span></td><td class="vsp">came</td><td class="vsp">come</td><td>venir</td></tr>
+          <tr><td class="vbase">cost<span class='vpron'>/kɔːst/</span></td><td class="vsp">cost</td><td class="vsp">cost</td><td>costar</td></tr>
+          <tr><td class="vbase">cut<span class='vpron'>/kʌt/</span></td><td class="vsp">cut</td><td class="vsp">cut</td><td>cortar</td></tr>
+          <tr><td class="vbase">choose<span class='vpron'>/tʃuːz/</span></td><td class="vsp">chose</td><td class="vsp">chosen</td><td>elegir</td></tr>
+          <tr><td class="vbase">cling<span class='vpron'>/klɪŋ/</span></td><td class="vsp">clung</td><td class="vsp">clung</td><td>agarrarse</td></tr>
+          <tr><td class="vbase">creep<span class='vpron'>/kriːp/</span></td><td class="vsp">crept</td><td class="vsp">crept</td><td>arrastrarse</td></tr>
+          <tr><td class="vbase">deal<span class='vpron'>/diːl/</span></td><td class="vsp">dealt</td><td class="vsp">dealt</td><td>tratar</td></tr>
+          <tr><td class="vbase">dig<span class='vpron'>/dɪɡ/</span></td><td class="vsp">dug</td><td class="vsp">dug</td><td>cavar</td></tr>
+          <tr><td class="vbase">do (does)<span class='vpron'>/duː/</span></td><td class="vsp">did</td><td class="vsp">done</td><td>hacer</td></tr>
+          <tr><td class="vbase">draw<span class='vpron'>/drɔː/</span></td><td class="vsp">drew</td><td class="vsp">drawn</td><td>dibujar</td></tr>
+          <tr><td class="vbase">dream<span class='vpron'>/driːm/</span></td><td class="vsp">dreamt/dreamed</td><td class="vsp">dreamt/dreamed</td><td>soñar</td></tr>
+          <tr><td class="vbase">drink<span class='vpron'>/drɪŋk/</span></td><td class="vsp">drank</td><td class="vsp">drunk</td><td>beber</td></tr>
+          <tr><td class="vbase">drive<span class='vpron'>/draɪv/</span></td><td class="vsp">drove</td><td class="vsp">driven</td><td>conducir</td></tr>
+          <tr><td class="vbase">eat<span class='vpron'>/iːt/</span></td><td class="vsp">ate</td><td class="vsp">eaten</td><td>comer</td></tr>
+          <tr><td class="vbase">fall<span class='vpron'>/fɔːl/</span></td><td class="vsp">fell</td><td class="vsp">fallen</td><td>caer</td></tr>
+          <tr><td class="vbase">feed<span class='vpron'>/fiːd/</span></td><td class="vsp">fed</td><td class="vsp">fed</td><td>alimentar</td></tr>
+          <tr><td class="vbase">feel<span class='vpron'>/fiːl/</span></td><td class="vsp">felt</td><td class="vsp">felt</td><td>sentir</td></tr>
+          <tr><td class="vbase">fight<span class='vpron'>/faɪt/</span></td><td class="vsp">fought</td><td class="vsp">fought</td><td>luchar</td></tr>
+          <tr><td class="vbase">find<span class='vpron'>/faɪnd/</span></td><td class="vsp">found</td><td class="vsp">found</td><td>encontrar</td></tr>
+          <tr><td class="vbase">flee<span class='vpron'>/fliː/</span></td><td class="vsp">fled</td><td class="vsp">fled</td><td>huir</td></tr>
+          <tr><td class="vbase">fly<span class='vpron'>/flaɪ/</span></td><td class="vsp">flew</td><td class="vsp">flown</td><td>volar</td></tr>
+          <tr><td class="vbase">forbid<span class='vpron'>/fərˈbɪd/</span></td><td class="vsp">forbade</td><td class="vsp">forbidden</td><td>prohibir</td></tr>
+          <tr><td class="vbase">forget<span class='vpron'>/fərˈɡɛt/</span></td><td class="vsp">forgot</td><td class="vsp">forgotten</td><td>olvidar</td></tr>
+          <tr><td class="vbase">forgive<span class='vpron'>/fərˈɡɪv/</span></td><td class="vsp">forgave</td><td class="vsp">forgiven</td><td>perdonar</td></tr>
+          <tr><td class="vbase">freeze<span class='vpron'>/friːz/</span></td><td class="vsp">froze</td><td class="vsp">frozen</td><td>helar</td></tr>
+          <tr><td class="vbase">get<span class='vpron'>/ɡɛt/</span></td><td class="vsp">got</td><td class="vsp">got/gotten</td><td>obtener</td></tr>
+          <tr><td class="vbase">give<span class='vpron'>/ɡɪv/</span></td><td class="vsp">gave</td><td class="vsp">given</td><td>dar</td></tr>
+          <tr><td class="vbase">go (goes)<span class='vpron'>/ɡoʊ/</span></td><td class="vsp">went</td><td class="vsp">gone</td><td>ir</td></tr>
+          <tr><td class="vbase">grow<span class='vpron'>/ɡroʊ/</span></td><td class="vsp">grew</td><td class="vsp">grown</td><td>crecer</td></tr>
+          <tr><td class="vbase">grind<span class='vpron'>/ɡraɪnd/</span></td><td class="vsp">ground</td><td class="vsp">ground</td><td>moler</td></tr>
+          <tr><td class="vbase">hang<span class='vpron'>/hæŋ/</span></td><td class="vsp">hung</td><td class="vsp">hung</td><td>colgar</td></tr>
+          <tr><td class="vbase">have<span class='vpron'>/hæv/</span></td><td class="vsp">had</td><td class="vsp">had</td><td>haber, tener</td></tr>
+          <tr><td class="vbase">hear<span class='vpron'>/hɪr/</span></td><td class="vsp">heard</td><td class="vsp">heard</td><td>oír</td></tr>
+          <tr><td class="vbase">hide<span class='vpron'>/haɪd/</span></td><td class="vsp">hid</td><td class="vsp">hidden</td><td>ocultar</td></tr>
+          <tr><td class="vbase">hit<span class='vpron'>/hɪt/</span></td><td class="vsp">hit</td><td class="vsp">hit</td><td>golpear</td></tr>
+          <tr><td class="vbase">hold<span class='vpron'>/hoʊld/</span></td><td class="vsp">held</td><td class="vsp">held</td><td>agarrar, celebrar</td></tr>
+          <tr><td class="vbase">hurt<span class='vpron'>/hɜːrt/</span></td><td class="vsp">hurt</td><td class="vsp">hurt</td><td>herir</td></tr>
+          <tr><td class="vbase">keep<span class='vpron'>/kiːp/</span></td><td class="vsp">kept</td><td class="vsp">kept</td><td>conservar</td></tr>
+          <tr><td class="vbase">know<span class='vpron'>/noʊ/</span></td><td class="vsp">knew</td><td class="vsp">known</td><td>saber, conocer</td></tr>
+          <tr><td class="vbase">kneel<span class='vpron'>/niːl/</span></td><td class="vsp">knelt</td><td class="vsp">knelt</td><td>arrodillarse</td></tr>
+          <tr><td class="vbase">knit<span class='vpron'>/nɪt/</span></td><td class="vsp">knit</td><td class="vsp">knit</td><td>hacer punto</td></tr>
+          <tr><td class="vbase">lay<span class='vpron'>/leɪ/</span></td><td class="vsp">laid</td><td class="vsp">laid</td><td>poner</td></tr>
+          <tr><td class="vbase">lead<span class='vpron'>/liːd/</span></td><td class="vsp">led</td><td class="vsp">led</td><td>conducir</td></tr>
+          <tr><td class="vbase">lean<span class='vpron'>/liːn/</span></td><td class="vsp">leant</td><td class="vsp">leant</td><td>apoyarse</td></tr>
+          <tr><td class="vbase">leap<span class='vpron'>/liːp/</span></td><td class="vsp">leapt</td><td class="vsp">leapt</td><td>brincar</td></tr>
+          <tr><td class="vbase">learn<span class='vpron'>/lɜːrn/</span></td><td class="vsp">learnt/learned</td><td class="vsp">learnt/learned</td><td>aprender</td></tr>
+          <tr><td class="vbase">leave<span class='vpron'>/liːv/</span></td><td class="vsp">left</td><td class="vsp">left</td><td>dejar</td></tr>
+          <tr><td class="vbase">lend<span class='vpron'>/lɛnd/</span></td><td class="vsp">lent</td><td class="vsp">lent</td><td>prestar</td></tr>
+          <tr><td class="vbase">let<span class='vpron'>/lɛt/</span></td><td class="vsp">let</td><td class="vsp">let</td><td>permitir</td></tr>
+          <tr><td class="vbase">lie<span class='vpron'>/laɪ/</span></td><td class="vsp">lay</td><td class="vsp">lain</td><td>echarse</td></tr>
+          <tr><td class="vbase">light<span class='vpron'>/laɪt/</span></td><td class="vsp">lit</td><td class="vsp">lit</td><td>encender</td></tr>
+          <tr><td class="vbase">lose<span class='vpron'>/luːz/</span></td><td class="vsp">lost</td><td class="vsp">lost</td><td>perder</td></tr>
+          <tr><td class="vbase">make<span class='vpron'>/meɪk/</span></td><td class="vsp">made</td><td class="vsp">made</td><td>hacer</td></tr>
+          <tr><td class="vbase">mean<span class='vpron'>/miːn/</span></td><td class="vsp">meant</td><td class="vsp">meant</td><td>significar</td></tr>
+          <tr><td class="vbase">meet<span class='vpron'>/miːt/</span></td><td class="vsp">met</td><td class="vsp">met</td><td>encontrar</td></tr>
+          <tr><td class="vbase">mistake<span class='vpron'>/mɪˈsteɪk/</span></td><td class="vsp">mistook</td><td class="vsp">mistaken</td><td>equivocar</td></tr>
+          <tr><td class="vbase">overcome<span class='vpron'>/ˌoʊvərˈkʌm/</span></td><td class="vsp">overcame</td><td class="vsp">overcome</td><td>vencer</td></tr>
+          <tr><td class="vbase">pay<span class='vpron'>/peɪ/</span></td><td class="vsp">paid</td><td class="vsp">paid</td><td>pagar</td></tr>
+          <tr><td class="vbase">put<span class='vpron'>/pʊt/</span></td><td class="vsp">put</td><td class="vsp">put</td><td>poner</td></tr>
+          <tr><td class="vbase">read<span class='vpron'>/riːd/</span></td><td class="vsp">read</td><td class="vsp">read</td><td>leer</td></tr>
+          <tr><td class="vbase">ride<span class='vpron'>/raɪd/</span></td><td class="vsp">rode</td><td class="vsp">ridden</td><td>montar</td></tr>
+          <tr><td class="vbase">ring<span class='vpron'>/rɪŋ/</span></td><td class="vsp">rang</td><td class="vsp">rung</td><td>llamar</td></tr>
+          <tr><td class="vbase">rise<span class='vpron'>/raɪz/</span></td><td class="vsp">rose</td><td class="vsp">risen</td><td>levantarse</td></tr>
+          <tr><td class="vbase">run<span class='vpron'>/rʌn/</span></td><td class="vsp">ran</td><td class="vsp">run</td><td>correr</td></tr>
+          <tr><td class="vbase">say<span class='vpron'>/seɪ/</span></td><td class="vsp">said</td><td class="vsp">said</td><td>decir</td></tr>
+          <tr><td class="vbase">see<span class='vpron'>/siː/</span></td><td class="vsp">saw</td><td class="vsp">seen</td><td>ver</td></tr>
+          <tr><td class="vbase">seek<span class='vpron'>/siːk/</span></td><td class="vsp">sought</td><td class="vsp">sought</td><td>buscar</td></tr>
+          <tr><td class="vbase">sell<span class='vpron'>/sɛl/</span></td><td class="vsp">sold</td><td class="vsp">sold</td><td>vender</td></tr>
+          <tr><td class="vbase">send<span class='vpron'>/sɛnd/</span></td><td class="vsp">sent</td><td class="vsp">sent</td><td>enviar</td></tr>
+          <tr><td class="vbase">set<span class='vpron'>/sɛt/</span></td><td class="vsp">set</td><td class="vsp">set</td><td>poner(se)</td></tr>
+          <tr><td class="vbase">sew<span class='vpron'>/soʊ/</span></td><td class="vsp">sewed</td><td class="vsp">sewed/sewn</td><td>coser</td></tr>
+          <tr><td class="vbase">shake<span class='vpron'>/ʃeɪk/</span></td><td class="vsp">shook</td><td class="vsp">shaken</td><td>sacudir</td></tr>
+          <tr><td class="vbase">shear<span class='vpron'>/ʃɪr/</span></td><td class="vsp">shore</td><td class="vsp">shorn</td><td>esquilar</td></tr>
+          <tr><td class="vbase">shine<span class='vpron'>/ʃaɪn/</span></td><td class="vsp">shone</td><td class="vsp">shone</td><td>brillar</td></tr>
+          <tr><td class="vbase">shoot<span class='vpron'>/ʃuːt/</span></td><td class="vsp">shot</td><td class="vsp">shot</td><td>disparar</td></tr>
+          <tr><td class="vbase">show<span class='vpron'>/ʃoʊ/</span></td><td class="vsp">showed</td><td class="vsp">shown</td><td>mostrar</td></tr>
+          <tr><td class="vbase">shrink<span class='vpron'>/ʃrɪŋk/</span></td><td class="vsp">shrank</td><td class="vsp">shrunk</td><td>encogerse</td></tr>
+          <tr><td class="vbase">shut<span class='vpron'>/ʃʌt/</span></td><td class="vsp">shut</td><td class="vsp">shut</td><td>cerrar</td></tr>
+          <tr><td class="vbase">sing<span class='vpron'>/sɪŋ/</span></td><td class="vsp">sang</td><td class="vsp">sung</td><td>cantar</td></tr>
+          <tr><td class="vbase">sink<span class='vpron'>/sɪŋk/</span></td><td class="vsp">sank</td><td class="vsp">sunk</td><td>hundir</td></tr>
+          <tr><td class="vbase">sit<span class='vpron'>/sɪt/</span></td><td class="vsp">sat</td><td class="vsp">sat</td><td>sentarse</td></tr>
+          <tr><td class="vbase">sleep<span class='vpron'>/sliːp/</span></td><td class="vsp">slept</td><td class="vsp">slept</td><td>dormir</td></tr>
+          <tr><td class="vbase">slide<span class='vpron'>/slaɪd/</span></td><td class="vsp">slid</td><td class="vsp">slid</td><td>resbalar</td></tr>
+          <tr><td class="vbase">smell<span class='vpron'>/smɛl/</span></td><td class="vsp">smelt</td><td class="vsp">smelt</td><td>oler</td></tr>
+          <tr><td class="vbase">sow<span class='vpron'>/soʊ/</span></td><td class="vsp">sowed</td><td class="vsp">sowed/sown</td><td>sembrar</td></tr>
+          <tr><td class="vbase">speak<span class='vpron'>/spiːk/</span></td><td class="vsp">spoke</td><td class="vsp">spoken</td><td>hablar</td></tr>
+          <tr><td class="vbase">speed<span class='vpron'>/spiːd/</span></td><td class="vsp">sped</td><td class="vsp">sped</td><td>acelerar</td></tr>
+          <tr><td class="vbase">spell<span class='vpron'>/spɛl/</span></td><td class="vsp">spelt</td><td class="vsp">spelt</td><td>deletrear</td></tr>
+          <tr><td class="vbase">spend<span class='vpron'>/spɛnd/</span></td><td class="vsp">spent</td><td class="vsp">spent</td><td>gastar</td></tr>
+          <tr><td class="vbase">spill<span class='vpron'>/spɪl/</span></td><td class="vsp">spilt/spilled</td><td class="vsp">spilt/spilled</td><td>derramar</td></tr>
+          <tr><td class="vbase">spin<span class='vpron'>/spɪn/</span></td><td class="vsp">spun</td><td class="vsp">spun</td><td>hilar</td></tr>
+          <tr><td class="vbase">spit<span class='vpron'>/spɪt/</span></td><td class="vsp">spat</td><td class="vsp">spat</td><td>escupir</td></tr>
+          <tr><td class="vbase">split<span class='vpron'>/splɪt/</span></td><td class="vsp">split</td><td class="vsp">split</td><td>partir, rajar</td></tr>
+          <tr><td class="vbase">spoil<span class='vpron'>/spɔɪl/</span></td><td class="vsp">spoilt/spoiled</td><td class="vsp">spoilt/spoiled</td><td>estropear</td></tr>
+          <tr><td class="vbase">spread<span class='vpron'>/sprɛd/</span></td><td class="vsp">spread</td><td class="vsp">spread</td><td>extender</td></tr>
+          <tr><td class="vbase">spring<span class='vpron'>/sprɪŋ/</span></td><td class="vsp">sprang</td><td class="vsp">sprung</td><td>saltar</td></tr>
+          <tr><td class="vbase">stand<span class='vpron'>/stænd/</span></td><td class="vsp">stood</td><td class="vsp">stood</td><td>estar de pie</td></tr>
+          <tr><td class="vbase">steal<span class='vpron'>/stiːl/</span></td><td class="vsp">stole</td><td class="vsp">stolen</td><td>robar</td></tr>
+          <tr><td class="vbase">stick<span class='vpron'>/stɪk/</span></td><td class="vsp">stuck</td><td class="vsp">stuck</td><td>pegar, engomar</td></tr>
+          <tr><td class="vbase">sting<span class='vpron'>/stɪŋ/</span></td><td class="vsp">stung</td><td class="vsp">stung</td><td>picar</td></tr>
+          <tr><td class="vbase">stink<span class='vpron'>/stɪŋk/</span></td><td class="vsp">stank/stunk</td><td class="vsp">stunk</td><td>apestar</td></tr>
+          <tr><td class="vbase">stride<span class='vpron'>/straɪd/</span></td><td class="vsp">strode</td><td class="vsp">stridden</td><td>dar zancadas</td></tr>
+          <tr><td class="vbase">strike<span class='vpron'>/straɪk/</span></td><td class="vsp">struck</td><td class="vsp">struck</td><td>golpear</td></tr>
+          <tr><td class="vbase">swear<span class='vpron'>/swɛr/</span></td><td class="vsp">swore</td><td class="vsp">sworn</td><td>jurar</td></tr>
+          <tr><td class="vbase">sweat<span class='vpron'>/swɛt/</span></td><td class="vsp">sweat</td><td class="vsp">sweat</td><td>sudar</td></tr>
+          <tr><td class="vbase">sweep<span class='vpron'>/swiːp/</span></td><td class="vsp">swept</td><td class="vsp">swept</td><td>barrer</td></tr>
+          <tr><td class="vbase">swell<span class='vpron'>/swɛl/</span></td><td class="vsp">swelled</td><td class="vsp">swollen</td><td>hinchar</td></tr>
+          <tr><td class="vbase">swim<span class='vpron'>/swɪm/</span></td><td class="vsp">swam</td><td class="vsp">swum</td><td>nadar</td></tr>
+          <tr><td class="vbase">swing<span class='vpron'>/swɪŋ/</span></td><td class="vsp">swung</td><td class="vsp">swung</td><td>columpiarse</td></tr>
+          <tr><td class="vbase">take<span class='vpron'>/teɪk/</span></td><td class="vsp">took</td><td class="vsp">taken</td><td>coger</td></tr>
+          <tr><td class="vbase">teach<span class='vpron'>/tiːtʃ/</span></td><td class="vsp">taught</td><td class="vsp">taught</td><td>enseñar</td></tr>
+          <tr><td class="vbase">tear<span class='vpron'>/tɛr/</span></td><td class="vsp">tore</td><td class="vsp">torn</td><td>rasgar</td></tr>
+          <tr><td class="vbase">tell<span class='vpron'>/tɛl/</span></td><td class="vsp">told</td><td class="vsp">told</td><td>decir</td></tr>
+          <tr><td class="vbase">think<span class='vpron'>/θɪŋk/</span></td><td class="vsp">thought</td><td class="vsp">thought</td><td>pensar</td></tr>
+          <tr><td class="vbase">throw<span class='vpron'>/θroʊ/</span></td><td class="vsp">threw</td><td class="vsp">thrown</td><td>arrojar, tirar</td></tr>
+          <tr><td class="vbase">thrust<span class='vpron'>/θrʌst/</span></td><td class="vsp">thrust</td><td class="vsp">thrust</td><td>introducir</td></tr>
+          <tr><td class="vbase">tread<span class='vpron'>/trɛd/</span></td><td class="vsp">trod</td><td class="vsp">trodden</td><td>pisar, hollar</td></tr>
+          <tr><td class="vbase">understand<span class='vpron'>/ˌʌndərˈstænd/</span></td><td class="vsp">understood</td><td class="vsp">understood</td><td>entender</td></tr>
+          <tr><td class="vbase">undergo<span class='vpron'>/ˌʌndərˈɡoʊ/</span></td><td class="vsp">underwent</td><td class="vsp">undergone</td><td>sufrir</td></tr>
+          <tr><td class="vbase">undertake<span class='vpron'>/ˌʌndərˈteɪk/</span></td><td class="vsp">undertook</td><td class="vsp">undertaken</td><td>emprender</td></tr>
+          <tr><td class="vbase">wake<span class='vpron'>/weɪk/</span></td><td class="vsp">woke</td><td class="vsp">woken</td><td>despertarse</td></tr>
+          <tr><td class="vbase">wear<span class='vpron'>/wɛr/</span></td><td class="vsp">wore</td><td class="vsp">worn</td><td>llevar puesto</td></tr>
+          <tr><td class="vbase">weave<span class='vpron'>/wiːv/</span></td><td class="vsp">wove</td><td class="vsp">woven</td><td>tejer</td></tr>
+          <tr><td class="vbase">weep<span class='vpron'>/wiːp/</span></td><td class="vsp">wept</td><td class="vsp">wept</td><td>llorar</td></tr>
+          <tr><td class="vbase">wet<span class='vpron'>/wɛt/</span></td><td class="vsp">wet</td><td class="vsp">wet</td><td>mojar</td></tr>
+          <tr><td class="vbase">win<span class='vpron'>/wɪn/</span></td><td class="vsp">won</td><td class="vsp">won</td><td>ganar</td></tr>
+          <tr><td class="vbase">wind<span class='vpron'>/waɪnd/</span></td><td class="vsp">wound</td><td class="vsp">wound</td><td>enrollar</td></tr>
+          <tr><td class="vbase">withdraw<span class='vpron'>/wɪðˈdrɔː/</span></td><td class="vsp">withdrew</td><td class="vsp">withdrawn</td><td>retirarse</td></tr>
+          <tr><td class="vbase">wring<span class='vpron'>/rɪŋ/</span></td><td class="vsp">wrung</td><td class="vsp">wrung</td><td>torcer</td></tr>
+          <tr><td class="vbase">write<span class='vpron'>/raɪt/</span></td><td class="vsp">wrote</td><td class="vsp">written</td><td>escribir</td></tr>
         </table>
       </div>
     </section>
@@ -810,6 +878,7 @@
     lang = lang === 'es' ? 'en' : 'es';
     document.getElementById('lang-btn').textContent = lang === 'es' ? 'ES → EN' : 'EN → ES';
     updateLang();
+    if (typeof updateInterlinearBtn === 'function') updateInterlinearBtn();
   });
   function updateLang() {
     document.querySelectorAll('[data-en]').forEach(el => {
@@ -829,6 +898,45 @@
       }
     });
   }
+
+  // Word-by-word gloss (interlinear) toggle — forces English so the glosses have something to sit under
+  let interlinearOn = false;
+  const interlinearBtn = document.getElementById('interlinear-btn');
+  function updateInterlinearBtn() {
+    interlinearBtn.textContent = lang === 'en'
+      ? (interlinearOn ? 'Word × word: ON' : 'Word × word: OFF')
+      : (interlinearOn ? 'Palabra x palabra: ON' : 'Palabra x palabra: OFF');
+    interlinearBtn.classList.toggle('active', interlinearOn);
+  }
+  interlinearBtn.addEventListener('click', () => {
+    interlinearOn = !interlinearOn;
+    if (interlinearOn && lang !== 'en') {
+      lang = 'en';
+      document.getElementById('lang-btn').textContent = 'EN → ES';
+      updateLang();
+    }
+    document.body.classList.toggle('interlinear-on', interlinearOn);
+    updateInterlinearBtn();
+  });
+
+  // Pronunciation (IPA) toggle — forces English for the pitch-line word spans; always works in the verb tables
+  let pronunciationOn = false;
+  const pronunciationBtn = document.getElementById('pronunciation-btn');
+  function updatePronunciationBtn() {
+    pronunciationBtn.textContent = pronunciationOn ? 'Pronunciación: ON' : 'Pronunciación: OFF';
+    pronunciationBtn.classList.toggle('active', pronunciationOn);
+  }
+  pronunciationBtn.addEventListener('click', () => {
+    pronunciationOn = !pronunciationOn;
+    if (pronunciationOn && lang !== 'en') {
+      lang = 'en';
+      document.getElementById('lang-btn').textContent = 'EN → ES';
+      updateLang();
+      updateInterlinearBtn();
+    }
+    document.body.classList.toggle('pronunciation-on', pronunciationOn);
+    updatePronunciationBtn();
+  });
 
   // Verb search filter
   const verbSearch = document.getElementById('verb-search');
