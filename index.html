@@ -291,7 +291,26 @@
     background: var(--gold-soft); color: var(--gold); margin-top: 0.1rem;
   }
   .pitch-line.continuous .tag-pill { background: var(--teal-soft); color: var(--teal); }
+  .pitch-line.past { border-left-color: var(--ink-faint); }
+  .pitch-line.past .tag-pill { background: var(--paper-soft); color: var(--ink-soft); }
   .pitch-text { font-size: 0.95rem; line-height: 1.5; }
+
+  .qa-block {
+    background: var(--paper-card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 0.85rem;
+  }
+  .qa-q { font-weight: 700; margin-bottom: 0.5rem; }
+  .qa-q .tag-pill { margin-right: 0.5rem; }
+  .qa-a { color: var(--text-dim); font-size: 0.92rem; padding-left: 0.1rem; border-left: 2px solid var(--line); padding-left: 0.75rem; }
+  .qa-a b { color: var(--text); }
+
+  .countdown-banner {
+    background: var(--ink); color: var(--paper);
+    border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .countdown-banner .cb-date { font-family: Georgia, serif; font-style: italic; font-size: 1.4rem; color: var(--gold-soft); }
+  .countdown-banner .cb-label { font-size: 0.85rem; color: color-mix(in srgb, var(--paper) 80%, transparent); }
 
   .deck-link {
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -344,7 +363,7 @@
   <div class="controls">
     <div class="tabs">
       <button class="tab-btn active" data-tab="manual" data-en="Manual">Manual</button>
-      <button class="tab-btn" data-tab="lesson" data-en="Today's homework">Tarea de hoy</button>
+      <button class="tab-btn" data-tab="lesson" data-en="Homework">Tareas</button>
       <button class="tab-btn" data-tab="verbs" data-en="Verbs">Verbos</button>
     </div>
     <button id="lang-btn">ES → EN</button>
@@ -455,7 +474,13 @@
             <td class="day">10-08 <span class="mono" style="font-size:0.7rem;color:var(--text-dim)" data-en="(Mon)">(lun)</span></td>
             <td data-en="Simple Present vs. Present Continuous (1st, 2nd, 3rd person)">Presente simple vs. presente continuo (1ª, 2ª, 3ª persona)</td>
             <td data-en="3rd-person spelling: ch/sh/s/x/z/o → -es · consonant+y → -ies · vowel+y → -s">Ortografía 3ª persona: ch/sh/s/x/z/o → -es · consonante+y → -ies · vocal+y → -s</td>
-            <td data-en="Sell the fabric (Musafil) pitch — see Today's homework tab">Vender la tela (Musafil) — ver pestaña Tarea de hoy</td>
+            <td data-en="Sell the fabric (Musafil) pitch — see Homework tab">Vender la tela (Musafil) — ver pestaña Tareas</td>
+          </tr>
+          <tr>
+            <td class="day">11-08 <span class="mono" style="font-size:0.7rem;color:var(--text-dim)" data-en="(Tue)">(mar)</span></td>
+            <td data-en="Oral presentation of Musafil — interview format, past + present tense">Presentación oral de Musafil — formato entrevista, tiempo pasado + presente</td>
+            <td data-en="Teacher corrected pronunciation and verb tenses. Questions like &quot;what was your inspiration?&quot; require switching between past (story) and present (facts) — that's what was hardest.">El profesor corrigió pronunciación y tiempos verbales. Preguntas tipo "cuál fue tu inspiración" exigen cambiar entre pasado (historia) y presente (hechos) — eso fue lo más difícil.</td>
+            <td data-en="Repeat the presentation as a SALES pitch (teacher plays buyer, asks questions) on Sept 1 · study the phonetic alphabet (IPA) — see Homework tab">Repetir la presentación pero VENDIENDO (profesor hace de comprador, pregunta) el 1 de septiembre · estudiar el alfabeto fonético (IPA) — ver pestaña Tareas</td>
           </tr>
         </table>
       </div>
@@ -576,6 +601,111 @@
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>believe</span><span class='w-ipa'>/bɪˈliːv/</span><span class='w-gloss'>creo</span></span> <span class='word-wrap'><span class='w-en'>Musafil</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil</span></span> <span class='word-wrap'><span class='w-en'>tells</span><span class='w-ipa'>/tɛlz/</span><span class='w-gloss'>cuenta</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>story</span><span class='w-ipa'>/ˈstɔːri/</span><span class='w-gloss'>historia</span></span> <span class='word-wrap'><span class='w-en'>your</span><span class='w-ipa'>/jɔːr/</span><span class='w-gloss'>que tus</span></span> <span class='word-wrap'><span class='w-en'>customers</span><span class='w-ipa'>/ˈkʌstəmərz/</span><span class='w-gloss'>clientes</span></span> <span class='word-wrap'><span class='w-en'>want</span><span class='w-ipa'>/wɒnt/</span><span class='w-gloss'>quieren</span></span> <span class='word-wrap'><span class='w-en'>to</span><span class='w-ipa'>/tuː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>hear.</span><span class='w-ipa'>/hɪr/</span><span class='w-gloss'>escuchar.</span></span>">Creo que Musafil cuenta una historia que tus clientes quieren escuchar.</span></div>
 
       <p class="tip" style="margin-top:0.85rem;" data-en="How to practice: read it out loud 2-3 times switching to English up top, then try saying it from memory. Same shadowing technique from the routine — Friday's practice, early.">Cómo practicarlo: léelo en voz alta 2-3 veces cambiando a inglés arriba, y luego intenta decirlo de memoria. Es la misma técnica de shadowing de la rutina — adelantas la práctica del viernes.</p>
+    </section>
+
+    <section>
+      <h2 data-en="Feedback from today's presentation (Tuesday, Aug 11)">Feedback de la presentación de hoy (martes 11 de agosto)</h2>
+      <div class="card accent-gold">
+        <p data-en="You presented Musafil in English today. The teacher corrected pronunciation and verb tenses, and asked interview-style questions (like &quot;what was your inspiration?&quot;) that forced you to switch between past and present — that's exactly what was hard. Totally normal at this stage.">Presentaste Musafil en inglés hoy. El profesor corrigió pronunciación y tiempos verbales, y te hizo preguntas tipo entrevista (como &quot;cuál fue tu inspiración?&quot;) que te obligaron a cambiar entre pasado y presente — eso fue lo que costó. Es normal en esta etapa.</p>
+      </div>
+
+      <div class="tarea-banner">
+        <h2 data-en="Next assignment: repeat it, but sell it">Siguiente tarea: repetirla, pero vendiéndola</h2>
+        <p data-en="Same presentation, new goal: this time you have to sell the product. The teacher will play the role of a buyer and ask you questions. Two things to fix from today: pronunciation, and switching cleanly between past (the story) and present (the facts).">Misma presentación, nueva meta: esta vez tienes que vender el producto. El profesor va a hacer de comprador y te va a hacer preguntas. Dos cosas a corregir de hoy: la pronunciación, y cambiar limpio entre pasado (la historia) y presente (los hechos).</p>
+      </div>
+
+      <div class="countdown-banner">
+        <div>
+          <div class="cb-label" data-en="Next presentation">Próxima presentación</div>
+          <div class="cb-date">1 septiembre 2026</div>
+        </div>
+        <div class="cb-label" data-en="Reminder already set in your calendar">Ya quedó el recordatorio en tu calendario</div>
+      </div>
+
+      <h3 data-en="Buyer Q&A bank — practice switching Past ↔ Present">Banco de preguntas de comprador — practica cambiar Pasado ↔ Presente</h3>
+      <p class="lede" style="margin-bottom:1rem;" data-en="Fill in the blanks marked ___ with your real answer, then practice saying the whole thing out loud.">Rellena los espacios marcados ___ con tu respuesta real, y practica diciendo todo en voz alta.</p>
+
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What inspired you to create Musafil?">What inspired you to create Musafil?</span></div>
+        <div class="qa-a" data-en="I was inspired when I saw farmers throwing away banana stems after harvest. I thought that fiber shouldn't go to waste.">I was inspired when I saw farmers throwing away banana stems after harvest. I thought that fiber shouldn't go to waste.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="How long did it take you to develop this?">How long did it take you to develop this?</span></div>
+        <div class="qa-a" data-en="It took me ___ to develop the process.">It took me ___ to develop the process.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What was the biggest challenge?">What was the biggest challenge?</span></div>
+        <div class="qa-a" data-en="The biggest challenge was extracting the fiber without using chemicals.">The biggest challenge was extracting the fiber without using chemicals.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How is Musafil different from regular cotton fabric?">How is Musafil different from regular cotton fabric?</span></div>
+        <div class="qa-a" data-en="Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.">Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Does it work with my current machines?">Does it work with my current machines?</span></div>
+        <div class="qa-a" data-en="Yes, it works with your current machines. You don't need to change your process.">Yes, it works with your current machines. You don't need to change your process.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How much does it cost?">How much does it cost?</span></div>
+        <div class="qa-a" data-en="The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.">The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Can I get a sample?">Can I get a sample?</span></div>
+        <div class="qa-a" data-en="Yes, I can send you a free sample this week.">Yes, I can send you a free sample this week.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Why should I choose Musafil over other sustainable fabrics?">Why should I choose Musafil over other sustainable fabrics?</span></div>
+        <div class="qa-a" data-en="Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.">Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.</div>
+      </div>
+
+      <p class="tip" data-en="Practice tip: read each question in your teacher's voice, pause, then answer out loud without reading — that's the exact format he'll use on September 1.">Consejo de práctica: lee cada pregunta como si fuera tu profesor, haz una pausa, y responde en voz alta sin leer — ese es exactamente el formato que va a usar el 1 de septiembre.</p>
+    </section>
+
+    <section>
+      <h2 data-en="Phonetic alphabet (IPA) — your teacher assigned this">Alfabeto fonético (IPA) — lo pidió tu profesor</h2>
+      <p class="lede" style="margin-bottom:1rem;" data-en="These are the symbols you've been seeing in the “Pronunciación” toggle, across this whole page. Learning to read them means you can pronounce any new word correctly just by looking it up — you don't have to hear it first.">Estos son los símbolos que has estado viendo en el botón "Pronunciación", en toda esta página. Aprender a leerlos significa que puedes pronunciar cualquier palabra nueva correctamente con solo buscarla — no necesitas escucharla primero.</p>
+
+      <div class="card">
+        <h3 data-en="Vowels">Vocales</h3>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th data-en="Symbol">Símbolo</th><th data-en="Like in">Como en</th><th data-en="Sounds like">Suena parecido a</th></tr>
+            <tr><td class="mono">/iː/</td><td>s<b>ee</b>, f<b>ee</b>l</td><td data-en="Spanish 'i', but longer">'i' española, pero larga</td></tr>
+            <tr><td class="mono">/ɪ/</td><td>s<b>i</b>t, <b>i</b>s</td><td data-en="short, between Spanish i and e">corta, entre 'i' y 'e'</td></tr>
+            <tr><td class="mono">/eɪ/</td><td>m<b>a</b>ke, d<b>ay</b></td><td data-en="like Spanish 'ei'">como 'ei' española</td></tr>
+            <tr><td class="mono">/ɛ/</td><td>b<b>e</b>d, g<b>e</b>t</td><td data-en="like Spanish 'e'">como 'e' española</td></tr>
+            <tr><td class="mono">/æ/</td><td>c<b>a</b>t, b<b>a</b>d</td><td data-en="no Spanish equivalent — open mouth, between a and e">no existe en español — boca abierta, entre 'a' y 'e'</td></tr>
+            <tr><td class="mono">/ɑː/</td><td><b>a</b>re, c<b>a</b>r</td><td data-en="Spanish 'a', but longer">'a' española, pero larga</td></tr>
+            <tr><td class="mono">/ɔː/</td><td>f<b>o</b>r, st<b>o</b>re</td><td data-en="long 'o'">'o' larga</td></tr>
+            <tr><td class="mono">/oʊ/</td><td>g<b>o</b>, h<b>o</b>me</td><td data-en="like Spanish 'ou'">como 'ou' española</td></tr>
+            <tr><td class="mono">/ʊ/</td><td>p<b>u</b>t, l<b>oo</b>k</td><td data-en="short 'u'">'u' corta</td></tr>
+            <tr><td class="mono">/uː/</td><td>wh<b>o</b>, bl<b>ue</b></td><td data-en="Spanish 'u', but longer">'u' española, pero larga</td></tr>
+            <tr><td class="mono">/ʌ/</td><td>c<b>u</b>p, c<b>o</b>me</td><td data-en="short, like 'uh'">corta, como 'a' apagada</td></tr>
+            <tr><td class="mono">/ə/</td><td><b>a</b>bout, th<b>e</b></td><td data-en="'schwa' — the most common English sound, an unstressed mumble">'schwa' — el sonido más común del inglés, sin acento</td></tr>
+            <tr><td class="mono">/aɪ/</td><td>wr<b>i</b>te, m<b>y</b></td><td data-en="like Spanish 'ai'">como 'ai' española</td></tr>
+            <tr><td class="mono">/aʊ/</td><td>n<b>ow</b>, h<b>ow</b></td><td data-en="like Spanish 'au'">como 'au' española</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 data-en="Tricky consonants (sounds Spanish doesn't have)">Consonantes difíciles (sonidos que no existen en español)</h3>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th data-en="Symbol">Símbolo</th><th data-en="Like in">Como en</th><th data-en="How to make it">Cómo hacerlo</th></tr>
+            <tr><td class="mono">/θ/</td><td><b>th</b>ink</td><td data-en="tongue between teeth, no voice">lengua entre los dientes, sin voz</td></tr>
+            <tr><td class="mono">/ð/</td><td><b>th</b>is</td><td data-en="tongue between teeth, WITH voice">lengua entre los dientes, CON voz</td></tr>
+            <tr><td class="mono">/ʃ/</td><td><b>sh</b>e</td><td data-en="like Spanish 'ch' but without touching the tongue-tip">como 'sh', labios redondos</td></tr>
+            <tr><td class="mono">/tʃ/</td><td><b>ch</b>urch</td><td data-en="exactly like Spanish 'ch'">exactamente como la 'ch' española</td></tr>
+            <tr><td class="mono">/dʒ/</td><td><b>j</b>ob</td><td data-en="like English 'j', voiced">como la 'y' fuerte argentina</td></tr>
+            <tr><td class="mono">/ŋ/</td><td>si<b>ng</b></td><td data-en="nasal, like Spanish 'n' before 'g/k'">nasal, como la 'n' antes de 'g/k'</td></tr>
+            <tr><td class="mono">/v/</td><td><b>v</b>ery</td><td data-en="upper teeth on lower lip — NOT like Spanish b/v">dientes de arriba sobre el labio de abajo — no como la b/v del español</td></tr>
+            <tr><td class="mono">/r/</td><td><b>r</b>ed</td><td data-en="tongue curls back, does NOT touch the roof of the mouth — nothing like Spanish r">la lengua se enrosca hacia atrás, no toca el paladar — nada que ver con la r española</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="tip" data-en="Practice: turn on the “Pronunciación” button up top and read the pitch lines and verb list out loud, checking each symbol against this table.">Práctica: activa el botón "Pronunciación" de arriba y lee en voz alta las líneas del pitch y la lista de verbos, revisando cada símbolo contra esta tabla.</p>
     </section>
 
   </div>
