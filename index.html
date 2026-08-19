@@ -329,6 +329,70 @@
     padding: 0.9rem 1.1rem; border-radius: 10px; line-height: 1.6;
   }
 
+  /* ── INTERACTIVE: listen / mic / progress / quiz ── */
+  .item-row { display: flex; align-items: flex-start; gap: 0.6rem; }
+  .item-row > .pitch-text, .item-row > .qa-body { flex: 1; }
+  .icon-btn {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--paper-soft);
+    color: var(--text-dim); font-size: 0.95rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; padding: 0;
+  }
+  .icon-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .icon-btn.mic-btn.listening { background: var(--gold); color: #241703; border-color: var(--gold); animation: mic-pulse 1s ease-in-out infinite; }
+  @keyframes mic-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(184,127,46,.5);} 50% { box-shadow: 0 0 0 6px rgba(184,127,46,0);} }
+  @media (prefers-reduced-motion: reduce) { .icon-btn.mic-btn.listening { animation: none; } }
+
+  .practice-check {
+    flex-shrink: 0; width: 22px; height: 22px; margin-top: 0.3rem;
+    accent-color: var(--teal); cursor: pointer;
+  }
+
+  .transcript-box {
+    display: none; margin-top: 0.6rem; padding: 0.6rem 0.8rem;
+    border-radius: 8px; font-family: ui-monospace, monospace; font-size: 0.82rem;
+    background: var(--paper-soft); border: 1px solid var(--line);
+  }
+  .transcript-box.shown { display: block; }
+  .transcript-box .tb-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+  .transcript-box .tb-score { font-weight: 700; }
+  .transcript-box.match-good .tb-score { color: var(--teal); }
+  .transcript-box.match-mid .tb-score { color: var(--gold); }
+  .transcript-box.match-low .tb-score { color: #c0392b; }
+
+  .progress-counter {
+    font-family: ui-monospace, monospace; font-size: 0.72rem;
+    color: var(--text-dim); margin-bottom: 0.75rem;
+  }
+  .progress-counter b { color: var(--teal); }
+
+  .qa-answer-toggle {
+    font-family: ui-monospace, monospace; font-size: 0.68rem;
+    letter-spacing: 0.04em; color: var(--teal); background: none;
+    border: 1px solid var(--teal); border-radius: 999px; padding: 0.35rem 0.7rem;
+    cursor: pointer; margin-top: 0.5rem;
+  }
+  .qa-a { display: none; }
+  .qa-a.shown { display: block; margin-top: 0.5rem; }
+
+  .quiz-row { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; }
+  .quiz-input {
+    font-family: ui-monospace, monospace; font-size: 0.85rem;
+    padding: 0.5rem 0.7rem; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--paper); color: var(--text); flex: 1; min-width: 140px;
+  }
+  .quiz-input.correct { border-color: var(--teal); background: var(--teal-soft); }
+  .quiz-input.wrong { border-color: #c0392b; background: rgba(192,57,43,0.08); }
+  .quiz-check-btn {
+    font-family: ui-monospace, monospace; font-size: 0.7rem;
+    padding: 0.5rem 0.9rem; border-radius: 8px; border: none;
+    background: var(--gold); color: #241703; cursor: pointer;
+  }
+  .quiz-feedback { font-family: ui-monospace, monospace; font-size: 0.78rem; margin-top: 0.35rem; min-height: 1.1em; }
+  .quiz-feedback.ok { color: var(--teal); }
+  .quiz-feedback.bad { color: #c0392b; }
+
   /* ── VERBS PANEL ── */
   .search-bar {
     position: sticky; top: 3.6rem; z-index: 10;
@@ -566,12 +630,50 @@
     </section>
 
     <section>
-      <h2 data-en="Quick check — tap to reveal the answer">Repaso rápido — toca para ver la respuesta</h2>
-      <details><summary data-en="1. She ___ (watch) TV every night.">1. She ___ (watch) TV every night.</summary><div class="answer">watches</div></details>
-      <details><summary data-en="2. Right now, I ___ (write) an email.">2. Right now, I ___ (write) an email.</summary><div class="answer">am writing</div></details>
-      <details><summary data-en="3. My brother ___ (study) English on Mondays.">3. My brother ___ (study) English on Mondays.</summary><div class="answer">studies</div></details>
-      <details><summary data-en="4. They ___ (play) soccer this afternoon.">4. They ___ (play) soccer this afternoon.</summary><div class="answer">are playing</div></details>
-      <details><summary data-en="5. He ___ (go) to the gym three times a week.">5. He ___ (go) to the gym three times a week.</summary><div class="answer">goes</div></details>
+      <h2 data-en="Quick check — type the answer">Repaso rápido — escribe la respuesta</h2>
+      <p class="lede" style="margin-bottom:0.75rem;" data-en="Fill the blank with the correct form of the verb in parentheses, then tap Check.">Completa el espacio con la forma correcta del verbo entre paréntesis, y toca Verificar.</p>
+      <div class="progress-counter" id="quiz-progress">Aciertos: <b>0</b> / 5</div>
+
+      <div class="qa-block">
+        <p style="margin:0 0 0.3rem;" data-en="1. She ___ (watch) TV every night.">1. She ___ (watch) TV every night.</p>
+        <div class="quiz-row">
+          <input type="text" class="quiz-input" data-answer="watches" placeholder="...">
+          <button class="quiz-check-btn" data-en="Check">Verificar</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="qa-block">
+        <p style="margin:0 0 0.3rem;" data-en="2. Right now, I ___ (write) an email.">2. Right now, I ___ (write) an email.</p>
+        <div class="quiz-row">
+          <input type="text" class="quiz-input" data-answer="am writing" placeholder="...">
+          <button class="quiz-check-btn" data-en="Check">Verificar</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="qa-block">
+        <p style="margin:0 0 0.3rem;" data-en="3. My brother ___ (study) English on Mondays.">3. My brother ___ (study) English on Mondays.</p>
+        <div class="quiz-row">
+          <input type="text" class="quiz-input" data-answer="studies" placeholder="...">
+          <button class="quiz-check-btn" data-en="Check">Verificar</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="qa-block">
+        <p style="margin:0 0 0.3rem;" data-en="4. They ___ (play) soccer this afternoon.">4. They ___ (play) soccer this afternoon.</p>
+        <div class="quiz-row">
+          <input type="text" class="quiz-input" data-answer="are playing" placeholder="...">
+          <button class="quiz-check-btn" data-en="Check">Verificar</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="qa-block">
+        <p style="margin:0 0 0.3rem;" data-en="5. He ___ (go) to the gym three times a week.">5. He ___ (go) to the gym three times a week.</p>
+        <div class="quiz-row">
+          <input type="text" class="quiz-input" data-answer="goes" placeholder="...">
+          <button class="quiz-check-btn" data-en="Check">Verificar</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
 
     <section>
@@ -588,17 +690,72 @@
         <div class="dl-arrow">↗</div>
       </a>
 
-      <p class="tip" style="margin-bottom:1rem;" data-en="Tap “Word gloss” up top to see the Spanish translation under each English word in the lines below.">Toca “Traducción por palabra” arriba para ver la traducción en español debajo de cada palabra en inglés de las líneas de abajo.</p>
+      <p class="tip" style="margin-bottom:1rem;" data-en="Tap “Word gloss” up top to see the Spanish translation under each English word in the lines below. 🔊 reads the line out loud. 🎤 records you and compares it to the target.">Toca “Traducción por palabra” arriba para ver la traducción en español debajo de cada palabra. 🔊 lee la línea en voz alta. 🎤 te graba y compara con el texto original.</p>
+      <div class="progress-counter" id="pitch-progress">Practicado: <b>0</b> / 9</div>
 
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Hi,</span><span class='w-ipa'>/haɪ/</span><span class='w-gloss'>Hola,</span></span> <span class='word-wrap'><span class='w-en'>my</span><span class='w-ipa'>/maɪ/</span><span class='w-gloss'>mi</span></span> <span class='word-wrap'><span class='w-en'>name</span><span class='w-ipa'>/neɪm/</span><span class='w-gloss'>nombre</span></span> <span class='word-wrap'><span class='w-en'>is</span><span class='w-ipa'>/ɪz/</span><span class='w-gloss'>es</span></span> <span class='word-wrap'><span class='w-en'>Albert.</span><span class='w-ipa'>/ˈælbərt/</span><span class='w-gloss'>Albert.</span></span> <span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>work</span><span class='w-ipa'>/wɜːrk/</span><span class='w-gloss'>trabajo</span></span> <span class='word-wrap'><span class='w-en'>for</span><span class='w-ipa'>/fɔːr/</span><span class='w-gloss'>para</span></span> <span class='word-wrap'><span class='w-en'>Inmotex,</span><span class='w-ipa'>/ˈɪnmoʊtɛks/</span><span class='w-gloss'>Inmotex,</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>company</span><span class='w-ipa'>/ˈkʌmpəni/</span><span class='w-gloss'>empresa</span></span> <span class='word-wrap'><span class='w-en'>in</span><span class='w-ipa'>/ɪn/</span><span class='w-gloss'>en</span></span> <span class='word-wrap'><span class='w-en'>Venezuela.</span><span class='w-ipa'>/ˌvɛnəˈzweɪlə/</span><span class='w-gloss'>Venezuela.</span></span>">Hola, me llamo Albert. Trabajo para Inmotex, una empresa en Venezuela.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="Hi, my name is Albert. I work for Inmotex, a company in Venezuela." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="Hi, my name is Albert. I work for Inmotex, a company in Venezuela." data-transcript-target="transcript-pitch-1" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-1"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-1"></div>
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>We</span><span class='w-ipa'>/wiː/</span><span class='w-gloss'>nosotros</span></span> <span class='word-wrap'><span class='w-en'>make</span><span class='w-ipa'>/meɪk/</span><span class='w-gloss'>hacemos</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>tela</span></span> <span class='word-wrap'><span class='w-en'>called</span><span class='w-ipa'>/kɔːld/</span><span class='w-gloss'>llamada</span></span> <span class='word-wrap'><span class='w-en'>Musafil.</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil.</span></span> <span class='word-wrap'><span class='w-en'>It</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>ella</span></span> <span class='word-wrap'><span class='w-en'>mixes</span><span class='w-ipa'>/ˈmɪksɪz/</span><span class='w-gloss'>mezcla</span></span> <span class='word-wrap'><span class='w-en'>banana</span><span class='w-ipa'>/bəˈnænə/</span><span class='w-gloss'>de plátano</span></span> <span class='word-wrap'><span class='w-en'>fiber</span><span class='w-ipa'>/ˈfaɪbər/</span><span class='w-gloss'>fibra</span></span> <span class='word-wrap'><span class='w-en'>and</span><span class='w-ipa'>/ænd/</span><span class='w-gloss'>y</span></span> <span class='word-wrap'><span class='w-en'>cotton.</span><span class='w-ipa'>/ˈkɒtn/</span><span class='w-gloss'>algodón.</span></span>">Hacemos una tela llamada Musafil. Mezcla fibra de plátano y algodón.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="We make a fabric called Musafil. It mixes banana fiber and cotton." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="We make a fabric called Musafil. It mixes banana fiber and cotton." data-transcript-target="transcript-pitch-2" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-2"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-2"></div>
       <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Right</span><span class='w-ipa'>/raɪt/</span><span class='w-gloss'>ahora</span></span> <span class='word-wrap'><span class='w-en'>now,</span><span class='w-ipa'>/naʊ/</span><span class='w-gloss'>mismo,</span></span> <span class='word-wrap'><span class='w-en'>we</span><span class='w-ipa'>/wiː/</span><span class='w-gloss'>nosotros</span></span> <span class='word-wrap'><span class='w-en'>are</span><span class='w-ipa'>/ɑːr/</span><span class='w-gloss'>estamos</span></span> <span class='word-wrap'><span class='w-en'>looking</span><span class='w-ipa'>/ˈlʊkɪŋ/</span><span class='w-gloss'>buscando</span></span> <span class='word-wrap'><span class='w-en'>for</span><span class='w-ipa'>/fɔːr/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>stores</span><span class='w-ipa'>/stɔːrz/</span><span class='w-gloss'>tiendas</span></span> <span class='word-wrap'><span class='w-en'>that</span><span class='w-ipa'>/ðæt/</span><span class='w-gloss'>que</span></span> <span class='word-wrap'><span class='w-en'>want</span><span class='w-ipa'>/wɒnt/</span><span class='w-gloss'>quieren</span></span> <span class='word-wrap'><span class='w-en'>to</span><span class='w-ipa'>/tuː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>sell</span><span class='w-ipa'>/sɛl/</span><span class='w-gloss'>vender</span></span> <span class='word-wrap'><span class='w-en'>something</span><span class='w-ipa'>/ˈsʌmθɪŋ/</span><span class='w-gloss'>algo</span></span> <span class='word-wrap'><span class='w-en'>different.</span><span class='w-ipa'>/ˈdɪfrənt/</span><span class='w-gloss'>diferente.</span></span>">Ahora mismo, estamos buscando tiendas que quieran vender algo diferente.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="Right now, we are looking for stores that want to sell something different." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="Right now, we are looking for stores that want to sell something different." data-transcript-target="transcript-pitch-3" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-3"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-3"></div>
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>The</span><span class='w-ipa'>/ðə/</span><span class='w-gloss'>la</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>tela</span></span> <span class='word-wrap'><span class='w-en'>comes</span><span class='w-ipa'>/kʌmz/</span><span class='w-gloss'>viene</span></span> <span class='word-wrap'><span class='w-en'>from</span><span class='w-ipa'>/frʌm/</span><span class='w-gloss'>de</span></span> <span class='word-wrap'><span class='w-en'>the</span><span class='w-ipa'>/ðə/</span><span class='w-gloss'>el</span></span> <span class='word-wrap'><span class='w-en'>banana</span><span class='w-ipa'>/bəˈnænə/</span><span class='w-gloss'>de plátano</span></span> <span class='word-wrap'><span class='w-en'>stem.</span><span class='w-ipa'>/stɛm/</span><span class='w-gloss'>tallo.</span></span> <span class='word-wrap'><span class='w-en'>Farmers</span><span class='w-ipa'>/ˈfɑːrmərz/</span><span class='w-gloss'>los agricultores</span></span> <span class='word-wrap'><span class='w-en'>usually</span><span class='w-ipa'>/ˈjuːʒuəli/</span><span class='w-gloss'>normalmente</span></span> <span class='word-wrap'><span class='w-en'>throw</span><span class='w-ipa'>/θroʊ/</span><span class='w-gloss'>botan</span></span> <span class='word-wrap'><span class='w-en'>it</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>lo</span></span> <span class='word-wrap'><span class='w-en'>away.</span><span class='w-ipa'>/əˈweɪ/</span><span class='w-gloss'>–</span></span>">La tela viene del tallo de plátano. Los agricultores normalmente lo botan.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="The fabric comes from the banana stem. Farmers usually throw it away." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="The fabric comes from the banana stem. Farmers usually throw it away." data-transcript-target="transcript-pitch-4" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-4"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-4"></div>
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Musafil</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil</span></span> <span class='word-wrap'><span class='w-en'>feels</span><span class='w-ipa'>/fiːlz/</span><span class='w-gloss'>se siente</span></span> <span class='word-wrap'><span class='w-en'>soft,</span><span class='w-ipa'>/sɒft/</span><span class='w-gloss'>suave,</span></span> <span class='word-wrap'><span class='w-en'>like</span><span class='w-ipa'>/laɪk/</span><span class='w-gloss'>como</span></span> <span class='word-wrap'><span class='w-en'>linen,</span><span class='w-ipa'>/ˈlɪnɪn/</span><span class='w-gloss'>el lino,</span></span> <span class='word-wrap'><span class='w-en'>and</span><span class='w-ipa'>/ænd/</span><span class='w-gloss'>y</span></span> <span class='word-wrap'><span class='w-en'>it</span><span class='w-ipa'>/ɪt/</span><span class='w-gloss'>ella</span></span> <span class='word-wrap'><span class='w-en'>works</span><span class='w-ipa'>/wɜːrks/</span><span class='w-gloss'>funciona</span></span> <span class='word-wrap'><span class='w-en'>with</span><span class='w-ipa'>/wɪð/</span><span class='w-gloss'>con</span></span> <span class='word-wrap'><span class='w-en'>your</span><span class='w-ipa'>/jɔːr/</span><span class='w-gloss'>tus</span></span> <span class='word-wrap'><span class='w-en'>current</span><span class='w-ipa'>/ˈkʌrənt/</span><span class='w-gloss'>actuales</span></span> <span class='word-wrap'><span class='w-en'>machines.</span><span class='w-ipa'>/məˈʃiːnz/</span><span class='w-gloss'>máquinas.</span></span>">Musafil se siente suave, como el lino, y funciona con tus máquinas actuales.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="Musafil feels soft, like linen, and it works with your current machines." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="Musafil feels soft, like linen, and it works with your current machines." data-transcript-target="transcript-pitch-5" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-5"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-5"></div>
       <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>am</span><span class='w-ipa'>/æm/</span><span class='w-gloss'>estoy</span></span> <span class='word-wrap'><span class='w-en'>offering</span><span class='w-ipa'>/ˈɒfərɪŋ/</span><span class='w-gloss'>ofreciendo</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>te</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>free</span><span class='w-ipa'>/friː/</span><span class='w-gloss'>gratis</span></span> <span class='word-wrap'><span class='w-en'>sample</span><span class='w-ipa'>/ˈsæmpəl/</span><span class='w-gloss'>muestra</span></span> <span class='word-wrap'><span class='w-en'>this</span><span class='w-ipa'>/ðɪs/</span><span class='w-gloss'>esta</span></span> <span class='word-wrap'><span class='w-en'>week.</span><span class='w-ipa'>/wiːk/</span><span class='w-gloss'>semana.</span></span>">Te estoy ofreciendo una muestra gratis esta semana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="I am offering you a free sample this week." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="I am offering you a free sample this week." data-transcript-target="transcript-pitch-6" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-6"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-6"></div>
       <div class="pitch-line continuous"><span class="tag-pill" data-en="Continuous">Continuo</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>Are</span><span class='w-ipa'>/ɑːr/</span><span class='w-gloss'>¿estás</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>selling</span><span class='w-ipa'>/ˈsɛlɪŋ/</span><span class='w-gloss'>vendiendo</span></span> <span class='word-wrap'><span class='w-en'>anything</span><span class='w-ipa'>/ˈɛniθɪŋ/</span><span class='w-gloss'>algo</span></span> <span class='word-wrap'><span class='w-en'>sustainable</span><span class='w-ipa'>/səˈsteɪnəbəl/</span><span class='w-gloss'>sostenible</span></span> <span class='word-wrap'><span class='w-en'>right</span><span class='w-ipa'>/raɪt/</span><span class='w-gloss'>ahora</span></span> <span class='word-wrap'><span class='w-en'>now?</span><span class='w-ipa'>/naʊ/</span><span class='w-gloss'>mismo?</span></span>">¿Estás vendiendo algo sostenible en este momento?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="Are you selling anything sustainable right now?" title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="Are you selling anything sustainable right now?" data-transcript-target="transcript-pitch-7" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-7"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-7"></div>
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>When</span><span class='w-ipa'>/wɛn/</span><span class='w-gloss'>¿cuándo</span></span> <span class='word-wrap'><span class='w-en'>do</span><span class='w-ipa'>/duː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>you</span><span class='w-ipa'>/juː/</span><span class='w-gloss'>tú</span></span> <span class='word-wrap'><span class='w-en'>receive</span><span class='w-ipa'>/rɪˈsiːv/</span><span class='w-gloss'>recibes</span></span> <span class='word-wrap'><span class='w-en'>new</span><span class='w-ipa'>/njuː/</span><span class='w-gloss'>nuevas</span></span> <span class='word-wrap'><span class='w-en'>fabric</span><span class='w-ipa'>/ˈfæbrɪk/</span><span class='w-gloss'>de tela</span></span> <span class='word-wrap'><span class='w-en'>samples?</span><span class='w-ipa'>/ˈsæmpəlz/</span><span class='w-gloss'>muestras?</span></span>">¿Cuándo recibes muestras de tela nuevas?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="When do you receive new fabric samples?" title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="When do you receive new fabric samples?" data-transcript-target="transcript-pitch-8" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-8"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-8"></div>
       <div class="pitch-line"><span class="tag-pill" data-en="Simple">Simple</span><span class="pitch-text" data-en="<span class='word-wrap'><span class='w-en'>I</span><span class='w-ipa'>/aɪ/</span><span class='w-gloss'>yo</span></span> <span class='word-wrap'><span class='w-en'>believe</span><span class='w-ipa'>/bɪˈliːv/</span><span class='w-gloss'>creo</span></span> <span class='word-wrap'><span class='w-en'>Musafil</span><span class='w-ipa'>/muːsəˈfiːl/</span><span class='w-gloss'>Musafil</span></span> <span class='word-wrap'><span class='w-en'>tells</span><span class='w-ipa'>/tɛlz/</span><span class='w-gloss'>cuenta</span></span> <span class='word-wrap'><span class='w-en'>a</span><span class='w-ipa'>/ə/</span><span class='w-gloss'>una</span></span> <span class='word-wrap'><span class='w-en'>story</span><span class='w-ipa'>/ˈstɔːri/</span><span class='w-gloss'>historia</span></span> <span class='word-wrap'><span class='w-en'>your</span><span class='w-ipa'>/jɔːr/</span><span class='w-gloss'>que tus</span></span> <span class='word-wrap'><span class='w-en'>customers</span><span class='w-ipa'>/ˈkʌstəmərz/</span><span class='w-gloss'>clientes</span></span> <span class='word-wrap'><span class='w-en'>want</span><span class='w-ipa'>/wɒnt/</span><span class='w-gloss'>quieren</span></span> <span class='word-wrap'><span class='w-en'>to</span><span class='w-ipa'>/tuː/</span><span class='w-gloss'>–</span></span> <span class='word-wrap'><span class='w-en'>hear.</span><span class='w-ipa'>/hɪr/</span><span class='w-gloss'>escuchar.</span></span>">Creo que Musafil cuenta una historia que tus clientes quieren escuchar.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;">
+        <button class="icon-btn listen-btn" data-say="I believe Musafil tells a story your customers want to hear." title="Escuchar en inglés">🔊</button>
+        <button class="icon-btn mic-btn" data-say="I believe Musafil tells a story your customers want to hear." data-transcript-target="transcript-pitch-9" title="Practicar y comparar">🎤</button>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="pitch-9"><span data-en="Practiced">Practicado</span></label>
+      </div>
+      <div class="transcript-box" id="transcript-pitch-9"></div>
 
       <p class="tip" style="margin-top:0.85rem;" data-en="How to practice: read it out loud 2-3 times switching to English up top, then try saying it from memory. Same shadowing technique from the routine — Friday's practice, early.">Cómo practicarlo: léelo en voz alta 2-3 veces cambiando a inglés arriba, y luego intenta decirlo de memoria. Es la misma técnica de shadowing de la rutina — adelantas la práctica del viernes.</p>
     </section>
@@ -623,42 +780,142 @@
       </div>
 
       <h3 data-en="Buyer Q&A bank — practice switching Past ↔ Present">Banco de preguntas de comprador — practica cambiar Pasado ↔ Presente</h3>
-      <p class="lede" style="margin-bottom:1rem;" data-en="Fill in the blanks marked ___ with your real answer, then practice saying the whole thing out loud.">Rellena los espacios marcados ___ con tu respuesta real, y practica diciendo todo en voz alta.</p>
+      <p class="lede" style="margin-bottom:0.5rem;" data-en="Fill in the blanks marked ___ with your real answer. Try to answer out loud from memory before tapping “Show answer.”">Rellena los espacios marcados ___ con tu respuesta real. Intenta responder de memoria en voz alta antes de tocar "Ver respuesta".</p>
+      <div class="progress-counter" id="qa-progress">Practicado: <b>0</b> / 12</div>
 
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What inspired you to create Musafil?">What inspired you to create Musafil?</span></div>
+      <div class="qa-block" data-id="qa-1">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What inspired you to create Musafil?">What inspired you to create Musafil?</span> <button class="icon-btn listen-btn" data-say="What inspired you to create Musafil?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
         <div class="qa-a" data-en="I was inspired when I saw farmers throwing away banana stems after harvest. I thought that fiber shouldn't go to waste.">I was inspired when I saw farmers throwing away banana stems after harvest. I thought that fiber shouldn't go to waste.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="How long did it take you to develop this?">How long did it take you to develop this?</span></div>
-        <div class="qa-a" data-en="It took me ___ to develop the process.">It took me ___ to develop the process.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What was the biggest challenge?">What was the biggest challenge?</span></div>
-        <div class="qa-a" data-en="The biggest challenge was extracting the fiber without using chemicals.">The biggest challenge was extracting the fiber without using chemicals.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How is Musafil different from regular cotton fabric?">How is Musafil different from regular cotton fabric?</span></div>
-        <div class="qa-a" data-en="Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.">Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Does it work with my current machines?">Does it work with my current machines?</span></div>
-        <div class="qa-a" data-en="Yes, it works with your current machines. You don't need to change your process.">Yes, it works with your current machines. You don't need to change your process.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How much does it cost?">How much does it cost?</span></div>
-        <div class="qa-a" data-en="The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.">The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Can I get a sample?">Can I get a sample?</span></div>
-        <div class="qa-a" data-en="Yes, I can send you a free sample this week.">Yes, I can send you a free sample this week.</div>
-      </div>
-      <div class="qa-block">
-        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Why should I choose Musafil over other sustainable fabrics?">Why should I choose Musafil over other sustainable fabrics?</span></div>
-        <div class="qa-a" data-en="Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.">Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="I was inspired when I saw farmers throwing away banana stems after harvest. I thought that fiber shouldn't go to waste." data-transcript-target="transcript-qa-1" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-1"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-1"></div>
       </div>
 
-      <p class="tip" data-en="Practice tip: read each question in your teacher's voice, pause, then answer out loud without reading — that's the exact format he'll use on September 1.">Consejo de práctica: lee cada pregunta como si fuera tu profesor, haz una pausa, y responde en voz alta sin leer — ese es exactamente el formato que va a usar el 1 de septiembre.</p>
+      <div class="qa-block" data-id="qa-2">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="How long did it take you to develop this?">How long did it take you to develop this?</span> <button class="icon-btn listen-btn" data-say="How long did it take you to develop this?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="It took me ___ to develop the process.">It took me ___ to develop the process.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="It took me time to develop the process." data-transcript-target="transcript-qa-2" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-2"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-2"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-3">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="What was the biggest challenge?">What was the biggest challenge?</span> <button class="icon-btn listen-btn" data-say="What was the biggest challenge?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="The biggest challenge was extracting the fiber without using chemicals.">The biggest challenge was extracting the fiber without using chemicals.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="The biggest challenge was extracting the fiber without using chemicals." data-transcript-target="transcript-qa-3" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-3"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-3"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-4">
+        <div class="qa-q"><span class="tag-pill past" data-en="Past">Pasado</span><span data-en="Did you test this with any factory before bringing it to me?">Did you test this with any factory before bringing it to me?</span> <button class="icon-btn listen-btn" data-say="Did you test this with any factory before bringing it to me?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Yes, I tested it with ___ before this meeting.">Yes, I tested it with ___ before this meeting.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Yes, I tested it before this meeting." data-transcript-target="transcript-qa-4" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-4"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-4"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-5">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How is Musafil different from regular cotton fabric?">How is Musafil different from regular cotton fabric?</span> <button class="icon-btn listen-btn" data-say="How is Musafil different from regular cotton fabric?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.">Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Musafil mixes 30% banana fiber with 70% cotton, and it uses 25% less water to produce." data-transcript-target="transcript-qa-5" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-5"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-5"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-6">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Does it work with my current machines?">Does it work with my current machines?</span> <button class="icon-btn listen-btn" data-say="Does it work with my current machines?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Yes, it works with your current machines. You don't need to change your process.">Yes, it works with your current machines. You don't need to change your process.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Yes, it works with your current machines. You don't need to change your process." data-transcript-target="transcript-qa-6" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-6"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-6"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-7">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How much does it cost?">How much does it cost?</span> <button class="icon-btn listen-btn" data-say="How much does it cost?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.">The price is competitive — similar to regular cotton, with no premium like bamboo or imported linen.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="The price is competitive, similar to regular cotton, with no premium like bamboo or imported linen." data-transcript-target="transcript-qa-7" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-7"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-7"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-8">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Can you give me a discount for a bulk order?">Can you give me a discount for a bulk order?</span> <button class="icon-btn listen-btn" data-say="Can you give me a discount for a bulk order?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="For larger orders, yes — the price is negotiable. Let's talk numbers.">For larger orders, yes — the price is negotiable. Let's talk numbers.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="For larger orders, yes, the price is negotiable. Let's talk numbers." data-transcript-target="transcript-qa-8" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-8"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-8"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-9">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="What happens if I'm not satisfied?">What happens if I'm not satisfied?</span> <button class="icon-btn listen-btn" data-say="What happens if I'm not satisfied?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="You can return the sample, no questions asked.">You can return the sample, no questions asked.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="You can return the sample, no questions asked." data-transcript-target="transcript-qa-9" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-9"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-9"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-10">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="What colors does the fabric come in?">What colors does the fabric come in?</span> <button class="icon-btn listen-btn" data-say="What colors does the fabric come in?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Right now it comes in natural tones, and I plan to add more options soon.">Right now it comes in natural tones, and I plan to add more options soon.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Right now it comes in natural tones, and I plan to add more options soon." data-transcript-target="transcript-qa-10" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-10"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-10"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-11">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Can I get a sample?">Can I get a sample?</span> <button class="icon-btn listen-btn" data-say="Can I get a sample?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Yes, I can send you a free sample this week.">Yes, I can send you a free sample this week.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Yes, I can send you a free sample this week." data-transcript-target="transcript-qa-11" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-11"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-11"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-12">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Why should I choose Musafil over other sustainable fabrics?">Why should I choose Musafil over other sustainable fabrics?</span> <button class="icon-btn listen-btn" data-say="Why should I choose Musafil over other sustainable fabrics?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.">Because it doesn't cost more, like bamboo or imported linen does — you get a premium story at a fair price.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Because it doesn't cost more, like bamboo or imported linen does, you get a premium story at a fair price." data-transcript-target="transcript-qa-12" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-12"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-12"></div>
+      </div>
+
+      <p class="tip" data-en="Practice tip: read each question in your teacher's voice, pause, then answer out loud from memory before tapping “Show answer.” That's the exact format he'll use on September 1.">Consejo de práctica: lee cada pregunta como si fuera tu profesor, haz una pausa, y responde en voz alta de memoria antes de tocar "Ver respuesta" — ese es exactamente el formato que va a usar el 1 de septiembre.</p>
     </section>
 
     <section>
@@ -1009,6 +1266,7 @@
     document.getElementById('lang-btn').textContent = lang === 'es' ? 'ES → EN' : 'EN → ES';
     updateLang();
     if (typeof updateInterlinearBtn === 'function') updateInterlinearBtn();
+    if (typeof updateProgressCounters === 'function') updateProgressCounters();
   });
   function updateLang() {
     document.querySelectorAll('[data-en]').forEach(el => {
@@ -1084,5 +1342,179 @@
       });
       document.getElementById('verb-count').textContent = q ? (visible + ' resultado(s)') : '';
     });
+  }
+
+  // ── LISTEN (text-to-speech) ─────────────────
+  function speakEnglish(text) {
+    if (!('speechSynthesis' in window)) {
+      alert(lang === 'en' ? 'Your browser does not support reading text out loud.' : 'Tu navegador no soporta la lectura en voz alta. Prueba en Chrome.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.92;
+    window.speechSynthesis.speak(u);
+  }
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.listen-btn');
+    if (btn && btn.dataset.say) speakEnglish(btn.dataset.say);
+  });
+
+  // ── PRACTICE & COMPARE (speech-to-text) ─────
+  const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let activeRecognition = null;
+  let activeMicBtn = null;
+
+  function normalizeWords(str) {
+    return str.toLowerCase().replace(/[.,!?¿¡"“”']/g, '').split(/\s+/).filter(Boolean);
+  }
+
+  function scoreTranscript(target, heard) {
+    const t = normalizeWords(target);
+    const h = new Set(normalizeWords(heard));
+    if (!t.length) return 0;
+    const hits = t.filter(w => h.has(w)).length;
+    return Math.round((hits / t.length) * 100);
+  }
+
+  function stopActiveRecognition() {
+    if (activeRecognition) { try { activeRecognition.stop(); } catch (e) {} }
+    if (activeMicBtn) activeMicBtn.classList.remove('listening');
+    activeRecognition = null;
+    activeMicBtn = null;
+  }
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.mic-btn');
+    if (!btn) return;
+    const target = btn.dataset.say;
+    const boxId = btn.dataset.transcriptTarget;
+    const box = boxId ? document.getElementById(boxId) : null;
+
+    if (!SpeechRecognitionCtor) {
+      if (box) {
+        box.className = 'transcript-box shown';
+        box.innerHTML = '<div class="tb-label">' + (lang === 'en' ? 'NOT SUPPORTED' : 'NO DISPONIBLE') + '</div>' +
+          (lang === 'en'
+            ? 'Voice recording is not supported in this browser. Try Chrome on Android.'
+            : 'Grabar voz no está disponible en este navegador. Prueba con Chrome en Android.');
+      }
+      return;
+    }
+
+    if (activeMicBtn === btn) { stopActiveRecognition(); return; }
+    stopActiveRecognition();
+
+    const recog = new SpeechRecognitionCtor();
+    recog.lang = 'en-US';
+    recog.interimResults = false;
+    recog.maxAlternatives = 1;
+    activeRecognition = recog;
+    activeMicBtn = btn;
+    btn.classList.add('listening');
+
+    recog.onresult = (ev) => {
+      const heard = ev.results[0][0].transcript;
+      const score = scoreTranscript(target, heard);
+      if (box) {
+        box.classList.add('shown');
+        box.classList.remove('match-good', 'match-mid', 'match-low');
+        box.classList.add(score >= 75 ? 'match-good' : score >= 45 ? 'match-mid' : 'match-low');
+        const label = lang === 'en' ? 'YOU SAID' : 'DIJISTE';
+        box.innerHTML = '<div class="tb-label">' + label + '</div>“' + heard + '”<br><span class="tb-score">' + score + '% match</span>';
+      }
+    };
+    recog.onerror = () => {
+      if (box) {
+        box.classList.add('shown');
+        box.innerHTML = '<div class="tb-label">' + (lang === 'en' ? 'ERROR' : 'ERROR') + '</div>' +
+          (lang === 'en' ? 'Could not access the microphone.' : 'No se pudo acceder al micrófono. Revisa los permisos.');
+      }
+    };
+    recog.onend = () => { if (activeMicBtn === btn) stopActiveRecognition(); };
+    try { recog.start(); } catch (e) { stopActiveRecognition(); }
+  });
+
+  // ── PROGRESS TRACKING (localStorage) ────────
+  const PROGRESS_KEY = 'cuadernoIngles.progress';
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveProgress(p) {
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); } catch (e) {}
+  }
+  function updateProgressCounters() {
+    const p = loadProgress();
+    const pitchDone = document.querySelectorAll('.practice-check[data-progress-id^="pitch-"]:checked').length;
+    const pitchTotal = document.querySelectorAll('.practice-check[data-progress-id^="pitch-"]').length;
+    const qaDone = document.querySelectorAll('.practice-check[data-progress-id^="qa-"]:checked').length;
+    const qaTotal = document.querySelectorAll('.practice-check[data-progress-id^="qa-"]').length;
+    const pitchCounter = document.getElementById('pitch-progress');
+    const qaCounter = document.getElementById('qa-progress');
+    if (pitchCounter) pitchCounter.innerHTML = (lang === 'en' ? 'Practiced: ' : 'Practicado: ') + '<b>' + pitchDone + '</b> / ' + pitchTotal;
+    if (qaCounter) qaCounter.innerHTML = (lang === 'en' ? 'Practiced: ' : 'Practicado: ') + '<b>' + qaDone + '</b> / ' + qaTotal;
+  }
+  document.querySelectorAll('.practice-check').forEach(cb => {
+    const id = cb.dataset.progressId;
+    const p = loadProgress();
+    if (p[id]) cb.checked = true;
+    cb.addEventListener('change', () => {
+      const prog = loadProgress();
+      prog[id] = cb.checked;
+      saveProgress(prog);
+      updateProgressCounters();
+    });
+  });
+  updateProgressCounters();
+
+  // ── SHOW / HIDE ANSWER (buyer Q&A) ──────────
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.qa-answer-toggle');
+    if (!btn) return;
+    const answer = btn.parentElement.querySelector('.qa-a');
+    if (!answer) return;
+    const nowShown = answer.classList.toggle('shown');
+    btn.textContent = nowShown
+      ? (lang === 'en' ? 'Hide answer' : 'Ocultar respuesta')
+      : (lang === 'en' ? 'Show answer' : 'Ver respuesta');
+  });
+
+  // ── QUIZ CHECK (grammar quick check) ────────
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.quiz-check-btn');
+    if (!btn) return;
+    checkQuizAnswer(btn);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('quiz-input')) {
+      const row = e.target.closest('.quiz-row');
+      const btn = row && row.querySelector('.quiz-check-btn');
+      if (btn) checkQuizAnswer(btn);
+    }
+  });
+  function checkQuizAnswer(btn) {
+    const row = btn.closest('.quiz-row');
+    const input = row.querySelector('.quiz-input');
+    const feedback = row.parentElement.querySelector('.quiz-feedback');
+    const given = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+    const correct = (input.dataset.answer || '').toLowerCase();
+    const isCorrect = given === correct;
+    input.classList.remove('correct', 'wrong');
+    input.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (feedback) {
+      feedback.className = 'quiz-feedback ' + (isCorrect ? 'ok' : 'bad');
+      feedback.textContent = isCorrect
+        ? (lang === 'en' ? '✓ Correct!' : '✓ ¡Correcto!')
+        : (lang === 'en' ? '✗ Correct answer: ' + input.dataset.answer : '✗ Respuesta correcta: ' + input.dataset.answer);
+    }
+    if (isCorrect && !input.dataset.counted) {
+      input.dataset.counted = '1';
+      const counter = document.getElementById('quiz-progress');
+      if (counter) {
+        const b = counter.querySelector('b');
+        b.textContent = (parseInt(b.textContent, 10) || 0) + 1;
+      }
+    }
   }
 </script>
