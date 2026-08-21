@@ -428,6 +428,7 @@
     <div class="tabs">
       <button class="tab-btn active" data-tab="manual" data-en="Manual">Manual</button>
       <button class="tab-btn" data-tab="lesson" data-en="Homework">Tareas</button>
+      <button class="tab-btn" data-tab="phrases" data-en="Everyday phrases">Frases</button>
       <button class="tab-btn" data-tab="verbs" data-en="Verbs">Verbos</button>
     </div>
     <button id="lang-btn">ES → EN</button>
@@ -967,6 +968,193 @@
 
   </div>
 
+  <!-- ══════════════ PANEL: EVERYDAY PHRASES ══════════════ -->
+  <div class="panel" id="panel-phrases">
+
+    <header class="hero">
+      <div class="eyebrow" data-en="Sentence bank">Banco de frases</div>
+      <h1 data-en="Everyday phrases, every tense">Frases cotidianas, en todos los tiempos</h1>
+      <p class="lede" data-en="36 common sentences across 6 tenses. Same tools as your homework: listen, record yourself and compare, mark as practiced.">36 frases comunes en 6 tiempos verbales. Las mismas herramientas que en tu tarea: escuchar, grabarte y comparar, marcar como practicada.</p>
+    </header>
+
+    <div class="progress-counter" id="frases-progress">Practicado: <b>0</b> / 36</div>
+
+    <section>
+      <h2 data-en="1. Simple Present — routines and facts">1. Presente Simple — rutinas y hechos</h2>
+      <div class="formula" data-en="Subject + verb (+s/es for he/she/it)">Sujeto + verbo (+s/es para he/she/it)</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I wake up at 6 in the morning.">Me despierto a las 6 de la mañana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I wake up at 6 in the morning." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I wake up at 6 in the morning." data-transcript-target="transcript-frase-1" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-1"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-1"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She works from Monday to Friday.">Ella trabaja de lunes a viernes.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She works from Monday to Friday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She works from Monday to Friday." data-transcript-target="transcript-frase-2" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-2"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-2"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="We usually have lunch at noon.">Normalmente almorzamos al mediodía.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We usually have lunch at noon." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We usually have lunch at noon." data-transcript-target="transcript-frase-3" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-3"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-3"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="He doesn't like coffee.">A él no le gusta el café.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He doesn't like coffee." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He doesn't like coffee." data-transcript-target="transcript-frase-4" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-4"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-4"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="Do you speak English at home?">¿Hablas inglés en casa?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Do you speak English at home?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Do you speak English at home?" data-transcript-target="transcript-frase-5" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-5"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-5"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="My sister lives in another city.">Mi hermana vive en otra ciudad.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="My sister lives in another city." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="My sister lives in another city." data-transcript-target="transcript-frase-6" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-6"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-6"></div>
+    </section>
+
+    <section>
+      <h2 data-en="2. Present Continuous — happening right now">2. Presente Continuo — pasando ahora mismo</h2>
+      <div class="formula" data-en="Subject + am/is/are + verb-ing">Sujeto + am/is/are + verbo-ing</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I am writing an email right now.">Estoy escribiendo un correo ahora mismo.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am writing an email right now." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am writing an email right now." data-transcript-target="transcript-frase-7" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-7"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-7"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="They are watching a movie tonight.">Están viendo una película esta noche.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="They are watching a movie tonight." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="They are watching a movie tonight." data-transcript-target="transcript-frase-8" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-8"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-8"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She is learning English this year.">Ella está aprendiendo inglés este año.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She is learning English this year." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She is learning English this year." data-transcript-target="transcript-frase-9" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-9"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-9"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="We are having dinner at the moment.">Estamos cenando en este momento.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We are having dinner at the moment." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We are having dinner at the moment." data-transcript-target="transcript-frase-10" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-10"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-10"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="Is he studying for his exam?">¿Está estudiando para su examen?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Is he studying for his exam?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Is he studying for his exam?" data-transcript-target="transcript-frase-11" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-11"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-11"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I am not working today.">No estoy trabajando hoy.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am not working today." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am not working today." data-transcript-target="transcript-frase-12" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-12"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-12"></div>
+    </section>
+
+    <section>
+      <h2 data-en="3. Simple Past — finished actions">3. Pasado Simple — acciones terminadas</h2>
+      <div class="formula" data-en="Subject + verb+ed (or irregular past form)">Sujeto + verbo+ed (o forma irregular)</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I woke up late yesterday.">Ayer me desperté tarde.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I woke up late yesterday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I woke up late yesterday." data-transcript-target="transcript-frase-13" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-13"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-13"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She called me last night.">Ella me llamó anoche.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She called me last night." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She called me last night." data-transcript-target="transcript-frase-14" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-14"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-14"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="We didn't go to the party.">No fuimos a la fiesta.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We didn't go to the party." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We didn't go to the party." data-transcript-target="transcript-frase-15" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-15"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-15"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="Did you finish your homework?">¿Terminaste tu tarea?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Did you finish your homework?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Did you finish your homework?" data-transcript-target="transcript-frase-16" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-16"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-16"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="He bought a new phone last week.">Él compró un teléfono nuevo la semana pasada.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He bought a new phone last week." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He bought a new phone last week." data-transcript-target="transcript-frase-17" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-17"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-17"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="They traveled to Caracas in June.">Ellos viajaron a Caracas en junio.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="They traveled to Caracas in June." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="They traveled to Caracas in June." data-transcript-target="transcript-frase-18" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-18"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-18"></div>
+    </section>
+
+    <section>
+      <h2 data-en="4. Past Continuous — an action in progress in the past">4. Pasado Continuo — una acción en curso en el pasado</h2>
+      <div class="formula" data-en="Subject + was/were + verb-ing">Sujeto + was/were + verbo-ing</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I was sleeping when you called.">Estaba durmiendo cuando llamaste.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I was sleeping when you called." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I was sleeping when you called." data-transcript-target="transcript-frase-19" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-19"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-19"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She was cooking dinner at 8 pm.">Ella estaba cocinando la cena a las 8 pm.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She was cooking dinner at 8 pm." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She was cooking dinner at 8 pm." data-transcript-target="transcript-frase-20" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-20"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-20"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="We were talking about you.">Estábamos hablando de ti.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We were talking about you." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We were talking about you." data-transcript-target="transcript-frase-21" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-21"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-21"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="What were you doing yesterday at noon?">¿Qué estabas haciendo ayer al mediodía?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="What were you doing yesterday at noon?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="What were you doing yesterday at noon?" data-transcript-target="transcript-frase-22" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-22"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-22"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="He was driving when it started to rain.">Él estaba manejando cuando empezó a llover.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He was driving when it started to rain." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He was driving when it started to rain." data-transcript-target="transcript-frase-23" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-23"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-23"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="They weren't listening to the teacher.">Ellos no estaban escuchando al profesor.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="They weren't listening to the teacher." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="They weren't listening to the teacher." data-transcript-target="transcript-frase-24" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-24"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-24"></div>
+    </section>
+
+    <section>
+      <h2 data-en="5. Future with “going to” — plans">5. Futuro con "going to" — planes</h2>
+      <div class="formula" data-en="Subject + am/is/are + going to + verb">Sujeto + am/is/are + going to + verbo</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to visit my family this weekend.">Voy a visitar a mi familia este fin de semana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to visit my family this weekend." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to visit my family this weekend." data-transcript-target="transcript-frase-25" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-25"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-25"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She is going to start a new job.">Ella va a empezar un trabajo nuevo.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She is going to start a new job." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She is going to start a new job." data-transcript-target="transcript-frase-26" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-26"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-26"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="We are not going to travel this year.">No vamos a viajar este año.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We are not going to travel this year." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We are not going to travel this year." data-transcript-target="transcript-frase-27" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-27"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-27"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="Are you going to call him tonight?">¿Vas a llamarlo esta noche?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Are you going to call him tonight?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Are you going to call him tonight?" data-transcript-target="transcript-frase-28" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-28"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-28"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="He is going to study abroad.">Él va a estudiar en el extranjero.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He is going to study abroad." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He is going to study abroad." data-transcript-target="transcript-frase-29" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-29"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-29"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="They are going to open a new store.">Ellos van a abrir una tienda nueva.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="They are going to open a new store." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="They are going to open a new store." data-transcript-target="transcript-frase-30" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-30"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-30"></div>
+    </section>
+
+    <section>
+      <h2 data-en="6. Future with “will” — decisions and predictions">6. Futuro con "will" — decisiones y predicciones</h2>
+      <div class="formula" data-en="Subject + will + verb">Sujeto + will + verbo</div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I will help you with that.">Te voy a ayudar con eso.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I will help you with that." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I will help you with that." data-transcript-target="transcript-frase-31" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-31"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-31"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="It will rain tomorrow.">Va a llover mañana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="It will rain tomorrow." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="It will rain tomorrow." data-transcript-target="transcript-frase-32" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-32"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-32"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="She will love this gift.">A ella le va a encantar este regalo.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She will love this gift." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She will love this gift." data-transcript-target="transcript-frase-33" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-33"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-33"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="I won't forget your birthday.">No voy a olvidar tu cumpleaños.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I won't forget your birthday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I won't forget your birthday." data-transcript-target="transcript-frase-34" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-34"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-34"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="Will you come to the meeting?">¿Vendrás a la reunión?</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Will you come to the meeting?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Will you come to the meeting?" data-transcript-target="transcript-frase-35" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-35"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-35"></div>
+
+      <div class="pitch-line"><span class="pitch-text" data-en="They will finish the project next month.">Ellos terminarán el proyecto el próximo mes.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="They will finish the project next month." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="They will finish the project next month." data-transcript-target="transcript-frase-36" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="frase-36"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-frase-36"></div>
+    </section>
+
+  </div>
+
   <!-- ══════════════ PANEL: VERBS ══════════════ -->
   <div class="panel" id="panel-verbs">
 
@@ -1444,16 +1632,19 @@
   function saveProgress(p) {
     try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); } catch (e) {}
   }
+  const PROGRESS_GROUPS = [
+    { prefix: 'pitch-', counterId: 'pitch-progress' },
+    { prefix: 'qa-', counterId: 'qa-progress' },
+    { prefix: 'frase-', counterId: 'frases-progress' },
+  ];
   function updateProgressCounters() {
-    const p = loadProgress();
-    const pitchDone = document.querySelectorAll('.practice-check[data-progress-id^="pitch-"]:checked').length;
-    const pitchTotal = document.querySelectorAll('.practice-check[data-progress-id^="pitch-"]').length;
-    const qaDone = document.querySelectorAll('.practice-check[data-progress-id^="qa-"]:checked').length;
-    const qaTotal = document.querySelectorAll('.practice-check[data-progress-id^="qa-"]').length;
-    const pitchCounter = document.getElementById('pitch-progress');
-    const qaCounter = document.getElementById('qa-progress');
-    if (pitchCounter) pitchCounter.innerHTML = (lang === 'en' ? 'Practiced: ' : 'Practicado: ') + '<b>' + pitchDone + '</b> / ' + pitchTotal;
-    if (qaCounter) qaCounter.innerHTML = (lang === 'en' ? 'Practiced: ' : 'Practicado: ') + '<b>' + qaDone + '</b> / ' + qaTotal;
+    PROGRESS_GROUPS.forEach(({ prefix, counterId }) => {
+      const counter = document.getElementById(counterId);
+      if (!counter) return;
+      const done = document.querySelectorAll('.practice-check[data-progress-id^="' + prefix + '"]:checked').length;
+      const total = document.querySelectorAll('.practice-check[data-progress-id^="' + prefix + '"]').length;
+      counter.innerHTML = (lang === 'en' ? 'Practiced: ' : 'Practicado: ') + '<b>' + done + '</b> / ' + total;
+    });
   }
   document.querySelectorAll('.practice-check').forEach(cb => {
     const id = cb.dataset.progressId;
