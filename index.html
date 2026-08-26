@@ -304,6 +304,23 @@
   .qa-a { color: var(--text-dim); font-size: 0.92rem; padding-left: 0.1rem; border-left: 2px solid var(--line); padding-left: 0.75rem; }
   .qa-a b { color: var(--text); }
 
+  .dialog-turn {
+    border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.55rem;
+    border: 1px solid var(--line); background: var(--paper-card);
+    border-left: 3px solid var(--gold);
+  }
+  .dialog-turn.cliente { border-left-color: var(--teal); margin-left: 1.4rem; }
+  .dialog-role {
+    font-family: ui-monospace, monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 0.35rem; color: var(--gold);
+  }
+  .dialog-turn.cliente .dialog-role { color: var(--teal); }
+  .dialog-es { font-size: 0.95rem; line-height: 1.5; }
+  .dialog-phonetic {
+    font-family: ui-monospace, monospace; font-size: 0.78rem;
+    color: var(--text-dim); font-style: italic; margin-top: 0.35rem;
+  }
+
   .countdown-banner {
     background: var(--ink); color: var(--paper);
     border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
@@ -547,6 +564,18 @@
             <td data-en="Teacher corrected pronunciation and verb tenses. Questions like &quot;what was your inspiration?&quot; require switching between past (story) and present (facts) — that's what was hardest.">El profesor corrigió pronunciación y tiempos verbales. Preguntas tipo "cuál fue tu inspiración" exigen cambiar entre pasado (historia) y presente (hechos) — eso fue lo más difícil.</td>
             <td data-en="Repeat the presentation as a SALES pitch (teacher plays buyer, asks questions) on Sept 1 · study the phonetic alphabet (IPA) — see Homework tab">Repetir la presentación pero VENDIENDO (profesor hace de comprador, pregunta) el 1 de septiembre · estudiar el alfabeto fonético (IPA) — ver pestaña Tareas</td>
           </tr>
+          <tr>
+            <td class="day" data-en="Class 5">Clase 5</td>
+            <td data-en="Phonetic alphabet: vowels, consonants, diphthongs">Alfabeto fonético: vocales, consonantes, diptongos</td>
+            <td data-en="Example: “know” has a silent K (/noʊ/) vs. “now” with no K at all (/naʊ/) — same “ow” ending, different sound.">Ejemplo: "know" tiene K muda (/noʊ/) vs. "now" que no tiene K (/naʊ/) — mismo final "ow", sonido distinto.</td>
+            <td data-en="See Homework tab → Diphthongs and spelling traps">Ver pestaña Tareas → Diptongos y trampas de ortografía</td>
+          </tr>
+          <tr>
+            <td class="day">21-08 <span class="mono" style="font-size:0.7rem;color:var(--text-dim)" data-en="(class 6)">(clase 6)</span></td>
+            <td data-en="The Acoustic Lab: Advanced English Pronunciation">The Acoustic Lab: pronunciación avanzada del inglés</td>
+            <td data-en="Vowel sound depends on syllable structure: vowel closed in by consonants on both sides = short sound; two vowels together, or vowel+consonant+silent E = long sound. Practiced pronunciation and listening comprehension.">El sonido de la vocal depende de la estructura de la sílaba: vocal encerrada por consonantes a los lados = sonido corto; dos vocales juntas, o vocal+consonante+E muda = sonido largo. Se practicó pronunciación y comprensión auditiva.</td>
+            <td data-en="Sell the real fabric — this time it's the actual sale, not a speech. See the full sales dialogue in the Homework tab.">Vender la tela real — esta vez es la venta real, no un speech. Ver el diálogo completo de venta en la pestaña Tareas.</td>
+          </tr>
         </table>
       </div>
     </section>
@@ -777,9 +806,139 @@
           <div class="cb-label" data-en="Next presentation">Próxima presentación</div>
           <div class="cb-date">1 septiembre 2026</div>
         </div>
-        <div class="cb-label" data-en="Reminder already set in your calendar">Ya quedó el recordatorio en tu calendario</div>
+        <div class="cb-label" data-en="This is the real sale now, not a speech">Ahora es la venta real, ya no es un speech</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Full sales dialogue (the real script)">Diálogo completo de venta (el guion real)</h2>
+      <p class="lede" style="margin-bottom:0.5rem;" data-en="Every English line has a simplified pronunciation guide below it (approximate Spanish sounds, not IPA — CAPS = stressed syllable). Listen to the CLIENTE lines too, so you understand them even if they ask in a different order.">Cada línea en inglés trae debajo su guía de pronunciación simplificada (sonidos aproximados en español, no es IPA — MAYÚSCULA = sílaba con el golpe de voz). Escucha también las líneas del CLIENTE, para que las entiendas aunque pregunten en otro orden.</p>
+      <div class="progress-counter" id="dlg-progress">Practicado: <b>0</b> / 8</div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="Good morning! Thank you for your time today.">¡Buenos días! Gracias por tu tiempo hoy.</div>
+        <div class="dialog-phonetic">Gud MÓRning! Zenk yu for yor táim tuDÉI.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Good morning! Thank you for your time today." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Good morning! Thank you for your time today." data-transcript-target="transcript-dlg-1" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-1"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-1"></div>
       </div>
 
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="Good morning. Nice to meet you.">Buenos días. Mucho gusto.</div>
+        <div class="dialog-phonetic">Gud MÓRning. Náis tu mit yu.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Good morning. Nice to meet you." title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="My name is Albert. I am the founder of Inmotex. I created Musafil.">Me llamo Albert. Soy el fundador de Inmotex. Yo creé Musafil.</div>
+        <div class="dialog-phonetic">Mái néim is Albert. Ái am de FÁUnder of Inmotex. Ái kriÉited Musafil.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="My name is Albert. I am the founder of Inmotex. I created Musafil." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="My name is Albert. I am the founder of Inmotex. I created Musafil." data-transcript-target="transcript-dlg-2" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-2"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-2"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="Nice to meet you, Albert. What is Musafil?">Mucho gusto, Albert. ¿Qué es Musafil?</div>
+        <div class="dialog-phonetic">Náis tu mit yu, Albert. Uát is Musafil?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Nice to meet you, Albert. What is Musafil?" title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="Musafil is a new fabric. It is a mix of banana fiber and cotton.">Musafil es una tela nueva. Es una mezcla de fibra de plátano y algodón.</div>
+        <div class="dialog-phonetic">Musafil is e niú FÁbric. It is e mix of baNÁna FÁIber and KÁton.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Musafil is a new fabric. It is a mix of banana fiber and cotton." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Musafil is a new fabric. It is a mix of banana fiber and cotton." data-transcript-target="transcript-dlg-3" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-3"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-3"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="Interesting. Why banana fiber?">Interesante. ¿Por qué fibra de plátano?</div>
+        <div class="dialog-phonetic">INtresting. Uái baNÁna FÁIber?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Interesting. Why banana fiber?" title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="Cotton uses a lot of water. Banana fiber comes from farm waste. It is more sustainable.">El algodón usa mucha agua. La fibra de plátano viene de un residuo agrícola. Es más sostenible.</div>
+        <div class="dialog-phonetic">KÁton IÚses e lat of wáter. baNÁna FÁIber kams from farm uéist. It is mor sasTÉInabol.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Cotton uses a lot of water. Banana fiber comes from farm waste. It is more sustainable." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Cotton uses a lot of water. Banana fiber comes from farm waste. It is more sustainable." data-transcript-target="transcript-dlg-4" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-4"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-4"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="How does the fabric feel?">¿Cómo se siente la tela?</div>
+        <div class="dialog-phonetic">Jáu das de FÁbric fil?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="How does the fabric feel?" title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="It feels soft, like linen. And it works with your current machines.">Se siente suave, como el lino. Y funciona con tus máquinas actuales.</div>
+        <div class="dialog-phonetic">It fils soft, láik LÍnen. And it uórks uíd yor KÁrent maSHÍNS.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="It feels soft, like linen. And it works with your current machines." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="It feels soft, like linen. And it works with your current machines." data-transcript-target="transcript-dlg-5" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-5"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-5"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="What is the price?">¿Cuál es el precio?</div>
+        <div class="dialog-phonetic">Uát is de práis?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="What is the price?" title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="The price is similar to good cotton. No extra cost, like bamboo or imported linen.">El precio es similar al del buen algodón. Sin sobreprecio, como el bambú o el lino importado.</div>
+        <div class="dialog-phonetic">De práis is SÍmilar tu gud KÁton. Nóu ÉXtra cost, láik bamBÚ or imPORted LÍnen.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="The price is similar to good cotton. No extra cost, like bamboo or imported linen." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="The price is similar to good cotton. No extra cost, like bamboo or imported linen." data-transcript-target="transcript-dlg-6" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-6"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-6"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="Can I see a sample?">¿Puedo ver una muestra?</div>
+        <div class="dialog-phonetic">Can ái si e SÁMpol?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Can I see a sample?" title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="Yes, of course. When can I send you a sample?">Sí, claro. ¿Cuándo puedo enviarte una muestra?</div>
+        <div class="dialog-phonetic">Iés, of kors. Uén can ái send yu e SÁMpol?</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Yes, of course. When can I send you a sample?" title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Yes, of course. When can I send you a sample?" data-transcript-target="transcript-dlg-7" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-7"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-7"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="This week is good for me.">Esta semana me viene bien.</div>
+        <div class="dialog-phonetic">Dis uík is gud for mi.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="This week is good for me." title="Escuchar">🔊</button></div>
+      </div>
+
+      <div class="dialog-turn tu">
+        <div class="dialog-role">TÚ</div>
+        <div class="dialog-es" data-en="Perfect. I will send it this week. Thank you very much.">Perfecto. La envío esta semana. ¡Muchas gracias!</div>
+        <div class="dialog-phonetic">PÉRfect. Ái uíl send it dis uík. Zenk yu VÉri mach.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Perfect. I will send it this week. Thank you very much." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Perfect. I will send it this week. Thank you very much." data-transcript-target="transcript-dlg-8" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="dlg-8"><span data-en="Practiced">Practicado</span></label></div>
+        <div class="transcript-box" id="transcript-dlg-8"></div>
+      </div>
+
+      <div class="dialog-turn cliente">
+        <div class="dialog-role">CLIENTE</div>
+        <div class="dialog-es" data-en="Thank you, Albert. I will wait for the sample.">Gracias, Albert. Espero la muestra.</div>
+        <div class="dialog-phonetic">Zenk yu, Albert. Ái uíl uéit for de SÁMpol.</div>
+        <div class="item-row" style="margin-top:0.5rem;"><button class="icon-btn listen-btn" data-say="Thank you, Albert. I will wait for the sample." title="Escuchar">🔊</button></div>
+      </div>
+
+      <p class="tip" data-en="This is an example — the real client can ask something else, or in a different order. Use it to practice the flow and vocabulary, not to memorize an exact script word for word.">Este es un ejemplo — el cliente real puede preguntar otra cosa, o en otro orden. Úsalo para practicar el flujo y el vocabulario, no para memorizar un guion exacto palabra por palabra.</p>
+    </section>
+
+    <section>
       <h3 data-en="Buyer Q&A bank — practice switching Past ↔ Present">Banco de preguntas de comprador — practica cambiar Pasado ↔ Presente</h3>
       <p class="lede" style="margin-bottom:0.5rem;" data-en="Fill in the blanks marked ___ with your real answer. Try to answer out loud from memory before tapping “Show answer.”">Rellena los espacios marcados ___ con tu respuesta real. Intenta responder de memoria en voz alta antes de tocar "Ver respuesta".</p>
       <div class="progress-counter" id="qa-progress">Practicado: <b>0</b> / 12</div>
@@ -916,6 +1075,119 @@
         <div class="transcript-box" id="transcript-qa-12"></div>
       </div>
 
+      <h3 style="margin-top:1.5rem;" data-en="More real FAQ (from your sales script)">Más preguntas reales frecuentes (de tu guion de venta)</h3>
+      <p class="lede" style="margin-bottom:1rem;" data-en="Where it says a specific number or detail of yours (price, delivery time, quantity), adjust it to your real situation before presenting.">Donde diga un número o dato específico tuyo (precio, tiempo de entrega, cantidad), ajústalo a tu realidad real antes de presentar.</p>
+
+      <div class="qa-block" data-id="qa-13">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="What is the minimum order?">What is the minimum order?</span> <button class="icon-btn listen-btn" data-say="What is the minimum order?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="The minimum order is small for a first trial. We can grow together.">The minimum order is small for a first trial. We can grow together.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="The minimum order is small for a first trial. We can grow together." data-transcript-target="transcript-qa-13" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-13"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-13"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-14">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Is this fabric durable?">Is this fabric durable?</span> <button class="icon-btn listen-btn" data-say="Is this fabric durable?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Yes. It is strong, and it lasts a long time.">Yes. It is strong, and it lasts a long time.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Yes. It is strong, and it lasts a long time." data-transcript-target="transcript-qa-14" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-14"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-14"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-15">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How do I wash it?">How do I wash it?</span> <button class="icon-btn listen-btn" data-say="How do I wash it?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="You can wash it like cotton. It needs no special care.">You can wash it like cotton. It needs no special care.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="You can wash it like cotton. It needs no special care." data-transcript-target="transcript-qa-15" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-15"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-15"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-16">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Do you have colors, or only natural white?">Do you have colors, or only natural white?</span> <button class="icon-btn listen-btn" data-say="Do you have colors, or only natural white?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Right now, we have natural white. We are working on more colors.">Right now, we have natural white. We are working on more colors.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Right now, we have natural white. We are working on more colors." data-transcript-target="transcript-qa-16" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-16"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-16"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-17">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Where do you make this fabric?">Where do you make this fabric?</span> <button class="icon-btn listen-btn" data-say="Where do you make this fabric?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="We make it in Venezuela, close to the banana farms.">We make it in Venezuela, close to the banana farms.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="We make it in Venezuela, close to the banana farms." data-transcript-target="transcript-qa-17" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-17"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-17"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-18">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How long is the delivery time?">How long is the delivery time?</span> <button class="icon-btn listen-btn" data-say="How long is the delivery time?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="I will confirm the exact time for your order.">I will confirm the exact time for your order.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="I will confirm the exact time for your order." data-transcript-target="transcript-qa-18" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-18"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-18"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-19">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Do you have a certificate for sustainability?">Do you have a certificate for sustainability?</span> <button class="icon-btn listen-btn" data-say="Do you have a certificate for sustainability?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="We are working on certification. Today, I can show you the full process.">We are working on certification. Today, I can show you the full process.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="We are working on certification. Today, I can show you the full process." data-transcript-target="transcript-qa-19" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-19"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-19"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-20">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Why is this better than regular cotton?">Why is this better than regular cotton?</span> <button class="icon-btn listen-btn" data-say="Why is this better than regular cotton?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="It uses less water and less land. And it has a strong story for your customers.">It uses less water and less land. And it has a strong story for your customers.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="It uses less water and less land. And it has a strong story for your customers." data-transcript-target="transcript-qa-20" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-20"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-20"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-21">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="Can you make big quantities?">Can you make big quantities?</span> <button class="icon-btn listen-btn" data-say="Can you make big quantities?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="Yes. We can grow our production with your order.">Yes. We can grow our production with your order.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="Yes. We can grow our production with your order." data-transcript-target="transcript-qa-21" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-21"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-21"></div>
+      </div>
+
+      <div class="qa-block" data-id="qa-22">
+        <div class="qa-q"><span class="tag-pill" data-en="Present">Presente</span><span data-en="How much does it cost?">How much does it cost?</span> <button class="icon-btn listen-btn" data-say="How much does it cost?" title="Escuchar">🔊</button></div>
+        <button class="qa-answer-toggle" data-en="Show answer">Ver respuesta</button>
+        <div class="qa-a" data-en="The price is close to standard cotton. I can send you the full price list.">The price is close to standard cotton. I can send you the full price list.</div>
+        <div class="item-row" style="margin-top:0.5rem;">
+          <button class="icon-btn mic-btn" data-say="The price is close to standard cotton. I can send you the full price list." data-transcript-target="transcript-qa-22" title="Practicar y comparar">🎤</button>
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="qa-22"><span data-en="Practiced">Practicado</span></label>
+        </div>
+        <div class="transcript-box" id="transcript-qa-22"></div>
+      </div>
+
       <p class="tip" data-en="Practice tip: read each question in your teacher's voice, pause, then answer out loud from memory before tapping “Show answer.” That's the exact format he'll use on September 1.">Consejo de práctica: lee cada pregunta como si fuera tu profesor, haz una pausa, y responde en voz alta de memoria antes de tocar "Ver respuesta" — ese es exactamente el formato que va a usar el 1 de septiembre.</p>
     </section>
 
@@ -964,6 +1236,92 @@
       </div>
 
       <p class="tip" data-en="Practice: turn on the “Pronunciación” button up top and read the pitch lines and verb list out loud, checking each symbol against this table.">Práctica: activa el botón "Pronunciación" de arriba y lee en voz alta las líneas del pitch y la lista de verbos, revisando cada símbolo contra esta tabla.</p>
+    </section>
+
+    <section>
+      <h2 data-en="Diphthongs and spelling traps (class 5)">Diptongos y trampas de ortografía (clase 5)</h2>
+      <p class="lede" style="margin-bottom:1rem;" data-en="A diphthong is two vowel sounds glued into one syllable — your mouth moves while you say it.">Un diptongo son dos sonidos de vocal pegados en una sola sílaba — la boca se mueve mientras lo dices.</p>
+
+      <div class="card">
+        <h3 data-en="The 5 main diphthongs">Los 5 diptongos principales</h3>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th data-en="Symbol">Símbolo</th><th data-en="Like in">Como en</th><th data-en="Sounds like">Suena parecido a</th></tr>
+            <tr><td class="mono">/eɪ/</td><td>m<b>a</b>ke, d<b>ay</b></td><td data-en="starts at 'e', glides to 'i'">empieza en 'e', desliza a 'i'</td></tr>
+            <tr><td class="mono">/aɪ/</td><td>wr<b>i</b>te, m<b>y</b></td><td data-en="like Spanish 'ai'">como 'ai' española</td></tr>
+            <tr><td class="mono">/aʊ/</td><td>n<b>ow</b>, h<b>ow</b></td><td data-en="like Spanish 'au'">como 'au' española</td></tr>
+            <tr><td class="mono">/oʊ/</td><td>kn<b>ow</b>, gr<b>ow</b></td><td data-en="like Spanish 'ou'">como 'ou' española</td></tr>
+            <tr><td class="mono">/ɔɪ/</td><td>b<b>oy</b>, v<b>oi</b>ce</td><td data-en="like Spanish 'oi'">como 'oi' española</td></tr>
+          </table>
+        </div>
+        <p class="tip" style="margin-top:0.85rem;" data-en="Trap: the letters “ow” don't always sound the same. Sometimes it's /oʊ/ (know, grow, show), sometimes it's /aʊ/ (now, how, cow). There's no fixed rule — you learn each word by ear.">Trampa: las letras "ow" no siempre suenan igual. A veces es /oʊ/ (know, grow, show), a veces es /aʊ/ (now, how, cow). No hay regla fija — se aprende palabra por palabra, de oído.</p>
+      </div>
+
+      <div class="card">
+        <h3 data-en="Silent letters">Letras mudas</h3>
+        <div class="rule-row">
+          <span class="rule-tag">kn-</span>
+          <span class="rule-examples" data-en="the K is silent → know /noʊ/ · knee /niː/ · knife /naɪf/ · knock /nɒk/">la K es muda → know /noʊ/ · knee /niː/ · knife /naɪf/ · knock /nɒk/</span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag">wr-</span>
+          <span class="rule-examples" data-en="the W is silent → write /raɪt/ · wrong /rɒŋ/">la W es muda → write /raɪt/ · wrong /rɒŋ/</span>
+        </div>
+        <div class="rule-row">
+          <span class="rule-tag">-mb</span>
+          <span class="rule-examples" data-en="the B is silent → climb /klaɪm/ · comb /koʊm/">la B es muda → climb /klaɪm/ · comb /koʊm/</span>
+        </div>
+        <p class="tip" style="margin-top:0.85rem;" data-en="This is exactly the “know vs. now” example from class: “know” has a silent K (/noʊ/) — “now” has no K at all (/naʊ/). Same letters “ow” at the end, completely different sound.">Este es exactamente el ejemplo de "know vs. now" de la clase: "know" tiene una K muda (/noʊ/) — "now" no tiene K para nada (/naʊ/). Las mismas letras "ow" al final, sonido completamente distinto.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-en="Short vs. long vowel — syllable rules (class 6: The Acoustic Lab)">Vocal corta vs. larga — reglas de sílaba (clase 6: The Acoustic Lab)</h2>
+      <p class="lede" style="margin-bottom:1rem;" data-en="Advanced pronunciation: how the letters around a vowel change how it sounds.">Pronunciación avanzada: cómo las letras alrededor de una vocal cambian cómo suena.</p>
+
+      <div class="grid2">
+        <div class="card tense-card">
+          <div class="tense-name" data-en="Closed syllable → short vowel">Sílaba cerrada → vocal corta</div>
+          <p data-en="A vowel with one consonant on each side (or vowel + consonant + consonant), and nothing after — the vowel stays short.">Una vocal con una consonante a cada lado (o vocal + consonante + consonante), y nada después — la vocal se queda corta.</p>
+          <div class="formula" data-en="Consonant + vowel + consonant(s)">Consonante + vocal + consonante(s)</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th data-en="Word">Palabra</th><th data-en="Sound">Sonido</th></tr>
+              <tr><td>c<b>a</b>p</td><td class="ex">/kæp/</td></tr>
+              <tr><td>b<b>i</b>t</td><td class="ex">/bɪt/</td></tr>
+              <tr><td>c<b>u</b>t</td><td class="ex">/kʌt/</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="card tense-card continuous">
+          <div class="tense-name" data-en="Open syllable / vowel team → long vowel">Sílaba abierta / vocales juntas → vocal larga</div>
+          <p data-en="Two vowels together, or a vowel + consonant + silent E — the first vowel “says its own name.”">Dos vocales juntas, o una vocal + consonante + E muda — la primera vocal "dice su propio nombre".</p>
+          <div class="formula" data-en="Vowel + consonant + silent E, or vowel + vowel">Vocal + consonante + E muda, o vocal + vocal</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th data-en="Word">Palabra</th><th data-en="Sound">Sonido</th></tr>
+              <tr><td>c<b>a</b>pe</td><td class="ex">/keɪp/</td></tr>
+              <tr><td>b<b>i</b>te</td><td class="ex">/baɪt/</td></tr>
+              <tr><td>b<b>oa</b>t</td><td class="ex">/boʊt/</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:0.85rem;">
+        <h3 data-en="Same word, one letter — completely different sound">Misma palabra, una letra — sonido completamente distinto</h3>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th data-en="Short (closed)">Corta (cerrada)</th><th data-en="Long (+ silent E)">Larga (+ E muda)</th></tr>
+            <tr><td>cap /kæp/</td><td>cape /keɪp/</td></tr>
+            <tr><td>bit /bɪt/</td><td>bite /baɪt/</td></tr>
+            <tr><td>cut /kʌt/</td><td>cute /kjuːt/</td></tr>
+            <tr><td>hop /hɒp/</td><td>hope /hoʊp/</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="tip" style="margin-top:0.85rem;" data-en="Practice from class: read each pair out loud, exaggerating the difference — short and clipped vs. long and gliding.">Práctica de la clase: lee cada par en voz alta, exagerando la diferencia — corta y cortante vs. larga y deslizada.</p>
     </section>
 
   </div>
@@ -1634,6 +1992,7 @@
   }
   const PROGRESS_GROUPS = [
     { prefix: 'pitch-', counterId: 'pitch-progress' },
+    { prefix: 'dlg-', counterId: 'dlg-progress' },
     { prefix: 'qa-', counterId: 'qa-progress' },
     { prefix: 'frase-', counterId: 'frases-progress' },
   ];
