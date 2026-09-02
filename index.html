@@ -304,6 +304,30 @@
   .qa-a { color: var(--text-dim); font-size: 0.92rem; padding-left: 0.1rem; border-left: 2px solid var(--line); padding-left: 0.75rem; }
   .qa-a b { color: var(--text); }
 
+  .week-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.6rem; margin-bottom: 1.25rem;
+  }
+  .week-card {
+    background: var(--paper-card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 0.85rem; text-align: center;
+  }
+  .week-card.repaso { border-color: var(--teal); }
+  .week-card .wk-num { font-family: Georgia, serif; font-style: italic; font-size: 1.3rem; color: var(--gold); }
+  .week-card.repaso .wk-num { color: var(--teal); }
+  .week-card .wk-dates { font-family: ui-monospace, monospace; font-size: 0.64rem; color: var(--text-dim); margin: 0.2rem 0 0.5rem; }
+  .week-card .wk-badge {
+    font-family: ui-monospace, monospace; font-size: 0.6rem; text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 0.22rem 0.55rem; border-radius: 999px;
+    background: var(--gold-soft); color: var(--gold); display: inline-block;
+  }
+  .week-card.repaso .wk-badge { background: var(--teal-soft); color: var(--teal); }
+
+  .verb-head { display: flex; align-items: baseline; gap: 0.6rem; margin: 1.1rem 0 0.5rem; }
+  .verb-head .v-base { font-family: Georgia, serif; font-style: italic; font-size: 1.3rem; color: var(--gold); }
+  .verb-head.group-b .v-base { color: var(--teal); }
+  .verb-head .v-forms { font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--text-dim); }
+
   .dialog-turn {
     border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.55rem;
     border: 1px solid var(--line); background: var(--paper-card);
@@ -1414,6 +1438,152 @@
     <div class="progress-counter" id="frases-progress">Practicado: <b>0</b> / 36</div>
 
     <section>
+      <h2 data-en="4-week plan: 5 verbs a day, made into a habit">Plan de 4 semanas: 5 verbos al día, hecho hábito</h2>
+      <p class="lede" style="margin-bottom:1rem;" data-en="10 verbs total, in 2 groups of 5. Each group gets a first week and a review week two weeks later — that's the spaced repetition from your strategies, applied to verbs.">10 verbos en total, en 2 grupos de 5. Cada grupo tiene una semana inicial y una semana de repaso dos semanas después — es la repetición espaciada de tus estrategias, aplicada a verbos.</p>
+
+      <div class="week-grid">
+        <div class="week-card">
+          <div class="wk-num">1</div>
+          <div class="wk-dates" data-en="Sept 2–8">2–8 sept</div>
+          <div class="wk-badge" data-en="Group A · NEW">Grupo A · NUEVO</div>
+        </div>
+        <div class="week-card">
+          <div class="wk-num">2</div>
+          <div class="wk-dates" data-en="Sept 9–15">9–15 sept</div>
+          <div class="wk-badge" data-en="Group B · NEW">Grupo B · NUEVO</div>
+        </div>
+        <div class="week-card repaso">
+          <div class="wk-num">3</div>
+          <div class="wk-dates" data-en="Sept 16–22">16–22 sept</div>
+          <div class="wk-badge" data-en="Group A · REVIEW">Grupo A · REPASO</div>
+        </div>
+        <div class="week-card repaso">
+          <div class="wk-num">4</div>
+          <div class="wk-dates" data-en="Sept 23–29">23–29 sept</div>
+          <div class="wk-badge" data-en="Group B · REVIEW">Grupo B · REPASO</div>
+        </div>
+      </div>
+
+      <div class="progress-counter" id="vom-progress">Practicado: <b>0</b> / 30</div>
+
+      <h3 data-en="Group A — weeks 1 and 3">Grupo A — semanas 1 y 3</h3>
+
+      <div class="verb-head"><span class="v-base">go</span><span class="v-forms">went · gone · /ɡoʊ/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="She goes to work by bus.">Ella va al trabajo en bus.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She goes to work by bus." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She goes to work by bus." data-transcript-target="transcript-vom-1" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-1"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-1"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="We went to the beach last weekend.">Fuimos a la playa el fin de semana pasado.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We went to the beach last weekend." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We went to the beach last weekend." data-transcript-target="transcript-vom-2" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-2"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-2"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to go to the bank tomorrow.">Voy a ir al banco mañana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to go to the bank tomorrow." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to go to the bank tomorrow." data-transcript-target="transcript-vom-3" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-3"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-3"></div>
+
+      <div class="verb-head"><span class="v-base">make</span><span class="v-forms">made · made · /meɪk/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="He makes the fabric with banana fiber.">Él hace la tela con fibra de plátano.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He makes the fabric with banana fiber." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He makes the fabric with banana fiber." data-transcript-target="transcript-vom-4" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-4"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-4"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I made a mistake in my last presentation.">Cometí un error en mi última presentación.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I made a mistake in my last presentation." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I made a mistake in my last presentation." data-transcript-target="transcript-vom-5" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-5"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-5"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="We are going to make more samples this month.">Vamos a hacer más muestras este mes.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We are going to make more samples this month." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We are going to make more samples this month." data-transcript-target="transcript-vom-6" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-6"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-6"></div>
+
+      <div class="verb-head"><span class="v-base">take</span><span class="v-forms">took · taken · /teɪk/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="It takes two weeks to deliver the order.">Toma dos semanas entregar el pedido.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="It takes two weeks to deliver the order." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="It takes two weeks to deliver the order." data-transcript-target="transcript-vom-7" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-7"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-7"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="She took the sample to the client yesterday.">Ella le llevó la muestra al cliente ayer.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="She took the sample to the client yesterday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="She took the sample to the client yesterday." data-transcript-target="transcript-vom-8" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-8"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-8"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to take your advice.">Voy a tomar tu consejo.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to take your advice." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to take your advice." data-transcript-target="transcript-vom-9" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-9"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-9"></div>
+
+      <div class="verb-head"><span class="v-base">have</span><span class="v-forms">had · had · /hæv/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="We have a new fabric called Musafil.">Tenemos una tela nueva llamada Musafil.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We have a new fabric called Musafil." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We have a new fabric called Musafil." data-transcript-target="transcript-vom-10" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-10"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-10"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I had a good class today.">Tuve una buena clase hoy.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I had a good class today." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I had a good class today." data-transcript-target="transcript-vom-11" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-11"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-11"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="You are going to have the results soon.">Vas a tener los resultados pronto.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="You are going to have the results soon." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="You are going to have the results soon." data-transcript-target="transcript-vom-12" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-12"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-12"></div>
+
+      <div class="verb-head"><span class="v-base">get</span><span class="v-forms">got · got/gotten · /ɡɛt/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I get up early every day.">Me levanto temprano todos los días.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I get up early every day." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I get up early every day." data-transcript-target="transcript-vom-13" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-13"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-13"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="He got a good grade on his test.">Él sacó una buena nota en su examen.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="He got a good grade on his test." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="He got a good grade on his test." data-transcript-target="transcript-vom-14" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-14"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-14"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to get better at pronunciation.">Voy a mejorar en pronunciación.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to get better at pronunciation." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to get better at pronunciation." data-transcript-target="transcript-vom-15" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-15"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-15"></div>
+
+      <h3 data-en="Group B — weeks 2 and 4" style="margin-top:1.5rem;">Grupo B — semanas 2 y 4</h3>
+
+      <div class="verb-head group-b"><span class="v-base">do</span><span class="v-forms">did · done · /duː/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I do my homework every night.">Hago mi tarea todas las noches.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I do my homework every night." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I do my homework every night." data-transcript-target="transcript-vom-16" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-16"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-16"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="We did a great presentation last week.">Hicimos una gran presentación la semana pasada.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We did a great presentation last week." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We did a great presentation last week." data-transcript-target="transcript-vom-17" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-17"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-17"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to do my best on September 1st.">Voy a dar lo mejor de mí el 1 de septiembre.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to do my best on September 1st." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to do my best on September 1st." data-transcript-target="transcript-vom-18" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-18"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-18"></div>
+
+      <div class="verb-head group-b"><span class="v-base">see</span><span class="v-forms">saw · seen · /siː/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I see the client every Tuesday.">Veo al cliente todos los martes.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I see the client every Tuesday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I see the client every Tuesday." data-transcript-target="transcript-vom-19" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-19"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-19"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I saw the sample yesterday.">Vi la muestra ayer.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I saw the sample yesterday." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I saw the sample yesterday." data-transcript-target="transcript-vom-20" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-20"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-20"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="We are going to see each other next week.">Nos vamos a ver la próxima semana.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="We are going to see each other next week." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="We are going to see each other next week." data-transcript-target="transcript-vom-21" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-21"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-21"></div>
+
+      <div class="verb-head group-b"><span class="v-base">know</span><span class="v-forms">knew · known · /noʊ/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I know the phonetic alphabet now.">Ahora conozco el alfabeto fonético.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I know the phonetic alphabet now." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I know the phonetic alphabet now." data-transcript-target="transcript-vom-22" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-22"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-22"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I didn't know the price before.">Antes no sabía el precio.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I didn't know the price before." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I didn't know the price before." data-transcript-target="transcript-vom-23" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-23"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-23"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="Soon you are going to know all the irregular verbs.">Pronto vas a conocer todos los verbos irregulares.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="Soon you are going to know all the irregular verbs." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="Soon you are going to know all the irregular verbs." data-transcript-target="transcript-vom-24" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-24"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-24"></div>
+
+      <div class="verb-head group-b"><span class="v-base">give</span><span class="v-forms">gave · given · /ɡɪv/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I give free samples to new clients.">Doy muestras gratis a clientes nuevos.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I give free samples to new clients." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I give free samples to new clients." data-transcript-target="transcript-vom-25" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-25"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-25"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="The teacher gave us new pronunciation examples.">El profesor nos dio ejemplos nuevos de pronunciación.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="The teacher gave us new pronunciation examples." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="The teacher gave us new pronunciation examples." data-transcript-target="transcript-vom-26" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-26"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-26"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to give a real sales pitch.">Voy a dar un pitch de venta real.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to give a real sales pitch." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to give a real sales pitch." data-transcript-target="transcript-vom-27" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-27"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-27"></div>
+
+      <div class="verb-head group-b"><span class="v-base">think</span><span class="v-forms">thought · thought · /θɪŋk/</span></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I think Musafil is a strong product.">Creo que Musafil es un producto fuerte.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I think Musafil is a strong product." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I think Musafil is a strong product." data-transcript-target="transcript-vom-28" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-28"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-28"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I thought the presentation went well.">Pensé que la presentación salió bien.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I thought the presentation went well." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I thought the presentation went well." data-transcript-target="transcript-vom-29" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-29"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-29"></div>
+      <div class="pitch-line"><span class="pitch-text" data-en="I am going to think about a good answer.">Voy a pensar en una buena respuesta.</span></div>
+      <div class="item-row" style="margin-top:-0.35rem;margin-bottom:0.55rem;"><button class="icon-btn listen-btn" data-say="I am going to think about a good answer." title="Escuchar">🔊</button><button class="icon-btn mic-btn" data-say="I am going to think about a good answer." data-transcript-target="transcript-vom-30" title="Practicar">🎤</button><label style="display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--text-dim);margin-left:auto;"><input type="checkbox" class="practice-check" data-progress-id="vom-30"><span data-en="Practiced">Practicado</span></label></div>
+      <div class="transcript-box" id="transcript-vom-30"></div>
+
+      <p class="tip" data-en="Daily habit: every day this week, read your 5 verbs' sentences out loud (listen first, then repeat, then record and compare). 2-3 minutes is enough. A daily reminder is already set in your calendar for the next 4 weeks.">Hábito diario: cada día de esta semana, lee en voz alta las frases de tus 5 verbos (primero escucha, luego repite, luego grábate y compara). Con 2-3 minutos alcanza. Ya dejé un recordatorio diario en tu calendario para las próximas 4 semanas.</p>
+    </section>
+
+    <section>
       <h2 data-en="1. Simple Present — routines and facts">1. Presente Simple — rutinas y hechos</h2>
       <div class="formula" data-en="Subject + verb (+s/es for he/she/it)">Sujeto + verbo (+s/es para he/she/it)</div>
 
@@ -2070,6 +2240,7 @@
     { prefix: 'pitch-', counterId: 'pitch-progress' },
     { prefix: 'dlg-', counterId: 'dlg-progress' },
     { prefix: 'qa-', counterId: 'qa-progress' },
+    { prefix: 'vom-', counterId: 'vom-progress' },
     { prefix: 'frase-', counterId: 'frases-progress' },
     { prefix: 'link-', counterId: 'link-progress' },
   ];
