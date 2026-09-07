@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musafil · El Monólogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --verde:   #1B4332;
+  --verde2:  #2D6A4F;
+  --lima:    #8DC26B;
+  --crema:   #F2EBD9;
+  --beige:   #EDE4CF;
+  --marron:  #7B4F2E;
+  --negro:   #0D0D0D;
+  --blanco:  #FAFAF8;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--negro);
+  font-family: 'Syne', sans-serif;
+  color: var(--blanco);
+  cursor: none;
+}
+
+.cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--lima); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: difference;
+}
+.cursor.big { width: 40px; height: 40px; background: var(--crema); }
+
+#deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 6vw 8vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity .0s;
+}
+.slide.active { opacity: 1; pointer-events: all; }
+
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--lima); z-index: 100;
+  transition: width .6s cubic-bezier(.25,.46,.45,.94);
+}
+
+#nav {
+  position: fixed; bottom: 2.5rem; right: 3rem;
+  display: flex; gap: 1rem; z-index: 100; align-items: center;
+}
+.nav-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: var(--blanco); font-size: 1.2rem;
+  cursor: pointer; transition: all .2s;
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-btn:hover { background: var(--verde2); border-color: var(--lima); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+#slide-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em; min-width: 50px; text-align: center;
+}
+
+#lang-btn {
+  position: fixed; top: 2rem; right: 3rem; z-index: 100;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.12em; padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.6); cursor: pointer;
+  backdrop-filter: blur(10px); transition: all .2s;
+}
+#lang-btn:hover { background: var(--verde2); color: var(--blanco); border-color: var(--lima); }
+
+#logo {
+  position: fixed; top: 2rem; left: 3rem; z-index: 100;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  color: rgba(255,255,255,0.35); letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+#dots {
+  position: fixed; left: 2rem; top: 50%;
+  transform: translateY(-50%); z-index: 100;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: all .3s; cursor: pointer;
+}
+.dot.active { background: var(--lima); transform: scale(1.5); }
+.dot:hover { background: rgba(255,255,255,0.5); }
+
+/* light-background slides need dark dots/nav text */
+.slide.light ~ #dots .dot, body:has(.slide.light.active) #dots .dot { background: rgba(13,13,13,0.2); }
+body:has(.slide.light.active) #dots .dot.active { background: var(--verde); }
+body:has(.slide.light.active) #logo { color: rgba(13,13,13,0.4); }
+body:has(.slide.light.active) #lang-btn { color: rgba(13,13,13,0.6); border-color: rgba(13,13,13,0.2); background: rgba(13,13,13,0.05); }
+body:has(.slide.light.active) #nav .nav-btn { color: var(--negro); border-color: rgba(13,13,13,0.2); background: rgba(13,13,13,0.05); }
+body:has(.slide.light.active) #slide-counter { color: rgba(13,13,13,0.4); }
+body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
+
+/* ── STAGE LABEL ── */
+.stage-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  color: var(--lima); letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 2rem; opacity: 0; transform: translateY(15px);
+  transition: opacity .7s, transform .7s;
+}
+.slide.active .stage-eyebrow { opacity: 1; transform: translateY(0); }
+.slide.light .stage-eyebrow { color: var(--verde2); }
+
+/* ── REVEAL LINES ── */
+.reveal-line {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  line-height: 1.25; max-width: 950px;
+  opacity: 0; transform: translateY(25px);
+  transition: opacity .7s, transform .7s;
+  margin-bottom: 0.4em;
+}
+.reveal-line.shown { opacity: 1; transform: translateY(0); }
+.reveal-line.emphasis { color: var(--lima); font-style: italic; }
+.slide.light .reveal-line.emphasis { color: var(--verde); }
+.reveal-line.quote { font-style: italic; }
+.reveal-line.small {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.3rem); color: rgba(255,255,255,0.65);
+  max-width: 700px; line-height: 1.5;
+}
+.slide.light .reveal-line.small { color: rgba(13,13,13,0.6); }
+
+.close-contact {
+  margin-top: 1.5rem; font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em;
+  opacity: 0; transition: opacity .6s;
+}
+.close-contact.shown { opacity: 1; }
+
+/* ── COVER ── */
+#s1 { background: var(--negro); }
+.s1-label {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--lima);
+  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem;
+  opacity: 0; transform: translateY(20px); transition: opacity .8s .2s, transform .8s .2s;
+}
+.s1-title {
+  font-family: 'Instrument Serif', serif; font-size: clamp(4.5rem, 11vw, 9.5rem);
+  line-height: 0.9; color: var(--blanco);
+  opacity: 0; transform: translateY(30px); transition: opacity .9s .4s, transform .9s .4s;
+}
+.s1-title em { font-style: italic; color: var(--lima); }
+.s1-sub {
+  margin-top: 2rem; font-family: 'DM Mono', monospace; font-size: 0.85rem;
+  color: rgba(255,255,255,0.45); letter-spacing: 0.03em; line-height: 1.8; max-width: 600px;
+  opacity: 0; transform: translateY(20px); transition: opacity .8s .7s, transform .8s .7s;
+}
+#s1.active .s1-label, #s1.active .s1-title, #s1.active .s1-sub { opacity: 1; transform: translateY(0); }
+
+/* backgrounds per slide */
+#s2 { background: var(--crema); color: var(--negro); }
+#s3 { background: var(--negro); }
+#s4 { background: var(--verde); }
+#s5 { background: var(--crema); color: var(--negro); }
+#s6 { background: var(--negro); }
+#s7 { background: var(--beige); color: var(--negro); }
+#s8 { background: var(--verde); }
+#s9 { background: var(--verde); }
+
+#hint {
+  position: fixed; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  color: rgba(255,255,255,0.25); letter-spacing: 0.1em;
+  z-index: 100; pointer-events: none; transition: opacity 1s;
+}
+#fullscreen-btn {
+  position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.3);
+  background: none; border: none; cursor: pointer; z-index: 100; transition: color .2s;
+}
+#fullscreen-btn:hover { color: var(--lima); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div id="progress"></div>
+<div id="logo">INMOTEX · MUSAFIL</div>
+<button id="lang-btn">EN → ES</button>
+<button id="fullscreen-btn">⛶ FULLSCREEN</button>
+<div id="dots"></div>
+
+<div id="deck">
+
+  <!-- S1 — COVER -->
+  <div class="slide" id="s1">
+    <div class="s1-label" data-en="Inmotex · Venezuela · 2026">Inmotex · Venezuela · 2026</div>
+    <h1 class="s1-title">Musa<em>fil</em></h1>
+    <p class="s1-sub" data-en="The monologue — your story, in 5 acts.<br>Greeting · Hook · Introduction · Development · Close">El monólogo — tu historia, en 5 actos.<br>Saludo · Gancho · Presentación · Desenlace · Cierre</p>
+  </div>
+
+  <!-- S2 — SALUDO -->
+  <div class="slide light" id="s2">
+    <div class="stage-eyebrow" data-en="1 · Greeting">1 · Saludo</div>
+    <div class="reveal-line reveal" data-en="Good morning.">Buenos días.</div>
+    <div class="reveal-line reveal emphasis" data-en="Thank you.">Gracias.</div>
+  </div>
+
+  <!-- S3 — GANCHO -->
+  <div class="slide" id="s3">
+    <div class="stage-eyebrow" data-en="2 · Hook">2 · Gancho</div>
+    <div class="reveal-line reveal" data-en="Your story.">Tu historia.</div>
+    <div class="reveal-line reveal" data-en="The world is changing.">El mundo cambia.</div>
+    <div class="reveal-line reveal emphasis" data-en="Imagine&hellip; banana fiber.">Imagina&hellip; fibra de plátano.</div>
+  </div>
+
+  <!-- S4 — PRESENTACION -->
+  <div class="slide" id="s4">
+    <div class="stage-eyebrow" data-en="3 · Introduction">3 · Presentación</div>
+    <div class="reveal-line reveal" data-en="Albert Peña">Albert Peña</div>
+    <div class="reveal-line reveal" data-en="Founder, Inmotex">Fundador, Inmotex</div>
+    <div class="reveal-line reveal emphasis" data-en="Musafil">Musafil</div>
+  </div>
+
+  <!-- S5 — LA OPORTUNIDAD -->
+  <div class="slide light" id="s5">
+    <div class="stage-eyebrow" data-en="4 · Development — the opportunity">4 · Desenlace — la oportunidad</div>
+    <div class="reveal-line reveal" data-en="Strong. Sustainable.">Fuerte. Sostenible.</div>
+    <div class="reveal-line reveal emphasis" data-en="Be the first.">Sé el primero.</div>
+  </div>
+
+  <!-- S6 — EL RETO -->
+  <div class="slide" id="s6">
+    <div class="stage-eyebrow" data-en="Development — the challenge">Desenlace — el reto</div>
+    <div class="reveal-line reveal" data-en="Say it:">Dilo:</div>
+    <div class="reveal-line reveal emphasis quote" data-en="&ldquo;I am real. I have a purpose.&rdquo;">&ldquo;Soy real. Tengo un propósito.&rdquo;</div>
+  </div>
+
+  <!-- S7 — LA HISTORIA -->
+  <div class="slide light" id="s7">
+    <div class="stage-eyebrow" data-en="The story you share">La historia que compartes</div>
+    <div class="reveal-line reveal quote" data-en="Your story.">Tu historia.</div>
+    <div class="reveal-line reveal emphasis quote" data-en="My story. Our story.">Mi historia. Nuestra historia.</div>
+  </div>
+
+  <!-- S8 — LA PROPUESTA -->
+  <div class="slide" id="s8">
+    <div class="stage-eyebrow" data-en="4 · Development — the offer">4 · Desenlace — la propuesta</div>
+    <div class="reveal-line reveal" data-en="A free sample.">Una muestra gratis.</div>
+    <div class="reveal-line reveal emphasis" data-en="Together.">Juntos.</div>
+  </div>
+
+  <!-- S9 — CIERRE -->
+  <div class="slide" id="s9">
+    <div class="stage-eyebrow" data-en="5 · Close">5 · Cierre</div>
+    <div class="reveal-line reveal" data-en="Thank you.">Gracias.</div>
+    <div class="reveal-line reveal emphasis" data-en="Your thoughts?">¿Tu opinión?</div>
+    <div class="close-contact reveal">Albert Peña · Inmotex · albert.umcat@gmail.com</div>
+  </div>
+
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" disabled>←</button>
+  <span id="slide-counter">1 / 9</span>
+  <button class="nav-btn" id="nextBtn">→</button>
+</div>
+<div id="hint">← → ARROW KEYS · SPACE · SWIPE</div>
+
+<script>
+const TOTAL = 9;
+let current = 0;
+let lang = 'en';
+let transitioning = false;
+
+const cursorEl = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursorEl.style.left = e.clientX + 'px';
+  cursorEl.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('button, .dot, .nav-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => cursorEl.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursorEl.classList.remove('big'));
+});
+
+const slides = Array.from(document.querySelectorAll('.slide'));
+
+function revealNext(slideIdx) {
+  const hidden = slides[slideIdx].querySelectorAll('.reveal:not(.shown)');
+  if (!hidden.length) return false;
+  hidden[0].classList.add('shown');
+  return true;
+}
+function resetReveal(slideIdx) {
+  slides[slideIdx].querySelectorAll('.reveal.shown').forEach(el => el.classList.remove('shown'));
+}
+
+function goTo(n) {
+  if (transitioning) return;
+  if (n < 0 || n >= TOTAL) return;
+  transitioning = true;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  updateUI();
+  resetReveal(current);
+  setTimeout(() => { transitioning = false; }, 700);
+}
+
+function tryAdvance() {
+  const revealed = revealNext(current);
+  if (revealed) return;
+  goTo(current + 1);
+}
+
+function updateUI() {
+  document.getElementById('progress').style.width = ((current + 1) / TOTAL * 100) + '%';
+  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + TOTAL;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+const dotsEl = document.getElementById('dots');
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+document.getElementById('nextBtn').addEventListener('click', tryAdvance);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); tryAdvance(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+});
+
+let touchX = 0;
+document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 50) dx > 0 ? tryAdvance() : goTo(current - 1);
+});
+
+document.getElementById('deck').addEventListener('click', e => {
+  const x = e.clientX / window.innerWidth;
+  if (x > 0.6) tryAdvance();
+  else if (x < 0.2) goTo(current - 1);
+});
+
+document.getElementById('lang-btn').addEventListener('click', () => {
+  lang = lang === 'es' ? 'en' : 'es';
+  document.getElementById('lang-btn').textContent = lang === 'es' ? 'ES → EN' : 'EN → ES';
+  updateLang();
+});
+function updateLang() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (lang === 'en') {
+      if (!el.dataset.es) el.dataset.es = el.innerHTML;
+      el.innerHTML = el.dataset.en;
+    } else {
+      if (el.dataset.es) el.innerHTML = el.dataset.es;
+    }
+  });
+}
+
+document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+setTimeout(() => { document.getElementById('hint').style.opacity = '0'; }, 4000);
+
+slides[0].classList.add('active');
+updateUI();
+if (lang === 'en') updateLang();
+</script>
+</body>
+</html>
