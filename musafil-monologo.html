@@ -155,6 +155,74 @@ body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
 }
 .close-contact.shown { opacity: 1; }
 
+/* ── AGENDA TAG (saludo) ── */
+.agenda {
+  font-family: 'DM Mono', monospace; font-size: 0.75rem;
+  color: rgba(13,13,13,0.55); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap;
+  opacity: 0; transition: opacity .7s;
+}
+.agenda.shown { opacity: 1; }
+.agenda span { padding: 0.3rem 0.75rem; border: 1px solid rgba(13,13,13,0.2); border-radius: 999px; }
+
+/* ── STAT ROW (data points) ── */
+.stats-row {
+  display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1.5rem;
+  opacity: 0; transform: translateY(20px); transition: opacity .7s, transform .7s;
+}
+.stats-row.shown { opacity: 1; transform: translateY(0); }
+.stat-box { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1rem; min-width: 140px; }
+.slide.light .stat-box { border-top-color: rgba(13,13,13,0.15); }
+.stat-big {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem); color: var(--lima); line-height: 1;
+}
+.slide.light .stat-big { color: var(--verde); }
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  color: rgba(255,255,255,0.45); margin-top: 0.6rem; line-height: 1.5; letter-spacing: 0.02em;
+}
+.slide.light .stat-label { color: rgba(13,13,13,0.5); }
+
+/* ── FEATURE LIST (numbered points) ── */
+.feature-list {
+  display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1.2rem;
+  max-width: 620px; width: 100%;
+  opacity: 0; transform: translateY(20px); transition: opacity .7s, transform .7s;
+}
+.feature-list.shown { opacity: 1; transform: translateY(0); }
+.feature-item {
+  display: flex; align-items: baseline; gap: 1rem;
+  padding-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.slide.light .feature-item { border-bottom-color: rgba(13,13,13,0.12); }
+.feature-item:last-child { border-bottom: none; }
+.feature-num {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--lima); flex-shrink: 0;
+}
+.slide.light .feature-num { color: var(--verde2); }
+.feature-text {
+  font-family: 'Syne', sans-serif; font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  color: rgba(255,255,255,0.85); line-height: 1.4;
+}
+.slide.light .feature-text { color: rgba(13,13,13,0.8); }
+
+/* ── ASK LADDER (steps that light up) ── */
+.ask-ladder { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+.ask-step {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1;
+  color: rgba(255,255,255,0.3); transition: color .5s;
+}
+.ask-step.shown { color: var(--blanco); }
+
+/* ── TAGLINE (small mono descriptor under a name/reveal) ── */
+.tagline {
+  font-family: 'DM Mono', monospace; font-size: 0.78rem;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.04em; margin-top: -0.3em; margin-bottom: 0.6em;
+}
+.slide.light .tagline { color: rgba(13,13,13,0.5); }
+
 /* ── COVER ── */
 #s1 { background: var(--negro); }
 .s1-label {
@@ -222,29 +290,41 @@ body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
   <div class="slide light" id="s2">
     <div class="stage-eyebrow" data-en="1 · Greeting">1 · Saludo</div>
     <div class="reveal-line reveal" data-en="Good morning.">Buenos días.</div>
-    <div class="reveal-line reveal emphasis" data-en="Thank you.">Gracias.</div>
+    <div class="reveal-line reveal emphasis" data-en="Thank you for the opportunity.">Gracias por la oportunidad.</div>
+    <div class="agenda reveal" data-en="<span>The story</span><span>The product</span><span>The opportunity</span>"><span>La historia</span><span>El producto</span><span>La oportunidad</span></div>
   </div>
 
   <!-- S3 — GANCHO -->
   <div class="slide" id="s3">
     <div class="stage-eyebrow" data-en="2 · Hook">2 · Gancho</div>
     <div class="reveal-line reveal" data-en="Your story.">Tu historia.</div>
-    <div class="reveal-line reveal" data-en="The world is changing.">El mundo cambia.</div>
     <div class="reveal-line reveal emphasis" data-en="Imagine&hellip; banana fiber.">Imagina&hellip; fibra de plátano.</div>
+    <div class="stats-row reveal">
+      <div class="stat-box"><div class="stat-big">10,000 L</div><div class="stat-label" data-en="of water per kg of cotton">de agua por kg de algodón</div></div>
+      <div class="stat-box"><div class="stat-big">0</div><div class="stat-label" data-en="fabrics like this, until now">telas así, hasta ahora</div></div>
+    </div>
+    <div class="reveal-line reveal small" data-en="Musafil changes that.">Musafil cambia eso.</div>
   </div>
 
   <!-- S4 — PRESENTACION -->
   <div class="slide" id="s4">
     <div class="stage-eyebrow" data-en="3 · Introduction">3 · Presentación</div>
     <div class="reveal-line reveal" data-en="Albert Peña">Albert Peña</div>
-    <div class="reveal-line reveal" data-en="Founder, Inmotex">Fundador, Inmotex</div>
+    <div class="tagline reveal" data-en="Founder, Inmotex · Venezuela">Fundador, Inmotex · Venezuela</div>
     <div class="reveal-line reveal emphasis" data-en="Musafil">Musafil</div>
+    <div class="tagline reveal" data-en="30% banana fiber · 70% cotton">30% fibra de plátano · 70% algodón</div>
   </div>
 
   <!-- S5 — LA OPORTUNIDAD -->
   <div class="slide light" id="s5">
     <div class="stage-eyebrow" data-en="4 · Development — the opportunity">4 · Desenlace — la oportunidad</div>
-    <div class="reveal-line reveal" data-en="Strong. Sustainable.">Fuerte. Sostenible.</div>
+    <div class="reveal-line reveal emphasis" data-en="Strong. Sustainable.">Fuerte. Sostenible.</div>
+    <div class="feature-list reveal">
+      <div class="feature-item"><span class="feature-num">01</span><span class="feature-text" data-en="Zero chemicals">Cero químicos</span></div>
+      <div class="feature-item"><span class="feature-num">02</span><span class="feature-text" data-en="25% less water">25% menos agua</span></div>
+      <div class="feature-item"><span class="feature-num">03</span><span class="feature-text" data-en="Works with your current machines">Compatible con tus máquinas actuales</span></div>
+      <div class="feature-item"><span class="feature-num">04</span><span class="feature-text" data-en="Zero agricultural waste">Cero desperdicio agrícola</span></div>
+    </div>
     <div class="reveal-line reveal emphasis" data-en="Be the first.">Sé el primero.</div>
   </div>
 
@@ -253,11 +333,13 @@ body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
     <div class="stage-eyebrow" data-en="Development — the challenge">Desenlace — el reto</div>
     <div class="reveal-line reveal" data-en="Say it:">Dilo:</div>
     <div class="reveal-line reveal emphasis quote" data-en="&ldquo;I am real. I have a purpose.&rdquo;">&ldquo;Soy real. Tengo un propósito.&rdquo;</div>
+    <div class="reveal-line reveal small" data-en="No competitor can say this.">Ningún competidor puede decir esto.</div>
   </div>
 
   <!-- S7 — LA HISTORIA -->
   <div class="slide light" id="s7">
     <div class="stage-eyebrow" data-en="The story you share">La historia que compartes</div>
+    <div class="tagline reveal" data-en="From farm waste to fashion.">Del residuo agrícola a la pasarela.</div>
     <div class="reveal-line reveal quote" data-en="Your story.">Tu historia.</div>
     <div class="reveal-line reveal emphasis quote" data-en="My story. Our story.">Mi historia. Nuestra historia.</div>
   </div>
@@ -265,8 +347,12 @@ body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
   <!-- S8 — LA PROPUESTA -->
   <div class="slide" id="s8">
     <div class="stage-eyebrow" data-en="4 · Development — the offer">4 · Desenlace — la propuesta</div>
-    <div class="reveal-line reveal" data-en="A free sample.">Una muestra gratis.</div>
-    <div class="reveal-line reveal emphasis" data-en="Together.">Juntos.</div>
+    <div class="ask-ladder">
+      <div class="ask-step reveal" data-en="One piece.">Una pieza.</div>
+      <div class="ask-step reveal" data-en="One line.">Una línea.</div>
+      <div class="ask-step reveal" data-en="One small collection.">Una colección pequeña.</div>
+    </div>
+    <div class="reveal-line reveal emphasis" data-en="When can I send you a sample?">¿Cuándo puedo enviarte una muestra?</div>
   </div>
 
   <!-- S9 — CIERRE -->
@@ -274,6 +360,7 @@ body:has(.slide.light.active) #hint { color: rgba(13,13,13,0.3); }
     <div class="stage-eyebrow" data-en="5 · Close">5 · Cierre</div>
     <div class="reveal-line reveal" data-en="Thank you.">Gracias.</div>
     <div class="reveal-line reveal emphasis" data-en="Your thoughts?">¿Tu opinión?</div>
+    <div class="tagline reveal" data-en="Next step: the sample, this week.">Próximo paso: la muestra, esta semana.</div>
     <div class="close-contact reveal">Albert Peña · Inmotex · albert.umcat@gmail.com</div>
   </div>
 
